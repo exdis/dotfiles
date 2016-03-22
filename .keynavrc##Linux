@@ -1,15 +1,43 @@
-ctrl+semicolon start
+ctrl+semicolon start,grid 4x4
+
+1 cell-select 1,warp
+q cell-select 2,warp
+a cell-select 3,warp
+z cell-select 4,warp
+2 cell-select 5,warp
+w cell-select 6,warp
+s cell-select 7,warp
+x cell-select 8,warp
+3 cell-select 9,warp
+e cell-select 10,warp
+d cell-select 11,warp
+c cell-select 12,warp
+4 cell-select 13,warp
+r cell-select 14,warp
+f cell-select 15,warp
+v cell-select 16,warp
+
 Escape end
+
 h cut-left
 j cut-down
 k cut-up
 l cut-right
+
 shift+h move-left
 shift+j move-down
 shift+k move-up
 shift+l move-right
+
 space warp,click 1,end
 shift+space warp, click 2,end
+
 semicolon warp,end
+
 n warp,click 5
 p warp,click 4
+
+BackSpace history-back
+
+o grid 1x1,cursorzoom 9 9
+p grid 1x1,cursorzoom 9 9,warp,click 1,end
