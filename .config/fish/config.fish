@@ -49,3 +49,5 @@ end
 . $fish_path/oh-my-fish.fish
 
 alias ack ack-grep
+
+alias ssh='env TERM=xterm ssh'
