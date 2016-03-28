@@ -26,7 +26,7 @@ shift+k move-up,warp
 shift+l move-right,warp
 
 space warp,click 1,end
-shift+space warp, click 2,end
+shift+space warp,click 3,end
 
 semicolon warp,end
 
