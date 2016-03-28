@@ -33,7 +33,9 @@ semicolon warp,end
 n warp,click 5
 p warp,click 4
 
-BackSpace history-back
+u history-back
 
 o grid 1x1,cursorzoom 9 9
 i grid 1x1,cursorzoom 9 9,warp,click 1,end
+
+y drag 1
