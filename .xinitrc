@@ -1,0 +1,1 @@
+/home/exdis/.dotfiles/xinitrc
