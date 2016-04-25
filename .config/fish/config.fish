@@ -1,5 +1,11 @@
 # Path to your oh-my-fish.
-set fish_path $HOME/.oh-my-fish
+set -gx OMF_PATH "/home/exdis/.local/share/omf"
+
+# Customize Oh My Fish configuration path.
+set -gx OMF_CONFIG "/home/exdis/.config/omf"
+
+# Load oh-my-fish configuration.
+source $OMF_PATH/init.fish
 
 set -gx PATH /usr/local/go/bin $PATH
 set -gx GOPATH $HOME/work
@@ -37,16 +43,6 @@ function fuck -d 'Correct your previous console command'
         history --delete $fucked_up_commandd
     end
 end
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-fish/plugins/*)
-# Custom plugins may be added to ~/.oh-my-fish/custom/plugins/
-# Example format: set fish_plugins autojump bundler
-
-# Path to your custom folder (default path is $FISH/custom)
-#set fish_custom $HOME/dotfiles/oh-my-fish
-
-# Load oh-my-fish configuration.
-. $fish_path/oh-my-fish.fish
 
 alias ack ack-grep
 
