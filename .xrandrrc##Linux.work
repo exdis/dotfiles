@@ -1,2 +1,2 @@
 #!/bin/bash
-xrandr --auto --output VGA1 --left-of HDMI1
+xrandr --auto --output VGA1 --right-of HDMI1
