@@ -1,0 +1,33 @@
+set username = d.kolesnikov
+set jid = d.kolesnikov@office.ngs.ru
+set server = xmpp.office.ngs.ru
+set port = 5222
+set ssl = 0
+set ssl_ignore_checks = 1
+set nickname = d.kolesnikov
+set logging = 1
+set load_logs = 1
+set logging_dir = ~/.mcabber/histo/
+set statefile = ~/.mcabber/mcabber.state
+set logging_ignore_status = 1
+set message_autoaway = Я куда-то отошёл...
+
+alias rsearch = roster search
+alias ufirst = roster unread_first
+alias unext = roster unread_next
+bind 269 = roster toggle_offline
+bind 270 = unext
+
+set color_background   = 234
+set color_general      = 244
+set color_info         = 240
+set color_msgin        = 166
+set color_msgout       = 64
+set color_msghl        = 136
+set color_bgstatus     = 235
+set color_status       = 166
+set color_roster       = 240
+set color_bgrostersel  = 235
+set color_rostersel    = 166
+set color_rosterselmsg = 136
+set color_rosternewmsg = 136
