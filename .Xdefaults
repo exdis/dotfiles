@@ -1,47 +1,49 @@
-urxvt*scrollBar: false
+URxvt.scrollBar: false
 
-urxvt*foreground: white
-urxvt*background: black
+URxvt.foreground: white
+URxvt.background: black
 
-urxvt*font: xft:FiraCode-Regular:size=9:autohint=false:antialias=true:hinting=false
-urxvt*letterSpace: -1
+URxvt.font: xft:Monaco:pixelsize=12:antialias=false
+URxvt.boldFont: xft:Monaco:style=Bold:pixelsize=12:antialias=false
+URxvt.italicFont:
+URxvt.boldItalicFont:
 
-*color0:  #2E3436
-*color1:  #a40000
-*color2:  #4E9A06
-*color3:  #C4A000
-*color4:  #3465A4
-*color5:  #75507B
-*color6:  #ce5c00
-*color7:  #babdb9
-*color8:  #555753
-*color9:  #EF2929
-*color10: #8AE234
-*color11: #FCE94F
-*color12: #729FCF
-*color13: #AD7FA8
-*color14: #fcaf3e
-*color15: #EEEEEC
+.color0:  #2E3436
+.color1:  #a40000
+.color2:  #4E9A06
+.color3:  #C4A000
+.color4:  #3465A4
+.color5:  #75507B
+.color6:  #ce5c00
+.color7:  #babdb9
+.color8:  #555753
+.color9:  #EF2929
+.color10: #8AE234
+.color11: #FCE94F
+.color12: #729FCF
+.color13: #AD7FA8
+.color14: #fcaf3e
+.color15: #EEEEEC
 
-urxvt*iso14755: false
-urxvt*iso14755_52: false
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
-urxvt*perl-lib: /home/exdis/.urxvt/ext/
-urxvt*perl-ext-common: clipboard,keyboard-select,url-select
+URxvt.perl-lib: /home/exdis/.urxvt/ext/
+URxvt.perl-ext-common: clipboard,keyboard-select,url-select
 
-urxvt*keysym.Control-i: perl:keyboard-select:activate
-urxvt*keysym.Control-s: perl:keyboard-select:search
+URxvt.keysym.Control-i: perl:keyboard-select:activate
+URxvt.keysym.Control-s: perl:keyboard-select:search
 
-urxvt*keysym.Control-Shift-L: perl:url-select:select_next
-urxvt*url-select.autocopy: true
-urxvt*url-select.underline: true
-urxvt*url-select.launcher: /usr/bin/google-chrome
+URxvt.keysym.Control-Shift-L: perl:url-select:select_next
+URxvt.url-select.autocopy: true
+URxvt.url-select.underline: true
+URxvt.url-select.launcher: /usr/bin/google-chrome
 
-urxvt*clipboard.copycmd: xsel --input --clipboard
-urxvt*clipboard.parsecmd: xsel --output --clipboard
+URxvt.clipboard.copycmd: xsel --input --clipboard
+URxvt.clipboard.parsecmd: xsel --output --clipboard
 
-urxvt*keysym.Control-Shift-C: perl:clipboard:copy
-urxvt*keysym.Control-Shift-V: perl:clipboard:paste
+URxvt.keysym.Control-Shift-C: perl:clipboard:copy
+URxvt.keysym.Control-Shift-V: perl:clipboard:paste
 
-urxvt*keysym.Control-Shift-K: command:\033]720;1\007
-urxvt*keysym.Control-Shift-J: command:\033]721;1\007
+URxvt.keysym.Control-Shift-K: command:\033]720;1\007
+URxvt.keysym.Control-Shift-J: command:\033]721;1\007

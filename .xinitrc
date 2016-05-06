@@ -6,4 +6,7 @@
 xkbcomp $HOME/.config/xkb/my $DISPLAY
 . $HOME/.xrandrrc
 xinput --set-prop 11 255 1.5
+xset fp+ ~/.fonts
+xset fp rehash
 [[ -f ~/.Xdefaults ]] && xrdb -remove 'urxvt*' && xrdb -merge ~/.Xdefaults
+exec i3
