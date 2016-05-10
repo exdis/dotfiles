@@ -11,5 +11,5 @@ xset fp rehash
 [[ -f ~/.Xdefaults ]] && xrdb -remove 'urxvt*' && xrdb -merge ~/.Xdefaults
 keynav &
 parcellite &
-sudo $HOME/dev/golang/shift-shift/shift-shift -quiet > /dev/null &
+. $HOME/.shiftrc
 exec i3

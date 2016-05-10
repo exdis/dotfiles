@@ -37,7 +37,7 @@ URxvt.keysym.Control-s: perl:keyboard-select:search
 URxvt.keysym.Control-Shift-L: perl:url-select:select_next
 URxvt.url-select.autocopy: true
 URxvt.url-select.underline: true
-URxvt.url-select.launcher: /usr/bin/google-chrome
+URxvt.url-select.launcher: /usr/bin/chromium
 
 URxvt.clipboard.copycmd: xsel --input --clipboard
 URxvt.clipboard.parsecmd: xsel --output --clipboard
