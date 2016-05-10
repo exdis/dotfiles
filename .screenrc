@@ -1,0 +1,9 @@
+#
+# look and feel for the bottom two lines.
+#
+caption     always        "%{+b rk}%H%{gk} |%c %{yk}%d.%m.%Y | %72=Load: %l %{wk}"
+hardstatus alwayslastline "%?%{yk}%-Lw%?%{wb}%n*%f %t%?(%u)%?%?%{yk}%+Lw%?"
+
+defscrollback 10000
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
+
