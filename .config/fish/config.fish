@@ -13,24 +13,13 @@ set -gx GOPATH $HOME/dev/golang
 function fish_mode_prompt --description "Displays the current mode"
   # Do nothing if not in vi mode
   if set -q __fish_vi_mode
-    switch $fish_bind_mode
-      case default
-        set_color --bold --background red white
-        echo ' N '
-      case insert
-        set_color --bold --background green white
-        echo ' I '
-      case visual
-        set_color --bold --background magenta white
-        echo ' V '
-    end
-    set_color normal
   end
 end
 # Theme
 set fish_theme bobthefish
 set fish_key_bindings fish_user_key_bindings
 set theme_display_ruby no
+set theme_display_vi yes
 
 function fuck -d 'Correct your previous console command'
     set -l exit_code $status
