@@ -33,6 +33,28 @@ function fuck -d 'Correct your previous console command'
     end
 end
 
+function fastcd
+    set -l directory $argv[1]
+    set -l maxdepth $argv[2]
+    set -l target $argv[3]
+
+    set -l chosen (find $directory -maxdepth $maxdepth -name $target \( -type d -or -type l \) -print -quit)
+
+    if test -n chosen
+        cd $chosen
+    else
+        cd $directory
+    end
+end
+
+alias gocd 'fastcd $GOPATH 3'
+
+complete -c gocd -x -a '( find $GOPATH -maxdepth 1 -type d ! -name ".git" -printf "%f\n" )'
+
+alias dcd 'fastcd $HOME/dev 3'
+
+complete -c dcd -x -a '( find $HOME/dev -maxdepth 1 -type d ! -name ".git" -printf "%f\n" )'
+
 alias ack ack-grep
 
 alias ssh='env TERM=xterm ssh'
