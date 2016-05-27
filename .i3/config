@@ -150,8 +150,8 @@ bar {
     status_command i3blocks -c ~/.i3/i3blocks.conf
 }
 
-bindsym $mod+Control+l exec i3lock -c 000000 -n
-exec xautolock -time 5 -locker 'i3lock -c 000000 -n' &
+bindsym $mod+Control+l exec xkb-switch -s us; exec i3lock -c 000000 -n
+exec xautolock -time 5 -locker 'xkb-switch -s us; i3lock -c 000000 -n' &
 
 exec "unity-settings-daemon"
 exec "/home/exdis/.xinitrc"
