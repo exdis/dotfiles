@@ -7,7 +7,7 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
-set -gx PATH /usr/local/go/bin /usr/local/bin $PATH
+set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin $PATH
 set -gx GOPATH $HOME/dev/golang
 
 function fish_mode_prompt --description "Displays the current mode"
