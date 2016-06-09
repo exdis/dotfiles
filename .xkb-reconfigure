@@ -8,12 +8,13 @@ SYMBOLS=(
     "ru:2"
 
     "level3(lwin_switch)"
+    "level5(ralt_switch)"
     #"mod4-lvl3"
 
     "hjkl"
     "hjkl(caret)"
     "hjkl(fast-enter)"
-    #"hjkl(fast-numpad)"
+    "hjkl(fast-numpad)"
     #"hjkl(fast-escape)"
 
 
