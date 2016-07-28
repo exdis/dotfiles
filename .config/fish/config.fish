@@ -1,3 +1,41 @@
+# If we get a value for _any_ language variable, we assume we've inherited something sensible to skip all this
+# and to allow the user to set it at runtime without mucking with config files.
+# This isn't actually our job, so there's a bunch of edge-cases we _cannot_ handle properly.
+# In general this breaks the expectation that an empty LANG will be the same as LANG=POSIX.
+# Note the missing LC_ALL - locale.conf doesn't allow it.
+set -l LANGVARS LANG LANGUAGE LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT LC_IDENTIFICATION
+if not string length -q -- $$LANGVARS
+    # Unset the variables since they are empty anyway, and this simplifies our code later.
+    for var in $LANGVARS
+        set -e $var
+    end
+    # First read from the kernel commandline.
+    # The splitting here is a bit weird, but we operate under the assumption that the locale can't include whitespace.
+    # Other whitespace shouldn't concern us, but a quoted "locale.LANG=SOMETHING" as a value to something else might.
+    if test -r /proc/cmdline
+        for var in (string match -r 'locale.[^=]+=\S+' < /proc/cmdline)
+            set -gx (string replace 'locale.' '' -- $var | string split '=')
+        end
+    end
+    # Now try locale.conf - a systemd invention, so I'm not sure if Slackware has it.
+    set -l f
+    if test -r "$XDG_CONFIG_HOME/locale.conf"
+        set f $XDG_CONFIG_HOME/locale.conf
+    else if test -r ~/.config/locale.conf
+        set f ~/.config/locale.conf
+    else if test -r /etc/locale.conf
+        set f /etc/locale.conf
+    end
+    if set -q f[1]
+        while read -l kv
+            set kv (string split '=' -- $kv)
+            if not set -q $kv[1]
+                set -gx $kv
+            end
+        end < $f
+    end
+end
+
 # Path to your oh-my-fish.
 set -gx OMF_PATH "$HOME/.local/share/omf"
 

@@ -14,7 +14,7 @@ SYMBOLS=(
     "hjkl"
     "hjkl(caret)"
     "hjkl(fast-enter)"
-    "hjkl(fast-numpad)"
+    "hjkl(fast-numpad-shifted)"
     #"hjkl(fast-escape)"
 
 

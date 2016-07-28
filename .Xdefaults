@@ -8,6 +8,8 @@ URxvt.boldFont: xft:Monaco:style=Bold:pixelsize=12:antialias=false
 URxvt.italicFont:
 URxvt.boldItalicFont:
 
+URxvt.saveLines: 5000
+
 .color0:  #2E3436
 .color1:  #a40000
 .color2:  #4E9A06
