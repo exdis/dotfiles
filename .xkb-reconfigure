@@ -1,7 +1,7 @@
 #!/bin/bash
 
 KEYCODES="evdev+aliases(qwerty)"
-COMPAT="complete+hjkl+ledscroll(group_lock)"
+COMPAT="complete+hjkl"
 SYMBOLS=(
     "pc"
     "us"

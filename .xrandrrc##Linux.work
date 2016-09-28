@@ -1,2 +1,3 @@
 #!/bin/bash
-xrandr --auto --output VGA1 --right-of HDMI1
+xrandr --auto --output DP1-1 --right-of eDP1
+xrandr --output eDP1 --primary

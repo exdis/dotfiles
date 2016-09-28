@@ -32,6 +32,20 @@ mapkey('<Ctrl-l>', 'Go forward', function() {
     history.go(1);
 });
 
+unmap('<Ctrl-d>');
+mapkey('<Ctrl-d>', 'Scroll down half page', function () {
+    Normal.scroll('pageDown');
+});
+unmap('<Ctrl-l>');
+mapkey('<Ctrl-l>', 'Scroll up half page', function () {
+    Normal.scroll('pageUp');
+});
+
+unmap('x');
+mapkey('x', 'Close tab', function () {
+    RUNTIME('closeTab');
+});
+
 Hints.style("background: #000;");
 
 settings.theme = '\

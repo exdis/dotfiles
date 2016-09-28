@@ -148,6 +148,7 @@ bindsym $mod+r mode "resize"
 bar {
     font pango:Monaco, FontAwesome 9
     status_command i3blocks -c ~/.i3/i3blocks.conf
+    tray_output primary
 }
 
 bindsym $mod+Control+l exec xkb-switch -s us; exec i3lock -c 000000 -n

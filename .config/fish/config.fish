@@ -45,8 +45,8 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
-set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin $PATH
 set -gx GOPATH $HOME/dev/golang
+set -gx PATH /usr/bin/core_perl /usr/local/go/bin /usr/local/bin $GOPATH/bin $PATH
 
 function fish_mode_prompt --description "Displays the current mode"
   # Do nothing if not in vi mode

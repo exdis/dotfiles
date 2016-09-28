@@ -4,14 +4,29 @@ statusFile = "/var/log/lsyncd/lsyncd-status.log",
 statusInterval = 10
 }
 
-
 sync {default.rsync,
-source="/data/projects/n1-webapp/",
-target="root@ngs.ru.dk.d:/data/projects/n1-webapp/",
+source="/home/dev/MarketNode/",
+target="exdis@market.logrus01d.yandex.ru:/home/exdis/node.market_exdis",
 exclude={
-"node_modules"
 },
 delay=0,
+delete=false,
+rsync={
+compress=false,
+archive=false,
+inplace=true,
+verbose=true,
+rsh="/usr/bin/ssh -p 22 -StrictHostKeyChecking=no"
+}
+}
+
+sync {default.rsync,
+source="/home/dev/common/",
+target="exdis@market.logrus01d.yandex.ru:/home/exdis/node.market_exdis/client/common",
+exclude={
+},
+delay=0,
+delete=false,
 rsync={
 compress=true,
 archive=true,
@@ -19,13 +34,29 @@ verbose=true,
 rsh="/usr/bin/ssh -p 22 -StrictHostKeyChecking=no"
 }
 }
+
 sync {default.rsync,
-source="/data/projects/n1-webapp/node_modules/ngs/",
-target="root@ngs.ru.dk.d:/data/projects/n1-webapp/node_modules/ngs/",
+source="/home/dev/common/",
+target="exdis@market.logrus01d.yandex.ru:/home/exdis/x5.market_exdis/common.hid",
 exclude={
-"node_modules"
 },
 delay=0,
+delete=false,
+rsync={
+compress=true,
+archive=true,
+verbose=true,
+rsh="/usr/bin/ssh -p 22 -StrictHostKeyChecking=no"
+}
+}
+
+sync {default.rsync,
+source="/home/dev/market/",
+target="exdis@market.logrus01d.yandex.ru:/home/exdis/x5.market_exdis/",
+exclude={
+},
+delay=0,
+delete=false,
 rsync={
 compress=true,
 archive=true,
