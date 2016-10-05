@@ -23,3 +23,5 @@
     editor = vim
 [push]
     default = simple
+[github]
+	user = exdis
