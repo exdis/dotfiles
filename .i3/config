@@ -192,3 +192,9 @@ workspace 10 output eDP1
 
 assign [class="^Vivaldi-stable$" instance="^crx_mpognobbkildjkofajifpdfhcoklimli$"] 1
 assign [class="^Vivaldi-stable$" instance="^vivaldi-stable$"] 9
+
+gaps outer 2
+gaps inner 4
+smart_gaps on
+
+new_window 1pixel
