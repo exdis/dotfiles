@@ -149,6 +149,13 @@ bar {
     font pango:Monaco, FontAwesome 9
     status_command i3blocks -c ~/.i3/i3blocks.conf
     tray_output primary
+    colors {
+        focused_workspace  #3776be #3776be #ffffff
+        active_workspace   #333333 #5f676a #ffffff
+        inactive_workspace #333333 #222222 #888888
+        urgent_workspace   #2f343a #900000 #ffffff
+        binding_mode       #2f343a #900000 #ffffff
+    }
 }
 
 bindsym $mod+Control+l exec xkb-switch -s us; exec i3lock -c 000000 -n
@@ -197,4 +204,11 @@ gaps outer 2
 gaps inner 4
 smart_gaps on
 
-new_window 1pixel
+new_window pixel 2
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #3776be #3776be #ffffff #2e9ef4   #3776be
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
