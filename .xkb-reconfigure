@@ -42,7 +42,7 @@ setxkbmap \
     | xkbcomp -w 0 - $DISPLAY 2>&1  \
     | systemd-cat -t xkb
 
-xset r rate 300 60
+xset r rate 300 100
 xset -b
 
 sudo pkill shift-shift
