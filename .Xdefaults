@@ -39,7 +39,7 @@ URxvt.keysym.Control-s: perl:keyboard-select:search
 URxvt.keysym.Control-Shift-L: perl:url-select:select_next
 URxvt.url-select.autocopy: true
 URxvt.url-select.underline: true
-URxvt.url-select.launcher: /usr/bin/vivaldi-stable
+URxvt.url-select.launcher: /usr/bin/opera
 
 URxvt.clipboard.copycmd: xsel --input --clipboard
 URxvt.clipboard.parsecmd: xsel --output --clipboard
