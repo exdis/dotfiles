@@ -1,0 +1,43 @@
+{
+    "workbench.colorTheme": "Material Theme",
+    "workbench.fontAliasing": "antialiased",
+    "vim.disableAnnoyingNeovimMessage": true,
+    "vim.easymotion": true,
+    "vim.easymotionMarkerFontFamily": "Fira Code",
+    "vim.easymotionMarkerFontSize": "12",
+    "vim.easymotionMarkerHeight": 13,
+    "vim.otherModesKeyBindingsNonRecursive": [
+        {
+            "before": ["s"],
+            "after": ["leader", "leader", "s"]
+        },
+        {
+            "before": ["leader", "s"],
+            "after": [],
+            "command": "editor.action.startFindReplaceAction"
+        }
+    ],
+    "vim.hlsearch": true,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.editor.enablePreview": false,
+    "workbench.startupEditor": "none",
+    "editor.fontFamily": "Fira Code",
+    "editor.fontSize": 14,
+    "editor.lineHeight": 18,
+    "editor.rulers": [
+        80, 120
+    ],
+    "editor.fontLigatures": true,
+    "editor.lineNumbers": "relative",
+    "editor.tabCompletion": true,
+    "editor.snippetSuggestions": "top",
+    "editor.cursorBlinking": "smooth",
+    "keyboard.dispatch": "keyCode",
+    "gitlens.blame.file.lineHighlight.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "emmet.includeLanguages": {
+        "stylus": "css"
+    },
+    "window.zoomLevel": -1,
+    "clock.dateFormat": "HH:MM"
+}
