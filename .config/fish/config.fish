@@ -46,7 +46,7 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 source $OMF_PATH/init.fish
 
 set -gx GOPATH $HOME/dev/golang
-set -gx PATH /usr/bin/core_perl /usr/local/go/bin /usr/local/bin $GOPATH/bin $PATH
+set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin $PATH
 
 function fish_mode_prompt --description "Displays the current mode"
   # Do nothing if not in vi mode
@@ -96,3 +96,5 @@ complete -c dcd -x -a '( find $HOME/dev -maxdepth 1 -type d ! -name ".git" -prin
 alias ack ack-grep
 
 alias ssh='env TERM=xterm ssh'
+
+set -gx GINNY_USER_CONFIG_PATH $HOME/ginny.conf.js

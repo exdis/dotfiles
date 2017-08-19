@@ -16,8 +16,8 @@
 [color]
     ui = auto
 [user]
-    name = Denis Kolesnikov
-    email = exsdis@gmail.com
+	name = Denis Kolesnikov
+	email = exsdis@gmail.com
 [core]
     excludesfile = ~/.gitignore
     editor = vim
@@ -25,3 +25,11 @@
     default = simple
 [github]
     user = exdis
+[diff]
+	tool = code
+[difftool "code"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+[difftool]
+	prompt = false
+[mergetool]
+	prompt = false
