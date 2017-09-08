@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Material Theme",
+    "workbench.colorTheme": "Solarized Light",
     "workbench.fontAliasing": "antialiased",
     "vim.disableAnnoyingNeovimMessage": true,
     "vim.easymotion": true,
@@ -10,11 +10,6 @@
         {
             "before": ["s"],
             "after": ["leader", "leader", "s"]
-        },
-        {
-            "before": ["leader", "s"],
-            "after": [],
-            "command": "editor.action.startFindReplaceAction"
         }
     ],
     "vim.hlsearch": true,
@@ -39,5 +34,8 @@
         "stylus": "css"
     },
     "window.zoomLevel": -1,
-    "clock.dateFormat": "HH:MM"
+    "clock.dateFormat": "HH:MM",
+    "editor.renderIndentGuides": false,
+    "extensions.ignoreRecommendations": true,
+    "rust.mode": "legacy"
 }

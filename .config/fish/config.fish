@@ -57,7 +57,7 @@ end
 set fish_theme bobthefish
 set fish_key_bindings fish_user_key_bindings
 set theme_display_ruby no
-set theme_display_vi yes
+# set theme_color_scheme solarized-light
 
 function fuck -d 'Correct your previous console command'
     set -l exit_code $status

@@ -4,29 +4,29 @@ settings {
     statusInterval = 10
 }
 
--- test build
-sync {
-    default.rsync,
-    source="/Users/exdis/dev/marketbuild/",
-    target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.market_build",
-    exclude={"node_modules", ".git"},
-    delay=0,
-    delete=true,
-    rsync={
-        binary="/usr/local/bin/rsync",
-        compress=false,
-        archive=false,
-        inplace=true,
-        verbose=true,
-        rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
-    }
-}
+-- -- test build
+-- sync {
+--     default.rsync,
+--     source="/Users/exdis/dev/marketbuild/",
+--     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.market_build",
+--     exclude={"node_modules", ".git"},
+--     delay=0,
+--     delete=true,
+--     rsync={
+--         binary="/usr/local/bin/rsync",
+--         compress=false,
+--         archive=false,
+--         inplace=true,
+--         verbose=true,
+--         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
+--     }
+-- }
 
 sync {
     default.rsync,
     source="/Users/exdis/dev/MarketNode/",
     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.market_exdis",
-    exclude={".git", "vendor", "client/common"},
+    exclude={".git", "vendor", "client/common", "node_modules"},
     delay=0,
     delete=false,
     rsync={

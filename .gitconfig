@@ -31,5 +31,9 @@
     cmd = code --wait --diff $LOCAL $REMOTE
 [difftool]
 	prompt = false
+[merge]
+    tool = code
+[mergetool "code"]
+    cmd = code --wait $MERGED
 [mergetool]
 	prompt = false
