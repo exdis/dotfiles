@@ -37,5 +37,8 @@
     "clock.dateFormat": "HH:MM",
     "editor.renderIndentGuides": false,
     "extensions.ignoreRecommendations": true,
-    "rust.mode": "legacy"
+    "rust.mode": "legacy",
+    "javascript.validate.enable": false,
+    "files.eol": "\n",
+    "vsicons.dontShowNewVersionMessage": true
 }

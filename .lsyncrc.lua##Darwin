@@ -4,29 +4,11 @@ settings {
     statusInterval = 10
 }
 
--- -- test build
--- sync {
---     default.rsync,
---     source="/Users/exdis/dev/marketbuild/",
---     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.market_build",
---     exclude={"node_modules", ".git"},
---     delay=0,
---     delete=true,
---     rsync={
---         binary="/usr/local/bin/rsync",
---         compress=false,
---         archive=false,
---         inplace=true,
---         verbose=true,
---         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
---     }
--- }
-
 sync {
     default.rsync,
     source="/Users/exdis/dev/MarketNode/",
     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.market_exdis",
-    exclude={".git", "vendor", "client/common", "node_modules"},
+    exclude={".git", "vendor", "client/common", "/node_modules"},
     delay=0,
     delete=false,
     rsync={
@@ -72,57 +54,6 @@ sync {
         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
     }
 }
-
--- sync {
---     default.rsync,
---     source="/Users/exdis/dev/common/",
---     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.touch_exdis/common",
---     exclude={".git"},
---     delay=0,
---     delete=false,
---     rsync={
---         binary="/usr/local/bin/rsync",
---         compress=true,
---         archive=true,
---         inplace=true,
---         verbose=true,
---         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
---     }
--- }
-
--- sync {
---     default.rsync,
---     source="/Users/exdis/dev/common/",
---     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/x5.market_exdis/common.hid",
---     exclude={".git"},
---     delay=0,
---     delete=false,
---     rsync={
---         binary="/usr/local/bin/rsync",
---         compress=true,
---         archive=true,
---         inplace=true,
---         verbose=true,
---         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
---     }
--- }
-
--- sync {
---     default.rsync,
---     source="/Users/exdis/dev/market/",
---     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/x5.market_exdis/",
---     exclude={".git"},
---     delay=0,
---     delete=false,
---     rsync={
---         binary="/usr/local/bin/rsync",
---         compress=true,
---         archive=true,
---         inplace=true,
---         verbose=true,
---         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
---     }
--- }
 
 -- .git
 sync {
@@ -176,57 +107,6 @@ sync {
     }
 }
 
--- sync {
---     default.rsync,
---     source="/Users/exdis/dev/common/.git/",
---     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.touch_exdis/common/.git/",
---     exclude={},
---     delay=0,
---     delete=false,
---     rsync={
---         binary="/usr/local/bin/rsync",
---         compress=true,
---         archive=true,
---         inplace=false,
---         verbose=true,
---         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
---     }
--- }
-
--- sync {
---     default.rsync,
---     source="/Users/exdis/dev/common/.git",
---     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/x5.market_exdis/common.hid/.git/",
---     exclude={},
---     delay=0,
---     delete=true,
---     rsync={
---         binary="/usr/local/bin/rsync",
---         compress=true,
---         archive=true,
---         inplace=false,
---         verbose=true,
---         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
---     }
--- }
-
--- sync {
---     default.rsync,
---     source="/Users/exdis/dev/market/.git/",
---     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/x5.market_exdis/.git/",
---     exclude={},
---     delay=0,
---     delete=true,
---     rsync={
---         binary="/usr/local/bin/rsync",
---         compress=true,
---         archive=true,
---         inplace=false,
---         verbose=true,
---         rsh="sudo -u exdis /usr/bin/ssh -p 22 -o StrictHostKeyChecking=no"
---     }
--- }
-
 -- route-converter
 -- sync {
 --     default.rsync,
@@ -249,10 +129,10 @@ sync {
 -- sync {
 --     default.rsync,
 --     source="/Users/exdis/dev/duplo",
---     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.market_exdis/vendor/node_modules/duplo",
---     exclude={},
+--     target="exdis@market.logrus01ed.yandex.ru:/home/exdis/node.market_exdis/node_modules/@yandex-market/levitan-gui",
+--     exclude={"node_modules"},
 --     delay=0,
---     delete=false,
+--     delete=true,
 --     rsync={
 --         binary="/usr/local/bin/rsync",
 --         compress=true,
