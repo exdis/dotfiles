@@ -5,6 +5,8 @@
     co = checkout
     ph = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git push origin $branch; }; f"
     phf = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git push origin $branch -f; }; f"
+    pl = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git pull origin $branch; }; f"
+    plr = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git pull --rebase origin $branch; }; f"
     r = rebase
     ra = rebase --abort
     rc = rebase --continue
