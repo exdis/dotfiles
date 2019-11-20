@@ -25,5 +25,76 @@
 		"prefix": "db",
 		"body": ["debugger;"],
 		"description": "Debugger"
+	},
+	"import": {
+		"prefix": "im",
+		"body": [
+			"import $1 from '$2';"
+		],
+		"description": "ES6 module import"
+	},
+	"import destruct": {
+		"prefix": "imd",
+		"body": [
+			"import { $1 } from '$2';"
+		],
+		"description": "ES6 module import with destructuring"
+	},
+	"import @avito": {
+		"prefix": "ima",
+		"body": [
+			"import $1 from '@avito/$2';"
+		],
+		"description": "ES6 module import @avito namespace"
+	},
+	"describe": {
+		"prefix": "des",
+		"body": [
+			"describe('$1', () => {",
+			"    $0",
+			"});"
+		],
+		"description": "Describe block"
+	},
+	"test": {
+		"prefix": "test",
+		"body": [
+			"test('$1', ${2:async }() => {",
+			"    $0",
+			"});"
+		],
+		"description": "Test block"
+	},
+	"Laquo": {
+		"prefix": "laquo",
+		"body": ["«"]
+	},
+	"Raquo": {
+		"prefix": "raquo",
+		"body": ["»"]
+	},
+	"Appdev": {
+		"prefix": "appdev",
+		"body": [
+			"import React from 'react';",
+			"import ReactDOM from 'react-dom';",
+			"",
+			"const style = { height: '100vh', background: '#f3df49', display: 'flex', alignItems: 'center', justifyContent: 'center' };",
+			"",
+			"const renderApp = () => {",
+			"    const container = (",
+			"        <div style={style}>",
+			"            <h1>",
+			"                <div>Hello MoscowJS</div>",
+			"            </h1>",
+			"        </div>",
+			"    );",
+			"",
+			"    ReactDOM.render(container, document.getElementById('app'));",
+			"};",
+			"",
+			"renderApp();",
+			""
+		]
 	}
 }

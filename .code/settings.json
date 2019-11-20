@@ -1,15 +1,42 @@
 {
     "workbench.colorTheme": "Solarized Light",
     "workbench.fontAliasing": "antialiased",
-    "vim.disableAnnoyingNeovimMessage": true,
     "vim.easymotion": true,
     "vim.easymotionMarkerFontFamily": "Fira Code",
     "vim.easymotionMarkerFontSize": "12",
     "vim.easymotionMarkerHeight": 13,
-    "vim.otherModesKeyBindingsNonRecursive": [
+    "vim.normalModeKeyBindings": [
         {
             "before": ["s"],
             "after": ["leader", "leader", "s"]
+        },
+        {
+            "before": ["H"],
+            "after": [],
+            "commands": [
+                {
+                    "command": ":tabp",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": ["L"],
+            "after": [],
+            "commands": [
+                {
+                    "command": ":tabnext",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": ["<C-h>"],
+            "after": ["<C-w>", "h"]
+        },
+        {
+            "before": ["<C-l>"],
+            "after": ["<C-w>", "l"]
         }
     ],
     "vim.hlsearch": true,
@@ -40,5 +67,39 @@
     "rust.mode": "legacy",
     "javascript.validate.enable": false,
     "files.eol": "\n",
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+    "ActiveFileInStatusBar.fullpath": false,
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true,
+        "suppressUpdateNotice": false,
+        "suppressWelcomeNotice": true
+    },
+    "workbench.editor.showTabs": true,
+    "files.associations": {
+        "*.html": "twig"
+    },
+    "elm.userProjectIntellisense": false,
+    "vim.useSystemClipboard": true,
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "gitlens.keymap": "none",
+    "editor.tabSize": 4,
+    "gitlens.historyExplorer.enabled": true,
+    "materialTheme.fixIconsRunning": false,
+    // "arduino.commandPath": "/Users/dekolesnikov/dev/arduino/arduino.sh"
+    "[elm]": {
+        "editor.formatOnSave": true
+    },
+    "breadcrumbs.enabled": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "terminal.integrated.rendererType": "dom"
 }

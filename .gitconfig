@@ -7,6 +7,7 @@
     phf = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git push origin $branch -f; }; f"
     pl = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git pull origin $branch; }; f"
     plr = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git pull --rebase origin $branch; }; f"
+    pdb = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git push origin :$branch; }; f"
     r = rebase
     ra = rebase --abort
     rc = rebase --continue
@@ -39,3 +40,8 @@
     cmd = code --wait $MERGED
 [mergetool]
 	prompt = false
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

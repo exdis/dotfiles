@@ -46,7 +46,7 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 source $OMF_PATH/init.fish
 
 set -gx GOPATH $HOME/dev/golang
-set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin $PATH
+set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin /usr/local/sbin $HOME/.cargo/bin $PATH
 
 function fish_mode_prompt --description "Displays the current mode"
   # Do nothing if not in vi mode
@@ -57,7 +57,7 @@ end
 set fish_theme bobthefish
 set fish_key_bindings fish_user_key_bindings
 set theme_display_ruby no
-# set theme_color_scheme solarized-light
+set theme_color_scheme gruvbox
 
 function fuck -d 'Correct your previous console command'
     set -l exit_code $status
@@ -96,5 +96,6 @@ complete -c dcd -x -a '( find $HOME/dev -maxdepth 1 -type d ! -name ".git" -prin
 alias ack ack-grep
 
 alias ssh='env TERM=xterm ssh'
+alias gclean='git rm .gitattributes; git add -A; git reset --hard'
 
 set -gx GINNY_USER_CONFIG_PATH $HOME/ginny.conf.js
