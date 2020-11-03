@@ -46,7 +46,12 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 source $OMF_PATH/init.fish
 
 set -gx GOPATH $HOME/dev/golang
-set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin /usr/local/sbin $HOME/.cargo/bin $PATH
+set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin /usr/local/sbin $HOME/.cargo/bin $HOME/dev/flutter/bin $HOME/.pub-cache/bin $PATH
+
+# Dart
+set -gx DART_SDK_PATH /usr/local/opt/dart/libexec
+set -gx OVERRIDE_WRIKE_DART_DEPS_BRANCH true
+set -gx PUB_HOSTED_URL "http://pub-dev.wrke.in"
 
 function fish_mode_prompt --description "Displays the current mode"
   # Do nothing if not in vi mode
@@ -54,10 +59,12 @@ function fish_mode_prompt --description "Displays the current mode"
   end
 end
 # Theme
+set fish_key_bindings fish_vi_key_bindings
 set fish_theme bobthefish
-set fish_key_bindings fish_user_key_bindings
 set theme_display_ruby no
 set theme_color_scheme gruvbox
+set theme_display_vi yes
+set theme_display_git_master_branch yes
 
 function fuck -d 'Correct your previous console command'
     set -l exit_code $status
@@ -71,31 +78,4 @@ function fuck -d 'Correct your previous console command'
     end
 end
 
-function fastcd
-    set -l directory $argv[1]
-    set -l maxdepth $argv[2]
-    set -l target $argv[3]
-
-    set -l chosen (find $directory -maxdepth $maxdepth -name $target \( -type d -or -type l \) -print -quit)
-
-    if test -n chosen
-        cd $chosen
-    else
-        cd $directory
-    end
-end
-
-alias gocd 'fastcd $GOPATH 3'
-
-complete -c gocd -x -a '( find $GOPATH -maxdepth 1 -type d ! -name ".git" -printf "%f\n" )'
-
-alias dcd 'fastcd $HOME/dev 3'
-
-complete -c dcd -x -a '( find $HOME/dev -maxdepth 1 -type d ! -name ".git" -printf "%f\n" )'
-
-alias ack ack-grep
-
 alias ssh='env TERM=xterm ssh'
-alias gclean='git rm .gitattributes; git add -A; git reset --hard'
-
-set -gx GINNY_USER_CONFIG_PATH $HOME/ginny.conf.js

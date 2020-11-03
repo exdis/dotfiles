@@ -1,5 +1,4 @@
 {
-    "workbench.colorTheme": "Solarized Light",
     "workbench.fontAliasing": "antialiased",
     "vim.easymotion": true,
     "vim.easymotionMarkerFontFamily": "Fira Code",
@@ -51,7 +50,6 @@
     ],
     "editor.fontLigatures": true,
     "editor.lineNumbers": "relative",
-    "editor.tabCompletion": true,
     "editor.snippetSuggestions": "top",
     "editor.cursorBlinking": "smooth",
     "keyboard.dispatch": "keyCode",
@@ -82,9 +80,6 @@
         "suppressWelcomeNotice": true
     },
     "workbench.editor.showTabs": true,
-    "files.associations": {
-        "*.html": "twig"
-    },
     "elm.userProjectIntellisense": false,
     "vim.useSystemClipboard": true,
     "C_Cpp.intelliSenseEngineFallback": "Disabled",
@@ -101,5 +96,22 @@
     "javascript.updateImportsOnFileMove.enabled": "always",
     "gitlens.views.fileHistory.enabled": true,
     "gitlens.views.lineHistory.enabled": true,
-    "terminal.integrated.rendererType": "dom"
+    "terminal.integrated.rendererType": "dom",
+    "emmet.triggerExpansionOnTab": true,
+    "dart.checkForSdkUpdates": false,
+    "workbench.colorTheme": "Gruvbox Dark Soft",
+    "tabnine.experimentalAutoImports": true,
+    "editor.acceptSuggestionOnEnter": "off",
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [
+            80
+        ],
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false
+    }
 }
