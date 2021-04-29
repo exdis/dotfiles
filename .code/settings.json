@@ -99,7 +99,7 @@
     "terminal.integrated.rendererType": "dom",
     "emmet.triggerExpansionOnTab": true,
     "dart.checkForSdkUpdates": false,
-    "workbench.colorTheme": "Ultimate White",
+    "workbench.colorTheme": "Gruvbox Material Dark",
     "tabnine.experimentalAutoImports": true,
     "editor.acceptSuggestionOnEnter": "off",
     "[dart]": {

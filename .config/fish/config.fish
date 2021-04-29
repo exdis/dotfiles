@@ -56,11 +56,6 @@ set -gx DART_SDK_PATH /usr/local/opt/dart/libexec
 set -gx OVERRIDE_WRIKE_DART_DEPS_BRANCH true
 set -gx PUB_HOSTED_URL "http://pub-dev.wrke.in"
 
-function fish_mode_prompt --description "Displays the current mode"
-  # Do nothing if not in vi mode
-  if set -q __fish_vi_mode
-  end
-end
 # Theme
 set fish_key_bindings fish_vi_key_bindings
 set fish_theme bobthefish
