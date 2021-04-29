@@ -22,7 +22,7 @@
 	name = Denis Kolesnikov
 	email = exsdis@gmail.com
 [core]
-    excludesfile = ~/.gitignore
+	excludesFile = ~/.gitignore
     editor = vim
 [push]
     default = simple

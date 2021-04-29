@@ -1,6 +1,6 @@
 const apps = [
     'Telegram',
-    'Firefox Developer Edition',
+    'Safari',
     'iTerm',
     'Visual Studio Code',
     'Canary Mail',
