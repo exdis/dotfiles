@@ -49,7 +49,7 @@ set -gx GOPATH $HOME/dev/golang
 set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin /usr/local/sbin $HOME/.cargo/bin $HOME/dev/flutter/bin $HOME/.pub-cache/bin /usr/local/opt/node@14/bin $PATH
 
 # Java
-set -gx JAVA_HOME (/usr/libexec/java_home -v "1.8")
+# set -gx JAVA_HOME (/usr/libexec/java_home -v "1.8")
 
 # Dart
 set -gx DART_SDK_PATH /usr/local/opt/dart/libexec
@@ -77,3 +77,7 @@ function fuck -d 'Correct your previous console command'
 end
 
 alias ssh='env TERM=xterm ssh'
+
+status --is-interactive; and source (rbenv init -|psub)
+
+source $HOME/dev/connect-stack/stack.fish
