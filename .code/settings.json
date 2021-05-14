@@ -113,5 +113,20 @@
         "editor.suggestSelection": "first",
         "editor.tabCompletion": "onlySnippets",
         "editor.wordBasedSuggestions": false
+    },
+    "eslint.workingDirectories": [
+        {"mode": "auto"}
+    ],
+    "editor.formatOnSave": true,
+    "prettier.requireConfig": true,
+    "prettier.useEditorConfig": false,
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }
