@@ -58,7 +58,6 @@
     "emmet.includeLanguages": {
         "stylus": "css"
     },
-    "window.zoomLevel": -1,
     "clock.dateFormat": "HH:MM",
     "editor.renderIndentGuides": false,
     "extensions.ignoreRecommendations": true,
@@ -128,5 +127,6 @@
     },
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "window.zoomLevel": -1
 }
