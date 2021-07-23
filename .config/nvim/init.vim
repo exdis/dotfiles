@@ -111,6 +111,7 @@ nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 nnoremap <silent> <C-f> :NERDTreeFind<CR>
 let g:NERDTreeMapOpenVSplit = '<C-v>'
 let g:NERDTreeMapOpenSplit = '<C-h>'
+let g:NERDTreeShowHidden = 1
 set guifont=DroidSansMono_Nerd_Font:h11
 
 " Tab navigation
@@ -150,3 +151,5 @@ let g:argwrap_padded_braces = '{'
 " Tmux background
 autocmd VimEnter * highlight Normal ctermfg=223 ctermbg=none guifg=#ebdbb2 guibg=#282828 guibg=none
 
+" Search
+nnoremap <silent> <CR> :noh<CR>
