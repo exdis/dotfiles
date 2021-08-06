@@ -45,6 +45,9 @@ Plug 'FooSoft/vim-argwrap'
 " Autoclose
 Plug 'Raimondi/delimitMate'
 
+" Snippets
+Plug 'sirver/UltiSnips'
+
 call plug#end()
 
 " Clipboard
@@ -153,3 +156,6 @@ autocmd VimEnter * highlight Normal ctermfg=223 ctermbg=none guifg=#ebdbb2 guibg
 
 " Search
 nnoremap <silent> <CR> :noh<CR>
+
+" Snippets
+let g:UltiSnipsExpandTrigger="<tab>"
