@@ -1,0 +1,7 @@
+{
+  "diagnostic.errorSign": "❌",
+  "diagnostic.warningSign": "⚠️'",
+  "diagnostic.infoSign": "ℹ️",
+  "diagnostic.hintSign": "⚡",
+  "solargraph.diagnostics": true
+}
