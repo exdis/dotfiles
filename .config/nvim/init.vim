@@ -29,6 +29,11 @@ Plug 'prettier/vim-prettier', {
 " NERDTree
 Plug 'preservim/nerdtree' |
   \ Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'jistr/vim-nerdtree-tabs'
+
+" DevIcons
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Surround Vim
 Plug 'tpope/vim-surround'
@@ -66,6 +71,10 @@ set rnu
 
 " Rulers
 set colorcolumn=80,100
+
+" Show special chars
+set list
+set listchars=tab:→\ ,trail:·,extends:⋯,precedes:⋯,nbsp:~
 
 " Nowrap
 set nowrap
@@ -122,12 +131,11 @@ let g:prettier#autoformat_config_present = 1
 " NERDTree
 set splitright
 set splitbelow
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
-nnoremap <silent> <C-f> :NERDTreeFind<CR>
+nnoremap <silent> <C-n> :NERDTreeTabsToggle<CR>
+nnoremap <silent> <C-f> :NERDTreeTabsFind<CR>
 let g:NERDTreeMapOpenVSplit = '<C-v>'
 let g:NERDTreeMapOpenSplit = '<C-h>'
 let g:NERDTreeShowHidden = 1
-set guifont=DroidSansMono_Nerd_Font:h11
 
 " Tab navigation
 nmap <silent> <S-h> :tabprevious<CR>
@@ -162,6 +170,9 @@ nnoremap <silent> <C-m> :call ToggleLC()<CR>
 " Argwrap
 nnoremap <silent> <leader>a :ArgWrap<CR>
 let g:argwrap_padded_braces = '{'
+
+" Easymotion
+nmap s <Plug>(easymotion-overwin-f)
 
 " Tmux background
 autocmd VimEnter * highlight Normal ctermfg=223 ctermbg=none guifg=#ebdbb2 guibg=#282828 guibg=none

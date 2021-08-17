@@ -10,6 +10,7 @@
     pdb = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git push origin :$branch; }; f"
     r = rebase
     ra = rebase --abort
+    ma = merge --abort
     rc = rebase --continue
     pr = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git pull --rebase origin $branch; }; f"
     tree = forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse --all --no-rebase
@@ -28,18 +29,6 @@
     default = simple
 [github]
     user = exdis
-[diff]
-	tool = code
-[difftool "code"]
-    cmd = code --wait --diff $LOCAL $REMOTE
-[difftool]
-	prompt = false
-[merge]
-    tool = code
-[mergetool "code"]
-    cmd = code --wait $MERGED
-[mergetool]
-	prompt = false
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
@@ -49,3 +38,13 @@
 	rebase = false
 [init]
 	defaultBranch = main
+[merge]
+  tool = vimdiff
+[mergetool]
+  prompt = true
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $MERGED $REMOTE
+[difftool]
+  prompt = false
+[diff]
+  tool = vimdiff
