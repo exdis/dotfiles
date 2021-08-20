@@ -59,7 +59,9 @@ require("bufferline").setup {
   },
   options = {
     offsets = {{filetype = "NvimTree", text = "File Explorer", text_align = "left"}},
-    show_tab_indicators = true
+    show_tab_indicators = false,
+    show_close_icon = false,
+    show_buffer_close_icons = false
   }
 }
 EOF
@@ -193,6 +195,7 @@ nmap s <Plug>(easymotion-overwin-f)
 
 " Tmux background
 autocmd VimEnter * highlight Normal ctermfg=223 ctermbg=none guifg=#ebdbb2 guibg=#282828 guibg=none
+autocmd VimEnter * highlight VertSplit ctermfg=241 ctermbg=none guifg=#665c54 guibg=#282828 guibg=none
 
 " Search
 nnoremap <silent> <CR> :noh<CR>
