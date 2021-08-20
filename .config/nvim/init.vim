@@ -26,14 +26,12 @@ Plug 'prettier/vim-prettier', {
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html']
   \ }
 
-" NERDTree
-Plug 'preservim/nerdtree' |
-  \ Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'jistr/vim-nerdtree-tabs'
+" FileExplorer
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
 
-" DevIcons
-Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" TabLine
+Plug 'akinsho/nvim-bufferline.lua'
 
 " Surround Vim
 Plug 'tpope/vim-surround'
@@ -52,6 +50,24 @@ Plug 'Raimondi/delimitMate'
 
 call plug#end()
 
+lua << EOF
+require("icons")
+require("nvimtree")
+require("bufferline").setup {
+  highlights ={
+    fill = { guibg = 'bg0' }
+  },
+  options = {
+    offsets = {{filetype = "NvimTree", text = "File Explorer", text_align = "left"}},
+    show_tab_indicators = true
+  }
+}
+EOF
+
+" Splits
+set splitright
+set splitbelow
+
 " Clipboard
 set clipboard=unnamedplus
 
@@ -64,7 +80,7 @@ set shell=/usr/local/bin/fish
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-autocmd vimenter * ++nested colorscheme gruvbox
+colorscheme gruvbox
 
 " Relative line numbers
 set rnu
@@ -128,14 +144,15 @@ let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat_require_pragma = 0
 let g:prettier#autoformat_config_present = 1
 
-" NERDTree
-set splitright
-set splitbelow
-nnoremap <silent> <C-n> :NERDTreeTabsToggle<CR>
-nnoremap <silent> <C-f> :NERDTreeTabsFind<CR>
-let g:NERDTreeMapOpenVSplit = '<C-v>'
-let g:NERDTreeMapOpenSplit = '<C-h>'
-let g:NERDTreeShowHidden = 1
+" FileExplorer
+nnoremap <silent> <C-n> :NvimTreeToggle<CR>
+nnoremap <silent> <C-f> :NvimTreeFindFile<CR>
+highlight NvimTreeFolderIcon guifg=orange
+highlight NvimTreeFolderName guifg=fg0
+highlight NvimTreeGitDirty guifg=red
+highlight NvimTreeOpenedFolderName guifg=fg0
+highlight NvimTreeEmptyFolderName guifg=fg0
+highlight NvimTreeIndentMarker guifg=orange
 
 " Tab navigation
 nmap <silent> <S-h> :tabprevious<CR>
