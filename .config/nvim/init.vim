@@ -58,10 +58,14 @@ require("bufferline").setup {
     fill = { guibg = 'bg0' }
   },
   options = {
+    numbers = "buffer_id",
+    left_trunc_marker = "",
+    right_trunc_marker = "",
     offsets = {{filetype = "NvimTree", text = "File Explorer", text_align = "left"}},
     show_tab_indicators = false,
     show_close_icon = false,
-    show_buffer_close_icons = false
+    show_buffer_close_icons = false,
+    separator_style = "thin"
   }
 }
 EOF
@@ -157,11 +161,12 @@ highlight NvimTreeEmptyFolderName guifg=fg0
 highlight NvimTreeIndentMarker guifg=orange
 
 " Tab navigation
-nmap <silent> <S-h> :tabprevious<CR>
-nmap <silent> <S-l> :tabnext<CR>
-nmap <silent> <S-j> :tabmove -1<CR>
-nmap <silent> <S-k> :tabmove +1<CR>
+nmap <silent> <S-h> :BufferLineCyclePrev<CR>
+nmap <silent> <S-l> :BufferLineCycleNext<CR>
+nmap <silent> <S-j> :BufferLineMovePrev<CR>
+nmap <silent> <S-k> :BufferLineMoveNext<CR>
 nmap <silent> <C-t> :tabnew<CR>
+nnoremap <silent> gb :BufferLinePick<CR>
 
 " Split navigation
 nmap <leader>w <C-w>w
