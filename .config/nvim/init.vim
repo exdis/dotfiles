@@ -14,8 +14,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " FuzzyFinder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -101,33 +101,10 @@ set listchars=tab:→\ ,trail:·,extends:⋯,precedes:⋯,nbsp:~
 " Nowrap
 set nowrap
 
-" Fzf settings
-function! RipgrepFzf(...)
-  let dir = '.'
-  let query = ''
-  if a:0 >= 1
-    let dir = a:1
-  endif
-  if a:0 >= 2
-    let query = a:2
-  endif
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s %s || true'
-  let initial_command = printf(command_fmt, shellescape(query), shellescape(dir))
-  let reload_command = printf(command_fmt, '{q}', dir)
-  let spec = {'options': ['--phony', '--query', query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), 0)
-endfunction
-
-command! -nargs=* -bang RG call RipgrepFzf(<f-args>)
-
-nnoremap <C-p> :GFiles<CR>
-nnoremap <C-r> :RG<CR>
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>h :History<CR>
-let g:fzf_action = {
-  \ 'return': 'tab split', 
-  \ 'ctrl-h': 'split',
-  \ 'ctrl-v': 'vsplit' }
+" FileFinder
+nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <C-r> <cmd>Telescope live_grep<cr>
+nnoremap <C-b> <cmd>Telescope buffers<cr>
 
 " Autocomplete
 " inoremap <expr> <TAB> pumvisible() ? "<C-y>" : "<TAB>"
