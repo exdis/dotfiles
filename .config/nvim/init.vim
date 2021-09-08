@@ -48,6 +48,9 @@ Plug 'FooSoft/vim-argwrap'
 " Autoclose
 Plug 'Raimondi/delimitMate'
 
+" IndentLine
+Plug 'Yggdroot/indentLine'
+
 call plug#end()
 
 lua << EOF
@@ -59,6 +62,7 @@ require("bufferline").setup {
   },
   options = {
     numbers = "buffer_id",
+    number_style = "",
     left_trunc_marker = "",
     right_trunc_marker = "",
     offsets = {{filetype = "NvimTree", text = "File Explorer", text_align = "left"}},
@@ -100,6 +104,9 @@ set listchars=tab:→\ ,trail:·,extends:⋯,precedes:⋯,nbsp:~
 
 " Nowrap
 set nowrap
+
+" IndentLine
+let g:indentLine_char_list = ['┊']
 
 " FileFinder
 nnoremap <C-p> <cmd>Telescope find_files<cr>
