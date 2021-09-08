@@ -51,6 +51,10 @@ Plug 'Raimondi/delimitMate'
 " IndentLine
 Plug 'Yggdroot/indentLine'
 
+" Find/replace
+Plug 'nvim-lua/plenary.nvim'
+Plug 'windwp/nvim-spectre'
+
 call plug#end()
 
 lua << EOF
@@ -104,6 +108,9 @@ set listchars=tab:→\ ,trail:·,extends:⋯,precedes:⋯,nbsp:~
 
 " Nowrap
 set nowrap
+
+" Nofold
+set nofoldenable
 
 " IndentLine
 let g:indentLine_char_list = ['┊']
@@ -188,6 +195,11 @@ autocmd VimEnter * highlight VertSplit ctermfg=241 ctermbg=none guifg=#665c54 gu
 
 " Search
 nnoremap <silent> <CR> :noh<CR>
+
+" Find/replace
+nnoremap <leader>S :lua require('spectre').open()<CR>
+nnoremap <leader>sw :lua require('spectre').open_visual({select_word=true})<CR>
+nnoremap <leader>s viw:lua require('spectre').open_file_search()<cr>
 
 " CoC
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
