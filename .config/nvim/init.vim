@@ -3,9 +3,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Theme
 Plug 'morhetz/gruvbox'
 
-" Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Lualine
+Plug 'hoob3rt/lualine.nvim'
 
 " Language support
 Plug 'sheerun/vim-polyglot'
@@ -80,6 +79,20 @@ require("bufferline").setup {
   }
 }
 require('neoscroll').setup()
+require('lualine').setup {
+  options = {
+    theme = 'gruvbox'
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {{'g:coc_status', left_padding = 0}, {'diagnostics', sources = {'coc'}}},
+    lualine_c = {{'filename', path=1}},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  extensions = {'quickfix', 'nvim-tree'}
+}
 EOF
 
 " Splits
@@ -88,10 +101,7 @@ set splitbelow
 
 " Clipboard
 set clipboard=unnamedplus
-
-" Airline
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#coc#enabled = 1
+nnoremap <silent> yy :let @* = expand("%")<CR>
 
 " Fish as default shell
 set shell=/usr/local/bin/fish
