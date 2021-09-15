@@ -55,6 +55,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'windwp/nvim-spectre'
 
+" Smooth scroll
+Plug 'karb94/neoscroll.nvim'
+
 call plug#end()
 
 lua << EOF
@@ -76,6 +79,7 @@ require("bufferline").setup {
     separator_style = "thin"
   }
 }
+require('neoscroll').setup()
 EOF
 
 " Splits
