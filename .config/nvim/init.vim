@@ -1,5 +1,8 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Dashboard
+Plug 'glepnir/dashboard-nvim'
+
 " Theme
 Plug 'morhetz/gruvbox'
 
@@ -95,6 +98,17 @@ require('lualine').setup {
 }
 EOF
 
+" Dashboard
+let g:dashboard_default_executive = 'telescope'
+let g:dashboard_custom_header = [
+\ ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+\ ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+\ ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+\ ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+\ ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+\ ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+\]
+
 " Splits
 set splitright
 set splitbelow
@@ -128,6 +142,7 @@ set nofoldenable
 
 " IndentLine
 let g:indentLine_char_list = ['┊']
+let g:indentLine_fileTypeExclude = ['dashboard']
 
 " FileFinder
 nnoremap <C-p> <cmd>Telescope find_files<cr>
