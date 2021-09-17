@@ -72,6 +72,7 @@ require("bufferline").setup {
     tab = { guibg = 'none' },
     tab_selected = { guibg = 'none' },
     buffer_selected = { guibg = 'none' },
+    buffer_visible = { guibg = 'none' },
     separator = { guibg = 'none' },
     separator_visible = { guibg = 'none' },
     indicator_selected = { guifg = 'orange', guibg = 'none' },
