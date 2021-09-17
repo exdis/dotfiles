@@ -67,7 +67,14 @@ require("icons")
 require("nvimtree")
 require("bufferline").setup {
   highlights ={
-    fill = { guibg = 'bg0' }
+    fill = { guibg = 'none' },
+    background = { guibg = 'none' },
+    tab = { guibg = 'none' },
+    tab_selected = { guibg = 'none' },
+    buffer_selected = { guibg = 'none' },
+    separator = { guibg = 'none' },
+    separator_visible = { guibg = 'none' },
+    indicator_selected = { guifg = 'orange', guibg = 'none' },
   },
   options = {
     numbers = "buffer_id",
@@ -75,10 +82,10 @@ require("bufferline").setup {
     left_trunc_marker = "",
     right_trunc_marker = "",
     offsets = {{filetype = "NvimTree", text = "File Explorer", text_align = "left"}},
-    show_tab_indicators = false,
+    show_tab_indicators = true,
     show_close_icon = false,
     show_buffer_close_icons = false,
-    separator_style = "thin"
+    separator_style = { '', '' }
   }
 }
 require('neoscroll').setup()
