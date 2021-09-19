@@ -83,3 +83,5 @@ status --is-interactive; and source (rbenv init -|psub)
 source $HOME/dev/connect-stack/stack.fish
 
 alias vim nvim
+
+set -g TERM "xterm-256color"
