@@ -1,7 +1,7 @@
 const apps = [
     'Telegram',
     'Brave Browser',
-    'iTerm',
+    'WezTerm',
     'Visual Studio Code',
     'Canary Mail',
     null,

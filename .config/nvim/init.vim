@@ -71,7 +71,7 @@ require("bufferline").setup {
     background = { guibg = 'none' },
     tab = { guibg = 'none' },
     tab_selected = { guibg = 'none' },
-    buffer_selected = { guibg = 'none' },
+    buffer_selected = { guibg = 'none', gui = 'bold' },
     buffer_visible = { guibg = 'none' },
     separator = { guibg = 'none' },
     separator_visible = { guibg = 'none' },
