@@ -25,7 +25,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Prettier
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html']
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'html']
   \ }
 
 " FileExplorer
@@ -59,6 +59,12 @@ Plug 'windwp/nvim-spectre'
 
 " Smooth scroll
 Plug 'karb94/neoscroll.nvim'
+
+" Editorconfig
+Plug 'editorconfig/editorconfig-vim'
+
+" TagBar
+Plug 'preservim/tagbar'
 
 call plug#end()
 
@@ -237,6 +243,9 @@ nnoremap <silent> <CR> :noh<CR>
 nnoremap <leader>S :lua require('spectre').open()<CR>
 nnoremap <leader>sw :lua require('spectre').open_visual({select_word=true})<CR>
 nnoremap <leader>s viw:lua require('spectre').open_file_search()<cr>
+
+" TagBar
+nmap <silent> <leader>t :TagbarToggle<CR>
 
 " CoC
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
