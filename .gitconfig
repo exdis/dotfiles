@@ -17,6 +17,7 @@
     unstage = reset HEAD --
     sync = "!f() { branch=`git rev-parse --abbrev-ref HEAD`; git pull --rebase origin $branch; git co master; git pull; git co $branch; git rebase master; }; f"
     d = "!f() { [ \"$GIT_PREFIX\" != \"\" ] && cd "$GIT_PREFIX"; git diff --color $@ | diff-so-fancy | less --tabs=4 -RFX; }; f"
+    mt = mergetool
 [color]
     ui = auto
 [user]
