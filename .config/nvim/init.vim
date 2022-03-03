@@ -70,7 +70,7 @@ call plug#end()
 
 lua << EOF
 require("icons")
-require("nvimtree")
+require("nvim-tree").setup()
 require("bufferline").setup {
   highlights ={
     fill = { guibg = 'none' },
@@ -84,8 +84,9 @@ require("bufferline").setup {
     indicator_selected = { guifg = 'orange', guibg = 'none' },
   },
   options = {
-    numbers = "buffer_id",
-    number_style = "",
+    numbers = function(opts)
+      return string.format('%s', opts.id)
+    end,
     left_trunc_marker = "",
     right_trunc_marker = "",
     offsets = {{filetype = "NvimTree", text = "File Explorer", text_align = "left"}},
@@ -137,6 +138,8 @@ set shell=/usr/local/bin/fish
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 colorscheme gruvbox
+
+set termguicolors
 
 " Relative line numbers
 set rnu
