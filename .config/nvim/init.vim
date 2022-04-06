@@ -23,10 +23,10 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Prettier
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'html']
-  \ }
+" Plug 'prettier/vim-prettier', {
+"   \ 'do': 'yarn install',
+"   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'html']
+"   \ }
 
 " FileExplorer
 Plug 'kyazdani42/nvim-web-devicons'
@@ -156,6 +156,9 @@ set nowrap
 
 " Nofold
 set nofoldenable
+
+" Yank
+nnoremap Y Y
 
 " IndentLine
 let g:indentLine_char_list = ['┊']
