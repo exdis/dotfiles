@@ -86,7 +86,4 @@ alias vim nvim
 
 set -g TERM "xterm-256color"
 
-set -g DOCKER_BUILDKIT 1
-eval (minikube docker-env)
-
 set -gx KUBECONFIG $HOME/.kube/config:$HOME/.kube/medallia-kubeconfig
