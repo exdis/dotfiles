@@ -64,16 +64,14 @@ set theme_color_scheme gruvbox
 set theme_display_vi yes
 set theme_display_git_master_branch yes
 
-function fuck -d 'Correct your previous console command'
-    set -l exit_code $status
-    set -l eval_script (mktemp 2>/dev/null ; or mktemp -t 'thefuck')
-    set -l fucked_up_commandd $history[1]
-    thefuck $fucked_up_commandd > $eval_script
-    . $eval_script
-    rm $eval_script
-    if test $exit_code -ne 0
-        history --delete $fucked_up_commandd
-    end
+function fuck -d "Correct your previous console command"
+  set -l fucked_up_command $history[1]
+  env TF_SHELL=fish TF_ALIAS=fuck PYTHONIOENCODING=utf-8 thefuck $fucked_up_command THEFUCK_ARGUMENT_PLACEHOLDER $argv | read -l unfucked_command
+  if [ "$unfucked_command" != "" ]
+    eval $unfucked_command
+    builtin history delete --exact --case-sensitive -- $fucked_up_command
+    builtin history merge
+  end
 end
 
 alias ssh='env TERM=xterm ssh'
