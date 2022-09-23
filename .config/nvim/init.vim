@@ -88,15 +88,18 @@ require("icons")
 require("nvim-tree").setup()
 require("bufferline").setup {
   highlights ={
-    fill = { guibg = 'none' },
-    background = { guibg = 'none' },
-    tab = { guibg = 'none' },
-    tab_selected = { guibg = 'none' },
-    buffer_selected = { guibg = 'none', gui = 'bold' },
-    buffer_visible = { guibg = 'none' },
-    separator = { guibg = 'none' },
-    separator_visible = { guibg = 'none' },
-    indicator_selected = { guifg = 'orange', guibg = 'none' },
+    fill = { bg = 'none' },
+    background = { bg = 'none' },
+    tab = { bg = 'none' },
+    tab_selected = { bg = 'none' },
+    buffer_selected = { bg = 'none', bold = true, italic = false },
+    numbers_selected = { bg = 'none', bold = true, italic = false },
+    numbers = { bg = 'none' },
+    numbers_visible = { bg = 'none' },
+    buffer_visible = { bg = 'none' },
+    separator = { bg = 'none' },
+    separator_visible = { bg = 'none' },
+    indicator_selected = { fg = 'orange', bg = 'none' },
   },
   options = {
     numbers = function(opts)
