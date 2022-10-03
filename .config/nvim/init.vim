@@ -1,8 +1,5 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Dashboard
-Plug 'glepnir/dashboard-nvim'
-
 " Theme
 Plug 'morhetz/gruvbox'
 
@@ -229,17 +226,6 @@ require('trouble').setup {}
 require('hop').setup { keys = 'etovxqpdygfblzhckisuran' }
 vim.api.nvim_set_keymap('', 's', "<cmd>lua require'hop'.hint_char1({})<cr>", {})
 EOF
-
-" Dashboard
-let g:dashboard_default_executive = 'telescope'
-let g:dashboard_custom_header = [
-\ ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
-\ ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
-\ ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
-\ ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
-\ ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
-\ ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
-\]
 
 " Splits
 set splitright
