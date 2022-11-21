@@ -76,6 +76,12 @@ Plug 'sbdchd/neoformat'
 " LSP progress
 Plug 'arkav/lualine-lsp-progress'
 
+" Scrollbar
+Plug 'petertriho/nvim-scrollbar'
+
+" Git signs
+Plug 'lewis6991/gitsigns.nvim'
+
 call plug#end()
 
 set signcolumn=yes
@@ -225,6 +231,22 @@ require('trouble').setup {}
 -- Hop (EasyMotion)
 require('hop').setup { keys = 'etovxqpdygfblzhckisuran' }
 vim.api.nvim_set_keymap('', 's', "<cmd>lua require'hop'.hint_char1({})<cr>", {})
+
+-- Scrollbar
+require('scrollbar').setup({
+  marks = {
+    GitAdd = { color = 'LightGreen' },
+    GitChange = { color = 'LightBlue' },
+    GitDelete = { color = 'Orange' }
+  },
+  handlers = {
+    gitsigns = true
+  }
+})
+
+-- Git signs
+require('gitsigns').setup()
+require('scrollbar.handlers.gitsigns').setup()
 EOF
 
 " Splits
