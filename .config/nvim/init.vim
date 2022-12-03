@@ -291,6 +291,8 @@ set laststatus=3
 " IndentLine
 let g:indentLine_char_list = ['┊']
 let g:indentLine_fileTypeExclude = ['dashboard']
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
 
 " FileFinder
 nnoremap <C-p> <cmd>Telescope find_files<cr>
