@@ -46,7 +46,7 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 source $OMF_PATH/init.fish
 
 set -gx GOPATH $HOME/dev/golang
-set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin /usr/local/sbin $HOME/.cargo/bin $HOME/dev/flutter/bin $HOME/.pub-cache/bin /usr/local/opt/node@14/bin $HOME/.krew/bin $PATH
+set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin /usr/local/sbin $HOME/.cargo/bin $HOME/dev/flutter/bin $HOME/.pub-cache/bin /usr/local/opt/node@14/bin $HOME/.krew/bin $HOME/Library/Python/3.8/bin $PATH
 
 # Java
 # set -gx JAVA_HOME (/usr/libexec/java_home -v "1.8")
@@ -83,3 +83,16 @@ alias vim nvim
 set -g TERM "xterm-256color"
 
 set -gx KUBECONFIG $HOME/.kube/config:$HOME/.kube/medallia-kubeconfig
+
+# pip fish completion start
+function __fish_complete_pip
+    set -lx COMP_WORDS (commandline -o) ""
+    set -lx COMP_CWORD ( \
+        math (contains -i -- (commandline -t) $COMP_WORDS)-1 \
+    )
+    set -lx PIP_AUTO_COMPLETE 1
+    string split \  -- (eval $COMP_WORDS[1])
+end
+complete -fa "(__fish_complete_pip)" -c pip3
+# pip fish completion end
+
