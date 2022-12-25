@@ -11,6 +11,12 @@ end
 -- Plugins
 require("plugins")
 
+-- LSP
+require("lsp-config")
+
+-- Autoclose / autopairs
+require('nvim-autopairs').setup()
+
 -- Nvim tree
 require("icons")
 require("nvim-tree").setup()
@@ -60,100 +66,6 @@ require('lualine').setup {
   },
   extensions = {'quickfix', 'nvim-tree'}
 }
-
--- Snippets
-local cmp = require('cmp')
-local lspkind = require('lspkind')
-local luasnip = require('luasnip')
-
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  mapping = {
-    ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
-    ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    }),
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.confirm({ select = true})
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end,
-  },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'path' },
-    { name = 'buffer' },
-  }, {
-    { name = 'buffer' },
-  }),
-  formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol_text',
-      maxwidth = 50,
-    })
-  }
-})
-
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  underline = true,
-  update_in_insert = true,
-  severity_sort = true,
-})
-
-vim.o.updatetime = 250
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
-
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-require('lspconfig').eslint.setup {
-  capabilities = capabilities
-}
-
-require('lspconfig').tsserver.setup {
-  capabilities = capabilities
-}
-
-require('lspconfig').solargraph.setup {
-  capabilities = capabilities
-}
-
--- Snippets
-require('luasnip/loaders/from_vscode').lazy_load()
 
 -- Trouble
 require('trouble').setup {}
@@ -223,9 +135,6 @@ Map('n', 'Y', 'Y')
 -- Statusline
 set.laststatus = 3
 
--- Redo
-Map('n', '<C-u>', ':redo<CR>')
-
 -- IndentLine
 vim.g['indentLine_char_list'] = {'┊'}
 vim.g['indentLine_fileTypeExclude'] = {'dashboard'}
@@ -234,7 +143,7 @@ vim.g['vim_markdown_conceal_code_blocks'] = 0
 
 -- FileFinder
 Map('n', '<C-p>', '<cmd>Telescope find_files<cr>')
-Map('n', '<C-r>', '<cmd>Telescope live_grep<cr>')
+Map('n', '<C-g>', '<cmd>Telescope live_grep<cr>')
 Map('n', '<C-b>', '<cmd>Telescope buffers<cr>')
 
 -- Prettier
@@ -288,10 +197,6 @@ Map('n', '<leader>s', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- TagBar
 Map('n', '<leader>t', ':TagbarToggle<CR>')
-
--- LSP
-Map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-Map('n', 'M', '<cmd>lua vim.lsp.buf.hover()<CR>')
 
 -- NeoFormat
 vim.g[':neoformat_try_node_exe'] = 1
