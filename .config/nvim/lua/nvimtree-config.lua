@@ -31,8 +31,8 @@ require('bufferline').setup {
   }
 }
 
-Map('n', '<C-n>', ':NvimTreeToggle<CR>')
-Map('n', '<C-f>', ':NvimTreeFindFile<CR>')
+Map('n', '<C-n>', '<cmd>NvimTreeToggle<CR>')
+Map('n', '<C-f>', '<cmd>NvimTreeFindFile<CR>')
 vim.cmd [[
   highlight NvimTreeFolderIcon guifg=orange
   highlight NvimTreeFolderName guifg=fg0

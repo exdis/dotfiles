@@ -14,7 +14,7 @@ require('lsp-config')
 require('nvim-autopairs').setup()
 
 -- Nvim tree
-require('nvimtree')
+require('nvimtree-config')
 
 -- NeoScroll
 require('neoscroll').setup()
