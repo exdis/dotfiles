@@ -1,8 +1,11 @@
 local Map = require('utils').Map
 
 require('icons')
-require('nvim-tree').setup()
-require('bufferline').setup {
+require('nvim-tree').setup({
+
+})
+
+require('bufferline').setup({
   highlights ={
     fill = { bg = 'none' },
     background = { bg = 'none' },
@@ -29,10 +32,11 @@ require('bufferline').setup {
     show_buffer_close_icons = false,
     separator_style = { '', '' }
   }
-}
+})
 
 Map('n', '<C-n>', '<cmd>NvimTreeToggle<CR>')
 Map('n', '<C-f>', '<cmd>NvimTreeFindFile<CR>')
+
 vim.cmd [[
   highlight NvimTreeFolderIcon guifg=orange
   highlight NvimTreeFolderName guifg=fg0

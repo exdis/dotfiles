@@ -13,11 +13,11 @@ require('lsp-config')
 -- Autoclose / autopairs
 require('nvim-autopairs').setup()
 
--- Nvim tree
-require('nvimtree-config')
-
 -- NeoScroll
 require('neoscroll').setup()
+
+-- Nvim tree
+require('nvimtree-config')
 
 -- LuaLine
 require('lualine-config')
