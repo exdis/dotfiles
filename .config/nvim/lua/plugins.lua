@@ -100,5 +100,8 @@ require("lazy").setup({
   'petertriho/nvim-scrollbar',
 
   -- Git signs
-  'lewis6991/gitsigns.nvim'
+  'lewis6991/gitsigns.nvim',
+
+  -- Symbols outline
+  'simrat39/symbols-outline.nvim'
 })

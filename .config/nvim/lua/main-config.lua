@@ -69,3 +69,5 @@ vim.cmd [[
 -- Search
 Map('n', '<CR>', ':noh<CR>')
 
+-- Symbols outline
+Map('n', 'mm', ':SymbolsOutline<CR>')
