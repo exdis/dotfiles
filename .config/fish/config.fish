@@ -76,8 +76,6 @@ end
 
 alias ssh='env TERM=xterm ssh'
 
-status --is-interactive; and source (rbenv init -|psub)
-
 alias vim nvim
 
 set -g TERM "xterm-256color"
