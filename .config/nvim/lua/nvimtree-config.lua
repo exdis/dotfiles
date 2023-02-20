@@ -2,11 +2,19 @@ local Map = require('utils').Map
 
 require('icons')
 require('nvim-tree').setup({
-
+  view = {
+    mappings = {
+      custom_only = false,
+      list = {
+        { key = '>', action = '' },
+        { key = '<', action = '' },
+      },
+    },
+  }
 })
 
 require('bufferline').setup({
-  highlights ={
+  highlights = {
     fill = { bg = 'none' },
     background = { bg = 'none' },
     tab = { bg = 'none' },
