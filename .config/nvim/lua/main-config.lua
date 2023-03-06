@@ -10,7 +10,7 @@ set.clipboard = "unnamedplus"
 Map('n', 'yy', ':let @* = expand("%")<CR>')
 
 -- Fish as default shell
-set.shell = '/usr/local/bin/fish'
+-- set.shell = '/usr/local/bin/fish'
 
 -- Colorscheme
 vim.cmd [[
@@ -64,6 +64,9 @@ Map('n', '<C-h>', '<C-W><C-H>')
 Map('n', '>', ':vertical resize +10<CR>')
 Map('n', '<', ':vertical resize -10<CR>')
 
+-- Buffer close
+Map('n', '<leader>q', ':bp<bar>sp<bar>bn<bar>bd<CR>')
+
 -- Tmux background
 vim.cmd [[
   autocmd VimEnter * highlight Normal ctermfg=223 ctermbg=none guifg=#ebdbb2 guibg=#282828 guibg=none
@@ -75,3 +78,8 @@ Map('n', '<CR>', ':noh<CR>')
 
 -- Symbols outline
 Map('n', 'mm', ':SymbolsOutline<CR>')
+
+-- Quickfix
+vim.cmd [[
+  autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+]]
