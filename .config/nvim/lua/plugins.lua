@@ -103,5 +103,8 @@ require("lazy").setup({
   'lewis6991/gitsigns.nvim',
 
   -- Symbols outline
-  'simrat39/symbols-outline.nvim'
+  'simrat39/symbols-outline.nvim',
+
+  -- Tmux navigation
+  'christoomey/vim-tmux-navigator'
 })

@@ -55,10 +55,10 @@ Map('n', 'gb', ':BufferLinePick<CR>')
 
 -- Split navigation
 Map('n', '<leader>w', '<C-w>w')
-Map('n', '<C-j>', '<C-W><C-J>')
-Map('n', '<C-k>', '<C-W><C-K>')
-Map('n', '<C-l>', '<C-W><C-L>')
-Map('n', '<C-h>', '<C-W><C-H>')
+Map('n', '<C-j>', ':TmuxNavigateDown<CR>')
+Map('n', '<C-k>', ':TmuxNavigateUp<CR>')
+Map('n', '<C-l>', ':TmuxNavigateRight<CR>')
+Map('n', '<C-h>', ':TmuxNavigateLeft<CR>')
 
 -- Split resizing
 Map('n', '>', ':vertical resize +10<CR>')
