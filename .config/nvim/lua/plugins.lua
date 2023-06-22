@@ -15,6 +15,9 @@ require("lazy").setup({
   -- Theme
   'morhetz/gruvbox',
 
+  -- TreeSitter,
+  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+
   -- Lualine
   'hoob3rt/lualine.nvim',
 
@@ -49,8 +52,9 @@ require("lazy").setup({
   -- Autoclose
   'windwp/nvim-autopairs',
 
-  -- IndentLine
-  'Yggdroot/indentLine',
+  -- Indent Blankline
+  -- 'Yggdroot/indentLine',
+  'lukas-reineke/indent-blankline.nvim',
 
   -- Find/replace
   'nvim-lua/plenary.nvim',

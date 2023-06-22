@@ -1,4 +1,9 @@
-vim.g['indentLine_char_list'] = {'┊'}
-vim.g['indentLine_fileTypeExclude'] = {'dashboard'}
-vim.g['vim_markdown_conceal'] = 0
-vim.g['vim_markdown_conceal_code_blocks'] = 0
+vim.opt.list = true
+
+vim.cmd [[highlight IndentBlankLineContextChar guifg=#888888]]
+
+require("indent_blankline").setup {
+  space_char_blankline = " ",
+  show_current_context = true,
+  -- show_current_context_start = true,
+}
