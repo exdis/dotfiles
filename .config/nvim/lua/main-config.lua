@@ -83,13 +83,3 @@ Map('n', 'mm', ':SymbolsOutline<CR>')
 vim.cmd [[
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 ]]
-
--- Prettier
-vim.cmd [[
-  function! YarnPrettier()
-    let cmd = 'yarn prettier'
-    let job_id = jobstart(cmd, {'detach': v:true})
-    call jobwait([job_id], 0)
-  endfunction
-  autocmd BufWritePost */ms/tmp/* call YarnPrettier()
-]]
