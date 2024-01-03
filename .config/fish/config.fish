@@ -78,6 +78,8 @@ alias ssh='env TERM=xterm ssh'
 
 alias vim nvim
 
+alias powershell pwsh
+
 set -g TERM "xterm-256color"
 
 set -gx KUBECONFIG $HOME/.kube/config:$HOME/.kube/medallia-kubeconfig
