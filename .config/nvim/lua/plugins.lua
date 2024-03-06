@@ -75,24 +75,39 @@ require("lazy").setup({
   -- TagBar
   'preservim/tagbar',
 
+  -- Mason
+  {
+    'williamboman/mason.nvim',
+    dependencies = {
+      'williamboman/mason-lspconfig.nvim',
+    }
+  },
+
   -- LSP
-  'williamboman/mason.nvim',
-  'williamboman/mason-lspconfig.nvim',
-  'neovim/nvim-lspconfig',
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+    }
+  },
 
   -- Autocomplete
-  'hrsh7th/nvim-cmp',
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'hrsh7th/cmp-cmdline',
+  {
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    dependencies = {
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      -- Snippets
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+    }
+  },
 
   -- Code actions menu
   { 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' },
-
-  -- Snippets
-  'L3MON4D3/LuaSnip',
-  'saadparwaiz1/cmp_luasnip',
 
   -- Suggest icons
   'onsails/lspkind.nvim',
@@ -116,5 +131,8 @@ require("lazy").setup({
   'simrat39/symbols-outline.nvim',
 
   -- Tmux navigation
-  'christoomey/vim-tmux-navigator'
+  'christoomey/vim-tmux-navigator',
+
+  -- Dressing
+  { 'stevearc/dressing.nvim', event = 'VeryLazy' }
 })
