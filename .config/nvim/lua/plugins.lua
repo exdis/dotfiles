@@ -16,7 +16,14 @@ require("lazy").setup({
   'morhetz/gruvbox',
 
   -- TreeSitter,
-  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+  {
+    "nvim-treesitter/nvim-treesitter",
+    event = { 'BufReadPre', 'BufNewFile' },
+    build = ":TSUpdate",
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects'
+    }
+  },
 
   -- Lualine
   'hoob3rt/lualine.nvim',
@@ -101,7 +108,11 @@ require("lazy").setup({
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       -- Snippets
-      'L3MON4D3/LuaSnip',
+      {
+        'L3MON4D3/LuaSnip',
+        version = 'v2.*',
+        build = 'make install_jsregexp'
+      },
       'saadparwaiz1/cmp_luasnip',
     }
   },

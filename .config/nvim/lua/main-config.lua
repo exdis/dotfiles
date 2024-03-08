@@ -83,3 +83,11 @@ Map('n', 'mm', ':SymbolsOutline<CR>')
 vim.cmd [[
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 ]]
+
+-- Clear SpellCap
+vim.cmd [[
+  hi clear SpellCap
+]]
+
+-- Backup dir
+set.backupdir = '/tmp'

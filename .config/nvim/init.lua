@@ -45,6 +45,9 @@ require('telescope-config')
 -- NeoFormat
 require('neoformat-config')
 
+-- TreeSitter
+require('treesitter')
+
 -- Argwrap
 Map('n', '<leader>a', ':ArgWrap<CR>')
 vim.g['argwrap_padded_braces'] = '{'
