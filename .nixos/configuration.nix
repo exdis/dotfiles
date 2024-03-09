@@ -152,6 +152,7 @@
      go
      gcc
      gnumake
+     xorg.xkbcomp
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -186,4 +187,5 @@
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
