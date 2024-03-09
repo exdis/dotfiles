@@ -1,46 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-KEYCODES="evdev+aliases(qwerty)"
-COMPAT="complete+hjkl"
-SYMBOLS=(
-    "pc"
-    "us"
-    "ru:2"
-
-    "level3(lwin_switch)"
-    "level5(ralt_switch)"
-    #"mod4-lvl3"
-
-    "hjkl"
-    "hjkl(caret)"
-    "hjkl(fast-enter)"
-    "hjkl(fast-numpad-shifted)"
-    #"hjkl(fast-escape)"
-
-
-    "capslock(escape)"
-    "shift(both_capslock)"
-    #"altwin(alt_win)"
-    #"altwin(swap_alt_win)"
-    #"bksp-last-group"
-    #"ralt-first-group"
-
-    #"level5(ralt_switch)"
-    #"hjkl(rtrn_switch)"
-
-    #"ctrl-shift-caps"
-    #"rshift-ralt"
-)
-
-SYMBOLS=$(IFS="+"; echo "${SYMBOLS[*]}")
-
-setxkbmap \
-    -keycodes $KEYCODES \
-    -symbols $SYMBOLS \
-    -compat $COMPAT \
-    -print \
-    | xkbcomp -w 0 - $DISPLAY 2>&1  \
-    | systemd-cat -t xkb
+xkbcomp -I$HOME/.xkb $HOME/.xkbcomp $DISPLAY
 
 xset r rate 200 100
 xset -b
@@ -48,15 +8,11 @@ xset -b
 sudo pkill shift-shift
 HANDLER_ENG="LEFTSHIFT"
 HANDLER_RUS="RIGHTSHIFT"
-if grep -q "Quickfire" /proc/bus/input/devices; then
-    KEYBOARD="quickfire"
-else
-    KEYBOARD="keyboard"
-fi
+KEYBOARD="AT Translated"
 
 {
     sudo shift-shift \
         -match "$KEYBOARD" \
-        -first "$HANDLER_ENG" -second "$HANDLER_RUS" \
+        -1 "$HANDLER_ENG" -2 "$HANDLER_RUS" \
         | systemd-cat -t shift-shift
 } &

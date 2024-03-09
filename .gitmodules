@@ -1,0 +1,3 @@
+[submodule ".xkb"]
+	path = .xkb
+	url = git@github.com:reconquest/rex.git
