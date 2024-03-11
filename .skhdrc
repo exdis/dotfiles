@@ -1,0 +1,29 @@
+# change focus
+fn - h : yabai -m window --focus west
+fn - j : yabai -m window --focus south
+fn - k : yabai -m window --focus north
+fn - l : yabai -m window --focus east
+
+fn - y : yabai -m display --focus west
+fn - u : yabai -m display --focus south
+fn - i : yabai -m display --focus north
+fn - o : yabai -m display --focus east
+
+fn - v : yabai -m space --layout stack
+fn - b : yabai -m space --layout bsp
+
+fn - p : yabai -m window --focus stack.prev
+fn - n : yabai -m window --focus stack.next
+
+fn - m : yabai -m space --balance
+
+alt + shift - 1 : yabai -m window --space 1
+alt + shift - 2 : yabai -m window --space 2
+alt + shift - 3 : yabai -m window --space 3
+alt + shift - 4 : yabai -m window --space 4
+alt + shift - 5 : yabai -m window --space 5
+alt + shift - 6 : yabai -m window --space 6
+alt + shift - 7 : yabai -m window --space 7
+alt + shift - 8 : yabai -m window --space 8
+alt + shift - 9 : yabai -m window --space 9
+alt + shift - 0 : yabai -m window --space 10
