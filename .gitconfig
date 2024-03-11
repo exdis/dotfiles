@@ -22,7 +22,7 @@
     ui = auto
 [user]
 	name = Denis Kolesnikov
-	email = exsdis@gmail.com
+	email = exdis@proton.me
 [core]
 	excludesFile = ~/.gitignore
     editor = vim
