@@ -2,6 +2,7 @@
 
 xkbcomp -I$HOME/.xkb $HOME/.xkbcomp $DISPLAY
 
+xset m 1 1
 xset r rate 200 100
 xset -b
 
