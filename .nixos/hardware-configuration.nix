@@ -6,17 +6,20 @@
 {
   imports = [ ];
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "ata_piix" "xhci_pci" "uas" "usbcore" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.rtl88x2bu ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/a12e04b0-c3a6-493e-aba4-69e3f3251741";
+    { device = "/dev/disk/by-uuid/7eb6ef1c-73a5-4f09-9d87-fd8192cea09c";
       fsType = "ext4";
     };
 
-  boot.initrd.luks.devices."luks-08383224-3d7a-4b24-b34c-2ed28b9ddcc1".device = "/dev/disk/by-uuid/08383224-3d7a-4b24-b34c-2ed28b9ddcc1";
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/9B84-8A01";
+      fsType = "vfat";
+    };
 
   swapDevices = [ ];
 

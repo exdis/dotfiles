@@ -13,18 +13,8 @@
     ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
-
-  boot.loader.grub.enableCryptodisk=true;
-
-  boot.initrd.luks.devices."luks-08383224-3d7a-4b24-b34c-2ed28b9ddcc1".keyFile = "/crypto_keyfile.bin";
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -121,7 +111,7 @@
     description = "Denis";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
+      firefox-devedition-unwrapped
     ];
     shell = pkgs.fish;
   };
@@ -153,6 +143,7 @@
      gcc
      gnumake
      xorg.xkbcomp
+     parted
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
