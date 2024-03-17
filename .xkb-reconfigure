@@ -8,7 +8,7 @@ xset -b
 sudo pkill shift-shift
 HANDLER_ENG="LEFTSHIFT"
 HANDLER_RUS="RIGHTSHIFT"
-KEYBOARD="AT Translated"
+KEYBOARD="Quickfire"
 
 {
     sudo shift-shift \
