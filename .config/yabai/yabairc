@@ -22,6 +22,8 @@ yabai -m config mouse_drop_action swap
 yabai -m rule --add app='^System Information$' manage=off
 yabai -m rule --add app='^System Preferences$' manage=off
 yabai -m rule --add app='^DeepL$' manage=off
+yabai -m rule --add app='^Things$' manage=off
+
 
 yabai -m rule --add title='Preferences$' manage=off
 yabai -m rule --add title='Settings$' manage=off
