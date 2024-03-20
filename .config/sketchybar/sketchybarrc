@@ -34,7 +34,7 @@ sketchybar --default icon.font="SF Pro:Semibold:15.0"      \
 # -- Left Side Items --
 source $ITEM_DIR/spaces.sh
 
-# -- Right Side Of Notch Items --
+# -- Left Side Of Notch Items --
 source $ITEM_DIR/media.sh
 
 # -- Right Side Items --

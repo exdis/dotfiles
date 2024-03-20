@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sketchybar --add item media e \
+sketchybar --add item media q \
            --set media label.color=$ACCENT_COLOR \
                        label.max_chars=20 \
                        icon.padding_left=0 \
