@@ -102,6 +102,8 @@
     #media-session.enable = true;
   };
 
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -112,6 +114,9 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox-devedition-unwrapped
+      brave
+      telegram-desktop
+      alsa-utils
     ];
     shell = pkgs.fish;
   };
