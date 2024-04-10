@@ -1,3 +1,0 @@
-!#/bin/bash
-xrandr --output default --mode 1280x800
-xrdb -merge .Xdefaults-retina
