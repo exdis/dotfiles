@@ -23,6 +23,7 @@ yabai -m rule --add app='^System Information$' manage=off
 yabai -m rule --add app='^System Preferences$' manage=off
 yabai -m rule --add app='^DeepL$' manage=off
 yabai -m rule --add app='^Things$' manage=off
+yabai -m rule --add app='^Azure VPN Client$' manage=off
 
 
 yabai -m rule --add title='Preferences$' manage=off
