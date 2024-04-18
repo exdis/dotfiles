@@ -96,3 +96,5 @@ end
 complete -fa "(__fish_complete_pip)" -c pip3
 # pip fish completion end
 
+# pyenv
+pyenv init - | source
