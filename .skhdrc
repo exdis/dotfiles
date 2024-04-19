@@ -9,14 +9,21 @@ fn - u : yabai -m display --focus south
 fn - i : yabai -m display --focus north
 fn - o : yabai -m display --focus east
 
+# layout
 fn - v : yabai -m space --layout stack
 fn - b : yabai -m space --layout bsp
 
+# prev/next in stacked
 fn - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 fn - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
 
+# balance
 fn - m : yabai -m space --balance
 
+# split type
+fn - c : yabai -m window --toggle split
+
+# spaces
 alt + shift - 1 : yabai -m window --space 1
 alt + shift - 2 : yabai -m window --space 2
 alt + shift - 3 : yabai -m window --space 3
