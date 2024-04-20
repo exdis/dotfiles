@@ -149,6 +149,7 @@
      gnumake
      xorg.xkbcomp
      parted
+     pyenv
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
