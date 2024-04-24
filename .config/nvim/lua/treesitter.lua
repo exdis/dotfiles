@@ -14,6 +14,7 @@ treesitter.setup({
     'tsx',
     'graphql',
     'lua',
+    'python',
   },
   textobjects = {
     select = {

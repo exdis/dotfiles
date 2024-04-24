@@ -5,7 +5,8 @@ require('mason-lspconfig').setup({
     'eslint',
     'html',
     'cssls',
-    'rust_analyzer'
+    'rust_analyzer',
+    'pylsp',
   }
 })
 
