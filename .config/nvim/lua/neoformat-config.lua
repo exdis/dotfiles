@@ -14,6 +14,7 @@ let g:neoformat_javascript_prettier = {
   \ }
 
 let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_python = ['yapf']
 ]]
 
 vim.cmd [[
@@ -21,5 +22,6 @@ vim.cmd [[
   autocmd BufWritePre *.jsx Neoformat
   autocmd BufWritePre *.ts Neoformat
   autocmd BufWritePre *.tsx Neoformat
+  autocmd BufWritePre *.py Neoformat
 ]]
 
