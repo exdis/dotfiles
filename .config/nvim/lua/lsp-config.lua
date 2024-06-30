@@ -36,6 +36,8 @@ vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 local lspconfig = require('lspconfig')
 local lsp_defaults = lspconfig.util.default_config
 
+lspconfig.gleam.setup({})
+
 require('mason-lspconfig').setup_handlers({
   function(server)
     lspconfig[server].setup({})

@@ -15,6 +15,7 @@ treesitter.setup({
     'graphql',
     'lua',
     'python',
+    'gleam',
   },
   textobjects = {
     select = {
