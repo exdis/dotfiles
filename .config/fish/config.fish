@@ -97,4 +97,5 @@ complete -fa "(__fish_complete_pip)" -c pip3
 # pip fish completion end
 
 # pyenv
+set -U fish_user_paths $HOME/.pyenv/bin $fish_user_paths
 pyenv init - | source
