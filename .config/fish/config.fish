@@ -80,6 +80,8 @@ alias vim nvim
 
 alias powershell pwsh
 
+alias la="eza -la --icons=always --git"
+
 set -g TERM "xterm-256color"
 
 set -gx KUBECONFIG $HOME/.kube/config:$HOME/.kube/medallia-kubeconfig
