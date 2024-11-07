@@ -49,3 +49,5 @@
   prompt = false
 [diff]
   tool = vimdiff
+[http]
+	postBuffer = 157286400
