@@ -85,7 +85,7 @@ outer.right =      0
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 cmd-slash = 'layout tiles horizontal vertical'
-cmd-comma = 'layout accordion horizontal vertical'
+cmd-period = 'layout accordion horizontal vertical'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 cmd-h = 'focus left'
@@ -200,9 +200,11 @@ alt-shift-l = ['join-with right', 'mode main']
 3 = 'main'
 4 = 'main'
 5 = 'main'
+6 = 'main'
 7 = ['secondary', 1]
 8 = ['secondary', 2]
 9 = ['secondary', 2]
+10 = 'main'
 
 [[on-window-detected]]
 if.app-id = 'com.linguee.DeepLCopyTranslator'
