@@ -145,5 +145,8 @@ require("lazy").setup({
   'christoomey/vim-tmux-navigator',
 
   -- Dressing
-  { 'stevearc/dressing.nvim', event = 'VeryLazy' }
+  { 'stevearc/dressing.nvim', event = 'VeryLazy' },
+
+  -- Copilot
+  { 'git@github.com:github/copilot.vim.git', event = 'VeryLazy' }
 })
