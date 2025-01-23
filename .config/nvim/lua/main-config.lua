@@ -13,11 +13,16 @@ Map('n', 'yy', ':let @* = expand("%")<CR>')
 -- set.shell = '/usr/local/bin/fish'
 
 -- Colorscheme
-vim.cmd [[
-  colorscheme gruvbox
-]]
-set.termguicolors = true
-set.background = 'dark'
+require("gruvbox").setup({
+  italic = {
+    strings = false,
+    emphasis = false,
+    opearators = false,
+    folds = false,
+  }
+})
+vim.o.background = "dark" -- or "light" for light mode
+vim.cmd([[colorscheme gruvbox]])
 
 -- Relative line numbers
 set.rnu = true

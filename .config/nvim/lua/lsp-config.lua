@@ -1,7 +1,7 @@
 require('mason').setup()
 require('mason-lspconfig').setup({
   ensure_installed = {
-    'tsserver',
+    'ts_ls',
     'eslint',
     'html',
     'cssls',
@@ -42,8 +42,8 @@ require('mason-lspconfig').setup_handlers({
   function(server)
     lspconfig[server].setup({})
   end,
-  ['tsserver'] = function()
-    lspconfig.tsserver.setup({
+  ['ts_ls'] = function()
+    lspconfig.ts_ls.setup({
       settings = {
         completions = {
           completeFunctionCalls = true
@@ -69,10 +69,6 @@ cmp.setup({
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
     end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
   },
   mapping = {
     ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
@@ -131,7 +127,7 @@ vim.diagnostic.config({
 vim.o.updatetime = 250
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = "", Warn = "", Hint = "", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
