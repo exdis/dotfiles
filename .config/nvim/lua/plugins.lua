@@ -29,7 +29,12 @@ require("lazy").setup({
   'hoob3rt/lualine.nvim',
 
   -- Language support
-  'sheerun/vim-polyglot',
+  {
+    'sheerun/vim-polyglot',
+    init = function()
+      vim.g.polyglot_disabled = { "ftdetect" }
+    end,
+  },
 
   -- FuzzyFinder
   'nvim-lua/plenary.nvim',
@@ -148,5 +153,15 @@ require("lazy").setup({
   { 'stevearc/dressing.nvim', event = 'VeryLazy' },
 
   -- Copilot
-  { 'git@github.com:github/copilot.vim.git', event = 'VeryLazy' }
+  { 'git@github.com:github/copilot.vim.git', event = 'VeryLazy' },
+
+  -- NeOrg
+  {
+    "nvim-neorg/neorg",
+    lazy = false,
+    version = "*",
+    after = "nvim-treesitter",
+    ft = "norg",
+    dependencies = { "vhyrro/luarocks.nvim", "nvim-treesitter" },
+  }
 })

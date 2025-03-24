@@ -55,6 +55,9 @@ vim.g['argwrap_padded_braces'] = '{'
 -- Spectre (find/replace)
 require('spectre-config')
 
+-- NeOrg
+require('neorg-config')
+
 -- TagBar
 Map('n', '<leader>t', ':TagbarToggle<CR>')
 
