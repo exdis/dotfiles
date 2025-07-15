@@ -25,10 +25,6 @@ require('lualine-config')
 -- Trouble
 require('trouble').setup()
 
--- Hop (EasyMotion)
-require('hop').setup { keys = 'etovxqpdygfblzhckisuran' }
-vim.api.nvim_set_keymap('', 's', "<cmd>lua require'hop'.hint_char1({})<cr>", {})
-
 -- Scrollbar
 require('scrollbar-config')
 
