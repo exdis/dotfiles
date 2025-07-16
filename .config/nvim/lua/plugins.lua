@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
       "git",
@@ -109,39 +110,34 @@ require("lazy").setup({
   -- TagBar
   'preservim/tagbar',
 
-  -- Mason
   {
-    'williamboman/mason.nvim',
-    dependencies = {
-      'williamboman/mason-lspconfig.nvim',
-    }
+      "mason-org/mason-lspconfig.nvim",
+      opts = {
+          ensure_installed = { "lua_ls", "rust_analyzer" },
+      },
+      dependencies = {
+          { "mason-org/mason.nvim", opts = {} },
+          "neovim/nvim-lspconfig",
+      },
   },
 
   -- LSP
   {
-    'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-    }
-  },
-
-  -- Autocomplete
-  {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      -- Snippets
-      {
-        'L3MON4D3/LuaSnip',
-        version = 'v2.*',
-        build = 'make install_jsregexp'
+    'saghen/blink.cmp',
+    dependencies = { 'rafamadriz/friendly-snippets' },
+    version = '1.*',
+    opts = {
+      keymap = { preset = 'super-tab' },
+      appearance = {
+        nerd_font_variant = 'mono'
       },
-      'saadparwaiz1/cmp_luasnip',
-    }
+      completion = { documentation = { auto_show = false } },
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" }
+    },
+    opts_extend = { "sources.default" }
   },
 
   -- Code actions menu
@@ -165,9 +161,6 @@ require("lazy").setup({
   -- Git signs
   'lewis6991/gitsigns.nvim',
 
-  -- Symbols outline
-  'simrat39/symbols-outline.nvim',
-
   -- Tmux navigation
   'christoomey/vim-tmux-navigator',
 
@@ -176,16 +169,6 @@ require("lazy").setup({
 
   -- Copilot
   { 'git@github.com:github/copilot.vim.git', event = 'VeryLazy' },
-
-  -- NeOrg
-  {
-    "nvim-neorg/neorg",
-    lazy = false,
-    version = "*",
-    after = "nvim-treesitter",
-    ft = "norg",
-    dependencies = { "vhyrro/luarocks.nvim", "nvim-treesitter" },
-  },
 
   {
     "trackpad.nvim",
