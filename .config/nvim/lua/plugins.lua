@@ -49,6 +49,23 @@ require("lazy").setup({
     }
   },
 
+  -- FFF (File Finder)
+  {
+    "dmtrKovalenko/fff.nvim",
+    build = "cargo build --release",
+    opts = {
+    },
+    keys = {
+      {
+        "ff", -- try it if you didn't it is a banger keybinding for a picker
+        function()
+          require("fff").find_files() -- or find_in_git_root() if you only want git files
+        end,
+        desc = "Open file picker",
+      },
+    },
+  },
+
   -- FileExplorer
   'kyazdani42/nvim-web-devicons',
   'kyazdani42/nvim-tree.lua',
