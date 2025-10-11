@@ -1,19 +1,16 @@
-{
-  description = "Main configuration flake";
-
+            {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    # This is pointing to an unstable release.
+    # If you prefer a stable release instead, you can this to the latest number shown here: https://nixos.org/download
+    # i.e. nixos-24.11
+    # Use `nix flake update` to update the flake to the latest revision of the chosen release channel.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
-
-  outputs = { self, nixpkgs, ...}:
-  let
-    lib = nixpkgs.lib;
-  in {
-    nixosConfigurations = {
-      nixos = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./configuration.nix ];
-      };
+  outputs = inputs@{ self, nixpkgs, ... }: {
+    # NOTE: 'nixos' is the default hostname
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      modules = [ ./configuration.nix ];
     };
   };
 }
+
