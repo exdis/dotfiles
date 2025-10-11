@@ -6,6 +6,7 @@ require('mason-lspconfig').setup({
     'cssls',
     'rust_analyzer',
     'pylsp',
+    'zls',
   }
 })
 
@@ -48,3 +49,18 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+-- Zig format
+vim.api.nvim_create_autocmd('BufWritePre',{
+  pattern = {"*.zig", "*.zon"},
+  callback = function(ev)
+    vim.lsp.buf.format()
+  end
+})
+
+-- Zig build
+vim.lsp.config('zls', {
+  settings = {
+    enable_build_on_save = true
+  },
+})

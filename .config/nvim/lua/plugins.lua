@@ -29,14 +29,6 @@ require("lazy").setup({
   -- Lualine
   'hoob3rt/lualine.nvim',
 
-  -- Language support
-  {
-    'sheerun/vim-polyglot',
-    init = function()
-      vim.g.polyglot_disabled = { "ftdetect" }
-    end,
-  },
-
   -- FuzzyFinder
   'nvim-lua/plenary.nvim',
 
@@ -187,13 +179,4 @@ require("lazy").setup({
   -- Copilot
   { 'git@github.com:github/copilot.vim.git', event = 'VeryLazy' },
 
-  {
-    "trackpad.nvim",
-    dir = "~/dev/notes",
-    config = function()
-      require("trackpad").setup({
-        dir = "/Users/dkolesnikov/dev/notes-repo/"
-      })
-    end,
-  }
 })
