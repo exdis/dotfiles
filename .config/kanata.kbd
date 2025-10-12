@@ -1,0 +1,141 @@
+(defcfg
+  process-unmapped-keys yes
+  macos-dev-names-exclude (
+    "Halcyon Elora rev2"
+  )
+)
+
+(defsrc
+  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10   f11   f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  fn lctl lmet lalt           spc            ralt rmet rctl
+)
+
+(deflocalkeys-macos
+  й 81
+  ц 87
+  у 69
+  к 84
+  е 89
+  н 85
+  г 73
+  ш 79
+  щ 80
+  х 74
+  ъ 75
+  ф 65
+  ы 83
+  в 68
+  а 70
+  п 72
+  р 74
+  о 76
+  л 75
+  д 78
+  ж 77
+  э 80
+  я 65
+  ч 83
+  с 68
+  м 70
+  и 72
+  т 74
+  ь 76
+  б 78
+  ю 77
+  ё 192
+)
+
+(defvar
+  tap-time 200
+  hold-time 200
+
+  left-hand-keys (
+    q w e r t
+    a s d f g
+    z x c v b
+    й ц у к е
+    ф ы в а п
+    я ч с м и
+  )
+  right-hand-keys (
+    y u i o p
+    h j k l ;
+    n m , . /
+    г ш щ х ъ
+    р о л д ж э
+    т ь б ю
+  )
+)
+(deflayer base
+  brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv     1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab     q    w    e    r    t    y    u    i    o    p    [    ]    \
+  esc     @a   @s   @d   @f   g    h    @j   @k   @l   @;    '    ret
+  @lshift z    x    c    v    b    n    m    ,    .    /    @rshift
+  lctl    lctl lmet @lalt           spc            @ralt rmet rctl
+)
+
+(deflayer nomods
+  brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv     1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab     q    w    e    r    t    y    u    i    o    p    [    ]    \
+  esc     a    s    d    f    g    h    j    k    l    ;    '    ret
+  @lshift z    x    c    v    b    n    m    ,    .    /    @rshift
+  lctl    lctl lmet @lalt           spc            @ralt rmet rctl
+)
+
+(deflayer numpad
+  brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv     1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab     1    2    3    4    t    y    u    i    o    p    [    ]    \
+  esc     5    6    7    8    g    h    j    k    l    ;    '    ret
+  @lshift -    =    9    0    b    n    m    ,    .    /    @rshift
+  lctl    lctl lmet @lalt           spc            @ralt rmet rctl
+)
+
+(deflayer nav
+  brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv     1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab     q    w    e    r    t    y    u    i    o    p    bspc    ]    \
+  esc     a    s    d    f    g    left down up   right ;    '    ret
+  @lshift z    x    c    v    b    n    m    ,    .    /    @rshift
+  lctl    lctl lmet @lalt           spc            @ralt rmet rctl
+)
+
+(defalias
+  npad (layer-while-held numpad)
+)
+
+(defalias
+  nnav (layer-while-held nav)
+)
+
+(deffakekeys
+  to-base (layer-switch base)
+)
+
+(defalias
+  tap (multi
+    (layer-switch nomods)
+    (on-idle-fakekey to-base tap 20)
+  )
+
+  ralt @npad
+  lalt @nnav
+
+  a (tap-hold-release-keys $tap-time $hold-time (multi a @tap)  lctl $left-hand-keys)
+  s (tap-hold-release-keys $tap-time $hold-time (multi s @tap) @lalt $left-hand-keys)
+  d (tap-hold-release-keys $tap-time $hold-time (multi d @tap)  lsft $left-hand-keys)
+  f (tap-hold-release-keys $tap-time $hold-time (multi f @tap)  lmet $left-hand-keys)
+  j (tap-hold-release-keys $tap-time $hold-time (multi j @tap)  rmet $right-hand-keys)
+  k (tap-hold-release-keys $tap-time $hold-time (multi k @tap)  rsft $right-hand-keys)
+  l (tap-hold-release-keys $tap-time $hold-time (multi l @tap) @ralt $right-hand-keys)
+  ; (tap-hold-release-keys $tap-time $hold-time (multi ; @tap)  rctl $right-hand-keys)
+
+  lshift (tap-hold-press $tap-time $hold-time C-S-M-\ lsft)
+  rshift (tap-hold-press $tap-time $hold-time C-S-A-M-\ rsft)
+)
