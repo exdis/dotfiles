@@ -1,5 +1,10 @@
 {
+  inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -12,8 +17,16 @@
   outputs = { nixpkgs, ... } @inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       modules = [
-        inputs.stylix.nixosModules.stylix
         ./configuration.nix
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+
+          home-manager.users.exdis = import ./home.nix;
+
+          home-manager.extraSpecialArgs = { inherit inputs; };
+        }
       ];
       specialArgs = { inherit inputs; };
     };
