@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
@@ -18,6 +18,7 @@
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       modules = [
         ./configuration.nix
+        inputs.stylix.nixosModules.stylix
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
