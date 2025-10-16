@@ -25,6 +25,7 @@ Map('n', 'yy', ':let @* = expand("%")<CR>')
 -- vim.cmd([[colorscheme gruvbox]])
 vim.o.background = "light" -- or "light" for light mode
 vim.cmd([[colorscheme alabaster]])
+vim.g.alabaster_floatborder = true
 
 -- Relative line numbers
 set.rnu = true
