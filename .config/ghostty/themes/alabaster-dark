@@ -2,8 +2,8 @@
 
 background = #0E1112
 foreground = #DADADA
-cursor-color = #E0E0E0
-cursor-text = #0E1112
+cursor-color = #007ACC
+cursor-text = #BFDBFE
 selection-background = #1E2427
 selection-foreground = #DADADA
 
