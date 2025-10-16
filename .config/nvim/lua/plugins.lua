@@ -15,6 +15,7 @@ vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup({
   -- Theme
   { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+  { "p00f/alabaster.nvim", priority = 1000, config = true },
 
   -- TreeSitter,
   {

@@ -60,9 +60,44 @@ set -gx PUB_HOSTED_URL "http://pub-dev.wrke.in"
 set fish_key_bindings fish_vi_key_bindings
 set fish_theme bobthefish
 set theme_display_ruby no
-set theme_color_scheme gruvbox
+# set theme_color_scheme gruvbox
 set theme_display_vi yes
 set theme_display_git_master_branch yes
+
+function bobthefish_colors -S -d "Alabaster Dark Custom Colors"
+    # Alabaster Dark palette
+    # Base / foreground / background
+    set -x color_initial_segment_exit     DADADA B96B55 --bold
+    set -x color_initial_segment_private  DADADA 5E87A5
+    set -x color_initial_segment_su       DADADA 8DAE8D --bold
+    set -x color_initial_segment_jobs     DADADA 5E87A5 --bold
+
+    # Path
+    set -x color_path                     1E2427 DADADA
+    set -x color_path_basename            1E2427 DADADA --bold
+    set -x color_path_nowrite             B96B55 DADADA
+    set -x color_path_nowrite_basename    B96B55 DADADA --bold
+
+    # Git / VCS
+    set -x color_repo                      AA89AA 1E2427
+    set -x color_repo_work_tree            1E2427 DADADA --bold
+    set -x color_repo_dirty                B96B55 DADADA
+    set -x color_repo_staged               D8B868 1E2427
+
+    # Vi mode
+    set -x color_vi_mode_default           DADADA 1E2427 --bold
+    set -x color_vi_mode_insert            8DAE8D 1E2427 --bold
+    set -x color_vi_mode_visual            D8B868 1E2427 --bold
+
+    # Virtual environments / tools
+    set -x color_virtualfish               72A6A6 DADADA --bold
+    set -x color_virtualgo                 72A6A6 DADADA --bold
+    set -x color_virtualenv                72A6A6 DADADA --bold
+
+    # User / Host
+    set -x color_username                  8DAE8D 5E87A5 --bold
+    set -x color_hostname                  8DAE8D 5E87A5
+end
 
 function fuck -d "Correct your previous console command"
   set -l fucked_up_command $history[1]

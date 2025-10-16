@@ -1,0 +1,32 @@
+# Alabaster Dark — Ghostty-compatible
+
+background = #0E1112
+foreground = #DADADA
+cursor-color = #E0E0E0
+cursor-text = #0E1112
+selection-background = #1E2427
+selection-foreground = #DADADA
+
+palette = 0=#1A1C1E
+palette = 8=#2E3235
+
+palette = 1=#CF6A4C
+palette = 9=#F08D70
+
+palette = 2=#99C794
+palette = 10=#B8E3A9
+
+palette = 3=#FAC863
+palette = 11=#FFD580
+
+palette = 4=#6699CC
+palette = 12=#82B1FF
+
+palette = 5=#C594C5
+palette = 13=#DDB6F2
+
+palette = 6=#5FB3B3
+palette = 14=#7FDBCA
+
+palette = 7=#DADADA
+palette = 15=#F3F3F3

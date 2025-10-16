@@ -13,16 +13,18 @@ Map('n', 'yy', ':let @* = expand("%")<CR>')
 -- set.shell = '/usr/local/bin/fish'
 
 -- Colorscheme
-require("gruvbox").setup({
-  italic = {
-    strings = false,
-    emphasis = false,
-    opearators = false,
-    folds = false,
-  }
-})
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+-- require("gruvbox").setup({
+--   italic = {
+--     strings = false,
+--     emphasis = false,
+--     opearators = false,
+--     folds = false,
+--   }
+-- })
+-- vim.o.background = "dark" -- or "light" for light mode
+-- vim.cmd([[colorscheme gruvbox]])
+vim.o.background = "light" -- or "light" for light mode
+vim.cmd([[colorscheme alabaster]])
 
 -- Relative line numbers
 set.rnu = true
@@ -73,10 +75,20 @@ Map('n', '<', ':vertical resize -10<CR>')
 Map('n', '<leader>q', ':bp<bar>sp<bar>bn<bar>bd<CR>')
 
 -- Tmux background
-vim.cmd [[
-  autocmd VimEnter * highlight Normal ctermfg=223 ctermbg=none guifg=#ebdbb2 guibg=#282828 guibg=none
-  autocmd VimEnter * highlight VertSplit ctermfg=241 ctermbg=none guifg=#665c54 guibg=#282828 guibg=none
-]]
+-- vim.cmd [[
+--   autocmd VimEnter * highlight Normal ctermfg=223 ctermbg=none guifg=#ebdbb2 guibg=#282828 guibg=none
+--   autocmd VimEnter * highlight VertSplit ctermfg=241 ctermbg=none guifg=#665c54 guibg=#282828 guibg=none
+-- ]]
+if vim.fn.exists('$TMUX') == 1 then
+  vim.cmd [[
+    " Detect entering or leaving a tmux pane
+    autocmd FocusGained * hi Normal guibg=#F7F7F7 guifg=#2E2E2E
+    autocmd FocusLost   * hi Normal guibg=#EDEDED guifg=#7B7B7B
+
+    autocmd FocusGained * hi VertSplit guibg=#F7F7F7 guifg=#D0D0D0
+    autocmd FocusLost   * hi VertSplit guibg=#EDEDED guifg=#C0C0C0
+  ]]
+end
 
 -- Search
 Map('n', '<CR>', ':noh<CR>')
