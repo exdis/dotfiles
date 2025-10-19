@@ -24,6 +24,8 @@ in
     shell = pkgs.fish;
   };
 
+  time.timeZone = "Europe/Prague";
+
   programs.fish.enable = true;
 
   hardware.graphics = {
@@ -86,10 +88,31 @@ in
     nerd-fonts.fira-code
   ];
 
-  stylix.enable = true;
-  stylix.autoEnable = true;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-  stylix.polarity = "dark";
+  stylix = {
+    enable = true;
+    autoEnable = true;
+    polarity = "dark";
+    base16Scheme = {
+      scheme = "Alabaster Dark";
+      author = "Base16 / adapted by you";
+      base00 = "#0b0c0d"; # Background
+      base01 = "#101214";
+      base02 = "#1c1f22";
+      base03 = "#5b6268";
+      base04 = "#8b9499";
+      base05 = "#e6eef3"; # Foreground
+      base06 = "#f6fbfd";
+      base07 = "#ffffff";
+      base08 = "#e06c75"; # Red
+      base09 = "#d19a66"; # Orange
+      base0A = "#e5c07b"; # Yellow
+      base0B = "#98c379"; # Green
+      base0C = "#56b6c2"; # Cyan
+      base0D = "#61afef"; # Blue
+      base0E = "#c678dd"; # Purple
+      base0F = "#be5046"; # Brown
+    };
+  };
 
   # Kanata
 
@@ -100,6 +123,15 @@ in
       "input"
       "uinput"
     ];
+  };
+
+  # Nix helper
+
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/home/user/exdis";
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
