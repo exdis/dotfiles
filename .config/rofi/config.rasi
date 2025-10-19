@@ -1,1 +1,5 @@
-@theme "gruvbox-dark"
+@theme "~/.config/rofi/alabaster-dark.rasi"
+configuration {
+    font: "Fira Code 12";
+    show-icons: true;
+}

@@ -1,0 +1,39 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "modules-left": ["custom/nixos", "hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["pulseaudio", "network", "custom/layout"],
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "format": "{name}",
+    "on-click": "activate",
+    "all-outputs": true
+  },
+  "custom/nixos": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "rofi --show drun",
+    "exec-on-event": false
+  },
+  "clock": {
+    "format": " {:%H:%M %A %d.%m}",
+    "tooltip-format": "<tt>{calendar}</tt>"
+  },
+  "pulseaudio": {
+    "format": "{volume}% {icon}",
+    "format-muted": "Muted {icon}"
+  },
+  "network": {
+    "format-wifi": " {essid}",
+    "format-ethernet": " {ifname}",
+    "format-disconnected": "",
+    "tooltip": true
+  },
+  "custom/layout": {
+    "format": "{}",
+    "exec": "python ~/dev/hypr_kb_layout.py",
+    "interval": 1
+  },
+}

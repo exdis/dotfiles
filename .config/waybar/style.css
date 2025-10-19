@@ -1,0 +1,50 @@
+@define-color blue #61afef;
+
+* {
+  font-family: "FiraCode Nerd Font", sans-serif;
+}
+
+#waybar {
+  background: #2e2e2e;
+  color: #d8d8d8;
+  padding: 0 10px;
+}
+
+#custom-nixos {
+  color: @blue;
+  margin-right: 15px;
+  margin-left: 15px;
+  font-size: 1.2em;
+}
+
+#workspaces button {
+  padding: 0 10px;
+  margin-right: 5px;
+  border-radius: 5px;
+  color: @blue;
+}
+
+#workspaces button.active {
+  background: #4c566a;
+  color: #eceff4;
+  font-weight: bold;
+}
+
+#clock {
+  color: #eceff4;
+  font-weight: bold;
+}
+
+#pulseaudio, #network {
+  color: @blue;
+  margin-left: 15px;
+}
+
+#pulseaudio:hover, #network:hover, #custom-nixos:hover {
+  color: @blue;
+}
+
+#custom-layout {
+  margin-left: 15px;
+  margin-right: 15px;
+}
