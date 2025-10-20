@@ -14,7 +14,7 @@
   "custom/nixos": {
     "format": "",
     "tooltip": false,
-    "on-click": "rofi --show drun",
+    "on-click": "rofi -show drun",
     "exec-on-event": false
   },
   "clock": {
