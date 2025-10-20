@@ -136,3 +136,9 @@ complete -fa "(__fish_complete_pip)" -c pip3
 # pyenv
 set -U fish_user_paths $HOME/.pyenv/bin $fish_user_paths
 pyenv init - | source
+
+# cursor
+set -g fish_cursor_default block
+set -g fish_cursor_insert block
+set -g fish_cursor_replace block
+set -g fish_cursor_visual block

@@ -2,4 +2,5 @@ font-family = FiraCode Nerd Font
 font-size = 12
 theme = alabaster-dark
 cursor-style = block
+shell-integration-features = no-cursor
 window-decoration = none
