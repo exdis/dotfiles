@@ -22,6 +22,7 @@
     neovim
     nodejs
     oh-my-fish
+    p7zip
     ripgrep
     rofi
     telegram-desktop

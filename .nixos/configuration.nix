@@ -125,6 +125,15 @@ in
     ];
   };
 
+  # Virtualization
+
+  virtualisation.virtualbox.host = {
+    enable = true;
+    enableExtensionPack = true;
+  };
+
+  users.extraGroups.vboxusers.members = [ "exdis" ];
+
   # Nix helper
 
   programs.nh = {
