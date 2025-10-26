@@ -5,6 +5,7 @@ in
   imports =
     [
       ./hardware-configuration.nix
+      ./containers/i2pd.nix
     ];
 
   boot.loader.systemd-boot.enable = true;

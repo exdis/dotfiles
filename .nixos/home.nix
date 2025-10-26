@@ -17,6 +17,7 @@
     fzf
     ghostty
     hyprpaper
+    librewolf
     nautilus
     neofetch
     neovim
