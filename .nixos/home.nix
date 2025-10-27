@@ -5,6 +5,7 @@
 
   imports = [
     inputs.zen-browser.homeModules.beta
+    ./modules/librewolf.nix
   ];
 
   home.username = "exdis";
@@ -17,7 +18,6 @@
     fzf
     ghostty
     hyprpaper
-    librewolf
     nautilus
     neofetch
     neovim
