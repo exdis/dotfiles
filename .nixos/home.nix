@@ -14,6 +14,8 @@
   home.packages = with pkgs; [
     bat
     diff-so-fancy
+    elixir
+    erlang
     eza
     fzf
     ghostty
@@ -24,6 +26,7 @@
     nodejs
     oh-my-fish
     p7zip
+    rebar3
     ripgrep
     rofi
     telegram-desktop
@@ -49,6 +52,10 @@
       profileNames = [ "default" ];
     };
     firefox = {
+      enable = true;
+      profileNames = [ "default" ];
+    };
+    librewolf = {
       enable = true;
       profileNames = [ "default" ];
     };

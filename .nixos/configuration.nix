@@ -56,14 +56,17 @@ in
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
+    bun
     bzip2
     cargo
     cmake
     gcc
     gdbm
     git
+    gleam
     gnumake
     libffi
+    lsof
     mesa
     ncurses
     openssl
