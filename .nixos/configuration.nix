@@ -59,6 +59,8 @@ in
     bun
     bzip2
     cargo
+    clang
+    clang-tools
     cmake
     gcc
     gdbm
@@ -80,6 +82,7 @@ in
     rustc
     sqlite
     tk
+    unzip
     xclip
     xz
     zig

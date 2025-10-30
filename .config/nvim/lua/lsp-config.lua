@@ -1,5 +1,10 @@
+require("mason").setup({
+  PATH = "prepend_system",
+})
+
 require('mason-lspconfig').setup({
   ensure_installed = {
+    'clangd',
     'ts_ls',
     'eslint',
     'html',
@@ -63,4 +68,13 @@ vim.lsp.config('zls', {
   settings = {
     enable_build_on_save = true
   },
+})
+
+-- Gleam
+vim.lsp.enable('gleam')
+
+-- Clang
+vim.lsp.config('clangd', {
+  cmd = { "clangd" },
+  filetypes = { "c", "cpp", "objc", "objcpp" },
 })
