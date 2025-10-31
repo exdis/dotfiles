@@ -72,6 +72,12 @@ vim.lsp.config('zls', {
 
 -- Gleam
 vim.lsp.enable('gleam')
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.gleam",
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
+})
 
 -- Clang
 vim.lsp.config('clangd', {
