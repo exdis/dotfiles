@@ -17,7 +17,7 @@
     "exec-on-event": false
   },
   "clock": {
-    "format": " {:%H:%M %A %d.%m}",
+    "format": "{:%A %d.%m  %H:%M}",
     "tooltip-format": "<tt>{calendar}</tt>"
   },
   "pulseaudio": {
