@@ -8,6 +8,7 @@ treesitter.setup({
     enable = true,
   },
   ensure_installed = {
+    'cpp',
     'json',
     'javascript',
     'typescript',
@@ -16,6 +17,7 @@ treesitter.setup({
     'lua',
     'python',
     'gleam',
+    'zig',
   },
   textobjects = {
     select = {
