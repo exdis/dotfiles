@@ -33,6 +33,7 @@
 #clock {
   color: #eceff4;
   font-weight: bold;
+  margin-right: 15px;
 }
 
 #pulseaudio, #network {

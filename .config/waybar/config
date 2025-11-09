@@ -3,8 +3,7 @@
   "position": "top",
   "height": 30,
   "modules-left": ["custom/nixos", "hyprland/workspaces"],
-  "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "network", "custom/layout"],
+  "modules-right": ["pulseaudio", "network", "custom/layout", "clock"],
   "hyprland/workspaces": {
     "disable-scroll": true,
     "format": "{name}",
