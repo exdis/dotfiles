@@ -97,8 +97,22 @@ require("lazy").setup({
     end,
   },
 
-  -- Argwrap
-  'FooSoft/vim-argwrap',
+  -- Argwrap.nvim
+  {
+    'exdis/argwrap.nvim',
+    keys = {
+      { "<leader>a", function() require("argwrap").toggle() end, desc = "Toggle argument wrap" },
+    },
+    opts = {
+      tail_comma = true,
+      wrap_closing_brace = true,
+      padded_braces = "{",
+      line_prefix = "",
+    },
+    config = function(_, opts)
+      require("argwrap").setup(opts)
+    end,
+  },
 
   -- Autoclose
   'windwp/nvim-autopairs',
@@ -180,4 +194,6 @@ require("lazy").setup({
   -- Copilot
   { 'git@github.com:github/copilot.vim.git', event = 'VeryLazy' },
 
+  -- Plenary
+  { "nvim-lua/plenary.nvim" },
 })

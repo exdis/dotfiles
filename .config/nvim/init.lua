@@ -44,10 +44,6 @@ require('neoformat-config')
 -- TreeSitter
 require('treesitter')
 
--- Argwrap
-Map('n', '<leader>a', ':ArgWrap<CR>')
-vim.g['argwrap_padded_braces'] = '{'
-
 -- Spectre (find/replace)
 require('spectre-config')
 
