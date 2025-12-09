@@ -65,8 +65,8 @@
   };
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ~/.nixos/wp.jpg
-    wallpaper = ,~/.nixos/wp.jpg
+    preload = ~/.nixos/wp.png
+    wallpaper = ,~/.nixos/wp.png
   '';
 
   home.stateVersion = "25.05";
