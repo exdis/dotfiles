@@ -60,7 +60,7 @@
             ];
             center = [
               {
-                id = "ActiveWindow"
+                id = "ActiveWindow";
               }
             ];
             right = [
