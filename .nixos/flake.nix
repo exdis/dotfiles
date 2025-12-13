@@ -13,6 +13,10 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { nixpkgs, ... } @inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
@@ -28,6 +32,7 @@
 
           home-manager.extraSpecialArgs = { inherit inputs; };
         }
+        ./noctalia.nix
       ];
       specialArgs = { inherit inputs; };
     };

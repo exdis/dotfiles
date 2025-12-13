@@ -41,6 +41,8 @@
   programs.zen-browser.enable = true;
   programs.firefox.enable = true;
 
+  programs.quickshell.enable = true;
+
   # programs.neovim = {
   #   enable = true;
   #   defaultEditor = true;
