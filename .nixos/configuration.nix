@@ -86,6 +86,7 @@ in
     sqlite
     tk
     unzip
+    wlr-randr
     xclip
     xz
     zig

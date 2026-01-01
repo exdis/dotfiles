@@ -74,6 +74,9 @@
                 id = "Bluetooth";
               }
               {
+                id = "Tray";
+              }
+              {
                 formatHorizontal = "HH:mm ddd dd MMM";
                 formatVertical = "HH mm";
                 id = "Clock";
@@ -86,6 +89,9 @@
               }
             ];
           };
+        };
+        dock = {
+          enable = false;
         };
         colorSchemes.predefinedScheme = "Monochrome";
         general = {

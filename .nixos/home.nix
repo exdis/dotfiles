@@ -17,6 +17,7 @@
     elixir
     erlang
     eza
+    filezilla
     fzf
     ghostty
     hyprpaper
