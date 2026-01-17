@@ -75,6 +75,7 @@
               }
               {
                 id = "Tray";
+                drawerEnabled = false;
               }
               {
                 formatHorizontal = "HH:mm ddd dd MMM";
@@ -91,7 +92,7 @@
           };
         };
         dock = {
-          enable = false;
+          enabled = false;
         };
         colorSchemes.predefinedScheme = "Monochrome";
         general = {
