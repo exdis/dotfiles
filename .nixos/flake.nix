@@ -36,7 +36,7 @@
 
           home-manager.extraSpecialArgs = { inherit inputs; };
         }
-        ./noctalia.nix
+        ./modules/noctalia.nix
         mango.nixosModules.mango
         {
           programs.mango.enable = true;

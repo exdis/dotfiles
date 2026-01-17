@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, lib, ... }:
 {
   home-manager.users.exdis = {
     # import the home manager module
@@ -7,40 +7,25 @@
     ];
 
     # configure options
-    programs.noctalia-shell = {
+    programs.noctalia-shell = lib.mkForce {
       enable = true;
       colors = {
-        # Error
-        mError = "#e06c75";        # base08
-        mOnError = "#0b0c0d";      # base00
-
-        # Primary (main accent)
-        mPrimary = "#61afef";      # base0D
-        mOnPrimary = "#0b0c0d";    # base00
-
-        # Secondary (softer accent)
-        mSecondary = "#56b6c2";    # base0C
-        mOnSecondary = "#0b0c0d";  # base00
-
-        # Tertiary (highlight / emphasis)
-        mTertiary = "#c678dd";     # base0E
-        mOnTertiary = "#0b0c0d";   # base00
-
-        # Surfaces
-        mSurface = "#101214";          # base01
-        mSurfaceVariant = "#1c1f22";   # base02
-
-        # On-surface text
-        mOnSurface = "#e6eef3";        # base05
-        mOnSurfaceVariant = "#8b9499"; # base04
-
-        # Hover
-        mHover = "#1c1f22";        # base02
-        mOnHover = "#ffffff";     # base07
-
-        # Outline / shadow
-        mOutline = "#5b6268";     # base03
-        mShadow = "#000000";
+        mPrimary = "#61afef";
+        mOnPrimary = "#0b0c0d";
+        mSecondary = "#56b6c2";
+        mOnSecondary = "#0b0c0d";
+        mTertiary = "#98c379";
+        mOnTertiary = "#0b0c0d";
+        mError = "#e06c75";
+        mOnError = "#0b0c0d";
+        mSurface = "#1c1f22";
+        mOnSurface = "#e6eef3";
+        mSurfaceVariant = "#101214";
+        mOnSurfaceVariant = "#8b9499";
+        mOutline = "#5b6268";
+        mShadow = "#0b0c0d";
+        mHover = "#c678dd";
+        mOnHover = "#0b0c0d";
       };
       settings = {
         # configure noctalia here; defaults will
@@ -66,6 +51,8 @@
             right = [
               {
                 id = "SystemMonitor";
+                showLoadAverage = true;
+                showNetworkStats = true;
               }
               {
                 id = "WiFi";
@@ -94,7 +81,6 @@
         dock = {
           enabled = false;
         };
-        colorSchemes.predefinedScheme = "Monochrome";
         general = {
           avatarImage = "/home/drfoobar/.face";
           radiusRatio = 0.2;
