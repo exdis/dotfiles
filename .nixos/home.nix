@@ -30,6 +30,7 @@
     rebar3
     ripgrep
     rofi
+    streamcontroller
     telegram-desktop
     waybar
     wofi
