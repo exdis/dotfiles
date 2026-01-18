@@ -10,22 +10,37 @@
     programs.noctalia-shell = lib.mkForce {
       enable = true;
       colors = {
-        mPrimary = "#61afef";
-        mOnPrimary = "#0b0c0d";
-        mSecondary = "#56b6c2";
-        mOnSecondary = "#0b0c0d";
-        mTertiary = "#98c379";
-        mOnTertiary = "#0b0c0d";
-        mError = "#e06c75";
-        mOnError = "#0b0c0d";
-        mSurface = "#1c1f22";
-        mOnSurface = "#e6eef3";
-        mSurfaceVariant = "#101214";
-        mOnSurfaceVariant = "#8b9499";
-        mOutline = "#5b6268";
-        mShadow = "#0b0c0d";
-        mHover = "#c678dd";
-        mOnHover = "#0b0c0d";
+        # Error
+        mError = "#e06c75";        # base08
+        mOnError = "#0b0c0d";      # base00
+
+        # Primary (main accent)
+        mPrimary = "#61afef";      # base0D
+        mOnPrimary = "#0b0c0d";    # base00
+
+        # Secondary (softer accent)
+        mSecondary = "#56b6c2";    # base0C
+        mOnSecondary = "#0b0c0d";  # base00
+
+        # Tertiary (highlight / emphasis)
+        mTertiary = "#c678dd";     # base0E
+        mOnTertiary = "#0b0c0d";   # base00
+
+        # Surfaces
+        mSurface = "#101214";          # base01
+        mSurfaceVariant = "#1c1f22";   # base02
+
+        # On-surface text
+        mOnSurface = "#e6eef3";        # base05
+        mOnSurfaceVariant = "#8b9499"; # base04
+
+        # Hover
+        mHover = "#61afef";      # base0D
+        mOnHover = "#ffffff";     # base07
+
+        # Outline / shadow
+        mOutline = "#5b6268";     # base03
+        mShadow = "#000000";
       };
       settings = {
         # configure noctalia here; defaults will
@@ -87,11 +102,9 @@
         };
         location = {
           monthBeforeDay = true;
-          name = "Marseille, France";
+          name = "Prague, Czechia";
         };
       };
-      # this may also be a string or a path to a JSON file,
-      # but in this case must include *all* settings.
     };
   };
 }
