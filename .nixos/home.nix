@@ -44,6 +44,11 @@
 
   programs.quickshell.enable = true;
 
+  programs.opencode = {
+    enable = true;
+    settings = builtins.fromJSON (builtins.readFile ./opencode-config.json);
+  };
+
   # programs.neovim = {
   #   enable = true;
   #   defaultEditor = true;
