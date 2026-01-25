@@ -65,6 +65,7 @@ in
     clang
     clang-tools
     cmake
+    jq
     gcc
     gdbm
     git
@@ -86,6 +87,7 @@ in
     sqlite
     tk
     unzip
+    wl-clipboard
     wlr-randr
     xclip
     xz

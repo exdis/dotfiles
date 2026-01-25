@@ -67,6 +67,17 @@
           "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
         }
       }
+    },
+    "azurefoundryus": {
+      "name": "Azure Foundry US",
+      "npm": "@ai-sdk/openai",
+      "options": {
+        "baseURL": "https://{env:AZURE_RESOURCE}.services.ai.azure.com/openai/v1",
+        "apiKey": "{env:AZURE_OPENAI_KEY}"
+      },
+      "models": {
+        "gpt-5.2-chat": {}
+      }
     }
   }
 }
