@@ -73,11 +73,14 @@
     hyprland = {
       enable = true;
     };
+    hyprpaper = {
+      enable = false;
+    };
   };
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ~/.nixos/wp.png
-    wallpaper = ,~/.nixos/wp.png
+    preload = ~/.nixos/uwp1.jpeg
+    wallpaper = ,~/.nixos/uwp1.jpeg
   '';
 
   home.stateVersion = "25.05";

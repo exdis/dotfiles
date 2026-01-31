@@ -125,6 +125,32 @@ in
       base0E = "#c678dd"; # Purple
       base0F = "#be5046"; # Brown
     };
+    # base16Scheme = {
+    #   scheme = "Noir Neon Night";
+    #   author = "Base16 / tuned for Hyprland noir wallpaper";
+
+    #   # Backgrounds — glossy black, wet asphalt
+    #   base00 = "#0b0c0e"; # main background
+    #   base01 = "#101316"; # subtle raised surfaces
+    #   base02 = "#14171a"; # selections / panels
+    #   base03 = "#2c3136"; # comments / outlines
+
+    #   # Foreground — cool, foggy white
+    #   base04 = "#8a9197"; # secondary text
+    #   base05 = "#d8dee3"; # primary text
+    #   base06 = "#eef2f5"; # brighter UI elements
+    #   base07 = "#ffffff"; # pure white (sparingly)
+
+    #   # Accents — tuned to wallpaper
+    #   base08 = "#d34b4b"; # red — taillights / danger
+    #   base09 = "#c9824a"; # orange — warm neon spill
+    #   base0A = "#d1b06b"; # yellow — street lamps
+    #   base0B = "#7fa874"; # green — muted, realistic
+    #   base0C = "#3f6f78"; # cyan — distant city glow
+    #   base0D = "#4f7fa6"; # blue — wet asphalt reflection
+    #   base0E = "#7a5a8e"; # purple — restrained neon
+    #   base0F = "#8c4a42"; # brown — warm shadow tone
+    # };
   };
 
   # Kanata
