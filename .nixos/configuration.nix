@@ -173,6 +173,10 @@ in
 
   users.extraGroups.vboxusers.members = [ "exdis" ];
 
+  virtualisation.docker.enable = true;
+
+  users.extraGroups.docker.members = [ "exdis" ];
+
   # Nix helper
 
   programs.nh = {
