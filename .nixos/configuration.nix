@@ -65,6 +65,7 @@ in
     clang
     clang-tools
     cmake
+    dnsutils
     jq
     gcc
     gdbm
