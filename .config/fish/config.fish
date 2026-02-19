@@ -46,7 +46,7 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 source $OMF_PATH/init.fish
 
 set -gx GOPATH $HOME/dev/golang
-set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin /usr/local/sbin $HOME/.cargo/bin $HOME/dev/flutter/bin $HOME/.pub-cache/bin /usr/local/opt/node@14/bin $HOME/.krew/bin $HOME/Library/Python/3.8/bin $PATH
+set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin /usr/local/sbin $HOME/.cargo/bin $HOME/dev/flutter/bin $HOME/.pub-cache/bin /usr/local/opt/node@14/bin $HOME/.krew/bin $HOME/Library/Python/3.8/bin $HOME/dev/depot_tools $PATH
 
 # Java
 # set -gx JAVA_HOME (/usr/libexec/java_home -v "1.8")
