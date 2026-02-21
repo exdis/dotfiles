@@ -22,6 +22,7 @@
     filezilla
     fzf
     ghostty
+    github-copilot-cli
     hyprpaper
     nautilus
     neofetch
