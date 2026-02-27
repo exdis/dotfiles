@@ -6,6 +6,7 @@ in
     [
       ./hardware-configuration.nix
       ./containers/i2pd.nix
+      ./modules/playdate.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -57,6 +58,16 @@ in
   hardware.bluetooth.enable = true;
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
+
+  services.yggdrasil = {
+    enable = true;
+
+    settings = {
+      Peers = [
+        "tls://37.205.14.171:993"
+      ];
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     bun
@@ -188,7 +199,7 @@ in
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+
   system.stateVersion = "25.05";
 }
 
