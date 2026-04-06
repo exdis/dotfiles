@@ -22,7 +22,7 @@ in
 
   users.users.exdis = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "kvm" ];
     shell = pkgs.fish;
   };
 
@@ -70,6 +70,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    android-tools
     bun
     bzip2
     cargo

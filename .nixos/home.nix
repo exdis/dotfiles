@@ -12,6 +12,7 @@
   home.homeDirectory = "/home/exdis";
 
   home.packages = with pkgs; [
+    android-studio
     azure-cli
     azure-functions-core-tools
     bat
@@ -23,7 +24,9 @@
     fzf
     ghostty
     github-copilot-cli
+    gradle
     hyprpaper
+    jdk21
     nautilus
     fastfetch
     neovim
