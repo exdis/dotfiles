@@ -25,7 +25,7 @@
     github-copilot-cli
     hyprpaper
     nautilus
-    neofetch
+    fastfetch
     neovim
     nodejs
     oh-my-fish
@@ -45,7 +45,6 @@
   programs.home-manager.enable = true;
 
   programs.zen-browser.enable = true;
-  programs.zen-browser.suppressXdgMigrationWarning = true;
   programs.firefox.enable = true;
 
   programs.quickshell.enable = true;
