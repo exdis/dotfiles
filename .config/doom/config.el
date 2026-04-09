@@ -1,5 +1,9 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+;; Tell Emacs where the tree-sitter grammars live (must be early, before any ts-mode loads)
+(setq treesit-extra-load-path
+      (list (expand-file-name ".local/etc/tree-sitter/" doom-emacs-dir)))
+
 ;; Ensure syntax highlighting is always on
 (global-font-lock-mode 1)
 (add-hook 'doom-after-init-hook (lambda () (global-font-lock-mode 1)))
@@ -173,8 +177,23 @@
 ;; ============================================================================
 
 ;; Use system clipboard (like set.clipboard = "unnamedplus")
+;; In terminal mode on Wayland, we need wl-copy/wl-paste
 (setq select-enable-clipboard t
       select-enable-primary t)
+
+(when (and (not (display-graphic-p))
+           (executable-find "wl-copy"))
+  (setq interprogram-cut-function
+        (lambda (text)
+          (let ((process-connection-type nil))
+            (let ((proc (start-process "wl-copy" nil "wl-copy" "--trim-newline")))
+              (process-send-string proc text)
+              (process-send-eof proc))))
+        interprogram-paste-function
+        (lambda ()
+          (let ((clip (string-trim-right
+                       (shell-command-to-string "wl-paste --no-newline 2>/dev/null"))))
+            (unless (string-empty-p clip) clip)))))
 
 ;; ============================================================================
 ;; Scrolling
@@ -486,13 +505,23 @@
 (setq org-directory "~/org/")
 
 ;; ============================================================================
-;; Gleam support (basic -- major mode + LSP)
+;; Gleam support (major mode + LSP)
 ;; ============================================================================
 
-(use-package! gleam-ts-mode
-  :mode "\\.gleam\\'"
-  :config
-  (add-hook 'gleam-ts-mode-hook #'eglot-ensure))
+(add-to-list 'auto-mode-alist '("\\.gleam\\'" . gleam-ts-mode))
+(after! eglot
+  (add-to-list 'eglot-server-programs '(gleam-ts-mode "gleam" "lsp")))
+(add-hook 'gleam-ts-mode-hook #'eglot-ensure)
+
+;; ============================================================================
+;; Fuzzy matching (Telescope-like)
+;; ============================================================================
+
+;; Make orderless use flex (fuzzy) matching by default, like Telescope
+;; Characters just need to appear in order, not contiguously
+;; e.g. "mco" matches "main-config.lua"
+(after! orderless
+  (setq orderless-matching-styles '(orderless-flex orderless-literal orderless-regexp)))
 
 ;; ============================================================================
 ;; Misc
@@ -510,12 +539,8 @@
 (map! :n "mm" #'consult-imenu)
 
 ;; ============================================================================
-;; Tree-sitter grammars
+;; Tree-sitter
 ;; ============================================================================
-
-;; Tell Emacs where the grammars live (treesit-auto installed them here)
-(setq treesit-extra-load-path
-      (list (expand-file-name ".local/etc/tree-sitter/" doom-emacs-dir)))
 
 (use-package! treesit-auto
   :config
