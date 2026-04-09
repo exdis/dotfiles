@@ -20,6 +20,7 @@
     elixir
     erlang
     eza
+    fd
     filezilla
     fzf
     ghostty
@@ -61,6 +62,10 @@
   #   enable = true;
   #   defaultEditor = true;
   # };
+
+  programs.emacs = {
+    enable = true;
+  };
 
   stylix.targets = {
     zen-browser = {
