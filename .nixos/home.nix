@@ -86,6 +86,9 @@
     hyprpaper = {
       enable = false;
     };
+    emacs = {
+      enable = false;
+    };
   };
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
