@@ -165,6 +165,10 @@
 (use-package haskell-mode
   :ensure t)
 
+(use-package gleam-ts-mode
+  :ensure t
+  :mode "\\.gleam\\'")
+
 (use-package eglot
   :hook
   ((typescript-ts-mode js-ts-mode tsx-ts-mode) . eglot-ensure)

@@ -119,4 +119,5 @@
 
 ;; --- Eglot ---
 (with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '(gleam-ts-mode . ("gleam" "lsp")))
   (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nixd"))))
