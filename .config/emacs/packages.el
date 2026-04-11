@@ -96,6 +96,7 @@
   :ensure t
   :custom
   (completion-styles '(orderless basic))
+  (orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package marginalia
