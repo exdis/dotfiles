@@ -137,10 +137,7 @@
 
 (use-package corfu-terminal
   :ensure t
-  :after corfu
-  :config
-  (unless (display-graphic-p)
-    (corfu-terminal-mode 1)))
+  :after corfu)
 
 (use-package vertico
   :ensure t
@@ -159,6 +156,9 @@
   :config
   (marginalia-mode))
 
+(use-package nix-ts-mode
+  :ensure t)
+
 (use-package eglot
   :hook
   ((typescript-ts-mode js-ts-mode tsx-ts-mode) . eglot-ensure)
@@ -167,6 +167,7 @@
   (zig-mode . eglot-ensure)
   (gleam-ts-mode . eglot-ensure)
   (python-ts-mode . eglot-ensure)
+  (nix-ts-mode . eglot-ensure)
   ((html-mode css-ts-mode) . eglot-ensure))
 
 (use-package flymake

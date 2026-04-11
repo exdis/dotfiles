@@ -88,6 +88,7 @@ in
     libffi
     lsof
     mesa
+    nixd
     ncurses
     typescript-language-server
     vscode-langservers-extracted

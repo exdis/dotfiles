@@ -70,6 +70,11 @@
     ];
   };
 
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+  };
+
   stylix.targets = {
     zen-browser = {
       enable = true;

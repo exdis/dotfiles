@@ -13,12 +13,6 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
-;; Fonts
-(when (display-graphic-p)
-  (set-face-attribute 'default nil
-                      :family "FiraCode Nerd Font"
-                      :height 120))
-
 ;; Redirect custom-set-variables to a separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
@@ -48,18 +42,18 @@
  '(flymake-popon   ((t (:background "#e8e8e8" :foreground "#333")))))
 
 ;; --- Centaur tabs ---
-
-(when (display-graphic-p)
-  (setq centaur-tabs-set-bar 'left))
 (setq centaur-tabs-set-icons t)
 (setq centaur-tabs-icon-type 'nerd-icons)
 (setq centaur-tabs-set-modified-marker t)
 (setq centaur-tabs-modified-marker "●")
 (setq centaur-tabs-buffer-groups-function #'my/centaur-tabs-buffer-groups)
-(setq centaur-tabs-active-bar
-      (centaur-tabs--make-xpm 'centaur-tabs-active-bar-face 2 centaur-tabs-bar-height))
 (centaur-tabs-mode 1)
 (centaur-tabs-headline-match)
+
+;; --- Frame-specific settings (daemon-compatible) ---
+(if (daemonp)
+    (add-hook 'server-after-make-frame-hook #'my/apply-frame-settings)
+  (my/apply-frame-settings))
 
 ;; --- Dashboard ---
 
@@ -122,3 +116,7 @@
       '((nil    . (telephone-line-major-mode-segment))
         (accent . (telephone-line-airline-position-segment))))
 (telephone-line-mode 1)
+
+;; --- Eglot ---
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nixd"))))

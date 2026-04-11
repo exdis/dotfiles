@@ -95,3 +95,20 @@
                      (concat "│ " padded " │")))
                  wrapped "\n")))
       (concat top "\n" body "\n" bottom))))
+
+;; --- Corfu ---
+(defun my/apply-frame-settings (&optional frame)
+  "Apply frame-specific settings based on whether FRAME is graphical."
+  (with-selected-frame (or frame (selected-frame))
+    (if (display-graphic-p)
+        (progn
+          ;; GUI: enable centaur-tabs bar, regenerate XPM
+          (setq centaur-tabs-set-bar 'left)
+          (setq centaur-tabs-active-bar
+                (centaur-tabs--make-xpm 'centaur-tabs-active-bar-face
+                                        2 centaur-tabs-bar-height))
+          ;; GUI: disable corfu-terminal
+          (corfu-terminal-mode -1))
+      ;; Terminal: no tab bar, enable corfu-terminal
+      (setq centaur-tabs-set-bar nil)
+      (corfu-terminal-mode 1))))

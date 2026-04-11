@@ -1,3 +1,6 @@
+;; Fonts
+(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-12"))
+
 ;; Startup screen
 (setq inhibit-startup-screen t)
 
