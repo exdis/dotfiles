@@ -11,11 +11,6 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
-;; Disable menu bar, tool bar, scroll bar
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-
 ;; Fonts
 (when (display-graphic-p)
   (set-face-attribute 'default nil
@@ -44,13 +39,12 @@
       '((nil    . (telephone-line-major-mode-segment))
         (accent . (telephone-line-airline-position-segment))))
 (custom-set-faces
- '(telephone-line-accent-active ((t (:background "#c0c0c0" :foreground "#333"))))
- '(telephone-line-accent-inactive ((t (:background "#e8e8e8" :foreground "#999"))))
- '(telephone-line-evil-normal ((t (:background "#b5c9a8" :foreground "#333"))))
- '(telephone-line-evil-insert ((t (:background "#a3c1d9" :foreground "#333"))))
- '(telephone-line-evil-visual ((t (:background "#c4aed0" :foreground "#333"))))
- '(telephone-line-evil-emacs ((t (:background "#d4b99a" :foreground "#333"))))
- '(telephone-line-evil-replace ((t (:background "#d4a0a0" :foreground "#333")))))
+ '(centaur-tabs-active-bar-face    ((t (:background "#FFBC5D"))))
+ '(centaur-tabs-default            ((t (:background "#f0f0f0" :foreground "#666"))))
+ '(centaur-tabs-selected           ((t (:background "#f5e6cc" :foreground "#333" :weight bold))))
+ '(centaur-tabs-unselected         ((t (:background "#e8e8e8" :foreground "#888"))))
+ '(centaur-tabs-selected-modified  ((t (:inherit centaur-tabs-selected :slant italic))))
+ '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :slant italic)))))
 (telephone-line-mode 1)
 
 ;; Corfu

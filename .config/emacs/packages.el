@@ -85,6 +85,22 @@
       "{|"  "[|"  "]#"  "(*"  "}#"  "$>"  "^="))
   (global-ligature-mode t))
 
+(use-package dashboard
+  :ensure t
+  :config
+  (setq dashboard-banner-logo-title "")
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-center-content t)
+  (setq dashboard-vertically-center-content t)
+  (setq dashboard-items '((recents . 8)
+                          (projects . 5)))
+  (setq dashboard-projects-backend 'project-el)
+  (setq dashboard-display-icons-p t)
+  (setq dashboard-icon-type 'nerd-icons)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (dashboard-setup-startup-hook))
+
 (use-package general
   :ensure t
   :config
@@ -104,18 +120,31 @@
 (use-package centaur-tabs
   :ensure t
   :after (alabaster-themes nerd-icons)
+  :init
+  (custom-set-faces
+   '(centaur-tabs-active-bar-face ((t (:background "#FFBC5D")))))
   :config
+  (defun my/centaur-tabs-buffer-groups ()
+    "Organize tabs into two groups: user files and system/emacs buffers."
+    (list
+     (cond
+      ((string-prefix-p "*" (buffer-name)) "System")
+      ((derived-mode-p 'special-mode 'compilation-mode) "System")
+      (t "Files"))))
+  (when (display-graphic-p)
+    (setq centaur-tabs-set-bar 'left))
   (setq centaur-tabs-set-icons t)
   (setq centaur-tabs-icon-type 'nerd-icons)
   (setq centaur-tabs-set-modified-marker t)
   (setq centaur-tabs-modified-marker "●")
-  (centaur-tabs-mode 1)
+  (setq centaur-tabs-buffer-groups-function #'my/centaur-tabs-buffer-groups)
   (custom-set-faces
-   '(centaur-tabs-default            ((t (:inherit header-line))))
-   '(centaur-tabs-selected           ((t (:inherit header-line :weight bold))))
-   '(centaur-tabs-unselected         ((t (:inherit mode-line-inactive))))
+   '(centaur-tabs-default            ((t (:background "#f0f0f0" :foreground "#666"))))
+   '(centaur-tabs-selected           ((t (:background "#d4ddd0" :foreground "#333" :weight bold))))
+   '(centaur-tabs-unselected         ((t (:background "#e8e8e8" :foreground "#888"))))
    '(centaur-tabs-selected-modified  ((t (:inherit centaur-tabs-selected :slant italic))))
    '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :slant italic)))))
+  (centaur-tabs-mode 1)
   (centaur-tabs-headline-match))
 
 (use-package xclip
