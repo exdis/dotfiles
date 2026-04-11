@@ -1,4 +1,4 @@
-;; Set up packages reositories
+;; Set up package repositories
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -21,6 +21,28 @@
   :after evil
   :config
   (evil-collection-init '(neotree)))
+
+(use-package evil-commentary
+  :ensure t
+  :after evil
+  :config
+  (evil-commentary-mode))
+
+(use-package general
+  :ensure t
+  :config
+  (general-create-definer my-leader-def
+    :states '(normal visual motion emacs)
+    :keymaps 'override
+    :prefix "SPC"))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+(use-package nerd-icons
+  :ensure t)
 
 (use-package ligature
   :ensure t
@@ -87,82 +109,22 @@
 
 (use-package dashboard
   :ensure t
-  :config
-  (setq dashboard-banner-logo-title "")
-  (setq dashboard-startup-banner 'logo)
-  (setq dashboard-center-content t)
-  (setq dashboard-vertically-center-content t)
-  (setq dashboard-items '((recents . 8)
-                          (projects . 5)))
-  (setq dashboard-projects-backend 'project-el)
-  (setq dashboard-display-icons-p t)
-  (setq dashboard-icon-type 'nerd-icons)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (dashboard-setup-startup-hook))
-
-(use-package general
-  :ensure t
-  :config
-  (general-create-definer my-leader-def
-			  :states '(normal visual motion emacs)
-			  :keymaps 'override
-			  :prefix "SPC"))
-
-(use-package which-key
-  :ensure t
-  :config
-  (which-key-mode))
-
-(use-package nerd-icons
-  :ensure t)
+  :demand t)
 
 (use-package centaur-tabs
   :ensure t
   :after (alabaster-themes nerd-icons)
   :init
   (custom-set-faces
-   '(centaur-tabs-active-bar-face ((t (:background "#FFBC5D")))))
-  :config
-  (defun my/centaur-tabs-buffer-groups ()
-    "Organize tabs into two groups: user files and system/emacs buffers."
-    (list
-     (cond
-      ((string-prefix-p "*" (buffer-name)) "System")
-      ((derived-mode-p 'special-mode 'compilation-mode) "System")
-      (t "Files"))))
-  (when (display-graphic-p)
-    (setq centaur-tabs-set-bar 'left))
-  (setq centaur-tabs-set-icons t)
-  (setq centaur-tabs-icon-type 'nerd-icons)
-  (setq centaur-tabs-set-modified-marker t)
-  (setq centaur-tabs-modified-marker "●")
-  (setq centaur-tabs-buffer-groups-function #'my/centaur-tabs-buffer-groups)
-  (custom-set-faces
-   '(centaur-tabs-default            ((t (:background "#f0f0f0" :foreground "#666"))))
-   '(centaur-tabs-selected           ((t (:background "#d4ddd0" :foreground "#333" :weight bold))))
-   '(centaur-tabs-unselected         ((t (:background "#e8e8e8" :foreground "#888"))))
-   '(centaur-tabs-selected-modified  ((t (:inherit centaur-tabs-selected :slant italic))))
-   '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :slant italic)))))
-  (centaur-tabs-mode 1)
-  (centaur-tabs-headline-match))
+   '(centaur-tabs-active-bar-face ((t (:background "#FFBC5D"))))))
 
 (use-package xclip
   :ensure t
-  :after evil
-  :config
-  (when (and (getenv "WAYLAND_DISPLAY") (executable-find "wl-copy"))
-    (setq xclip-method 'wl-copy)
-    (setq xclip-program "wl-copy"))
-  (xclip-mode 1))
+  :after evil)
 
 (use-package neotree
   :ensure t
-  :after nerd-icons
-  :config
-  (setq neo-theme 'nerd-icons)
-  (setq neo-smart-open t)
-  (setq neo-window-width 30))
+  :after nerd-icons)
 
 (use-package corfu
   :ensure t
@@ -208,91 +170,15 @@
   ((html-mode css-ts-mode) . eglot-ensure))
 
 (use-package flymake
-  :hook (prog-mode . flymake-mode)
-  :config
-  (setq flymake-margin-indicators-string
-	'((error "!!" compilation-error)
-	  (warning "?" compilation-warning)
-	  (note "·" compilation-info))))
+  :hook (prog-mode . flymake-mode))
 
 (use-package flymake-eslint
   :ensure t
-  :after eglot
-  :config
-  (setq flymake-eslint-prefer-json-diagnostics t)
-  (defun my/add-node-modules-path ()
-    "Add node_modules/.bin to exec-path for the current buffer."
-    (let ((root (locate-dominating-file default-directory "node_modules")))
-      (when root
-        (make-local-variable 'exec-path)
-        (add-to-list 'exec-path (expand-file-name "node_modules/.bin" root)))))
-  (defun my/flymake-eslint-after-eglot ()
-    "Add eslint backend after eglot has set up flymake."
-    (when (and (bound-and-true-p eglot--managed-mode)
-               (derived-mode-p 'js-ts-mode 'typescript-ts-mode 'tsx-ts-mode))
-      (my/add-node-modules-path)
-      (flymake-eslint-enable)))
-  (add-hook 'eglot-managed-mode-hook #'my/flymake-eslint-after-eglot)
-  (defun my/disable-flymake-eldoc ()
-    "Remove flymake from eldoc so diagnostics only show in popon."
-    (setq-local eldoc-documentation-functions
-		(remove #'flymake-eldoc-function eldoc-documentation-functions)))
-  (add-hook 'eglot-managed-mode-hook #'my/disable-flymake-eldoc 100))
+  :after eglot)
 
 (use-package flymake-popon
   :ensure t
-  :hook (flymake-mode . flymake-popon-mode)
-  :config
-  (setq flymake-popon-method 'popon)
-  (setq flymake-popon-width 70)
-  (defun my/flymake-popon-format-diagnostic (diagnostic)
-    "Format DIAGNOSTIC with a box-drawing border."
-    (let* ((text (flymake-diagnostic-text diagnostic))
-           (type (flymake-diagnostic-type diagnostic))
-           (face (flymake--lookup-type-property type 'mode-line-face))
-           (icon (pcase type
-                   (:error "✗")
-                   (:warning "⚠")
-                   (_ "·")))
-           ;; Split text into first line and rest
-           (lines (split-string text "[\n\r]"))
-           (first-line (concat icon " " (car lines)))
-           (rest-lines (cdr lines))
-           ;; Build all content lines
-           (all-lines (cons first-line rest-lines))
-           ;; Inner width (content area, -4 for "│ " and " │")
-           (inner-width (- flymake-popon-width 4))
-           ;; Word-wrap and pad each line
-           (wrapped '())
-           (top (concat "┌" (make-string (+ inner-width 2) ?─) "┐"))
-           (bottom (concat "└" (make-string (+ inner-width 2) ?─) "┘")))
-      ;; Wrap long lines and collect them
-      (dolist (line all-lines)
-        (if (<= (length line) inner-width)
-            (push line wrapped)
-          ;; Simple word wrap
-          (let ((remaining line))
-            (while (> (length remaining) inner-width)
-              (let ((break-pos (or (cl-position ?\s remaining
-                                                :from-end t
-                                                :end inner-width)
-                                   inner-width)))
-                (push (substring remaining 0 break-pos) wrapped)
-                (setq remaining (string-trim-left
-                                 (substring remaining break-pos)))))
-            (when (> (length remaining) 0)
-              (push remaining wrapped)))))
-      (setq wrapped (nreverse wrapped))
-      ;; Build bordered output
-      (let ((body (mapconcat
-                   (lambda (line)
-                     (let ((padded (concat line
-                                          (make-string
-                                           (max 0 (- inner-width (length line)))
-                                           ?\s))))
-                       (concat "│ " padded " │")))
-                   wrapped "\n")))
-        (concat top "\n" body "\n" bottom)))))
+  :hook (flymake-mode . flymake-popon-mode))
 
 (use-package consult
   :ensure t)
@@ -303,11 +189,6 @@
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
-(use-package evil-commentary
-  :ensure t
-  :after evil
-  :config
-  (evil-commentary-mode))
-
 (use-package telephone-line
-  :ensure t)
+  :ensure t
+  :demand t)
