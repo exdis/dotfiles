@@ -23,6 +23,11 @@
 (define-key evil-normal-state-map (kbd "H") 'centaur-tabs-backward)
 (define-key evil-normal-state-map (kbd "L") 'centaur-tabs-forward)
 
+;; Keep tab navigation in dired (override evil-collection-dired)
+(evil-define-key 'normal dired-mode-map
+  "H" 'centaur-tabs-backward
+  "L" 'centaur-tabs-forward)
+
 ;; Copy relative file path
 (my-leader-def
   "yy" '(copy-relative-file-path :which-key "copy relative path")

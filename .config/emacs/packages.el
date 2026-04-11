@@ -20,7 +20,7 @@
   :ensure t
   :after evil
   :config
-  (evil-collection-init '(neotree)))
+  (evil-collection-init '(neotree dired)))
 
 (use-package evil-commentary
   :ensure t
