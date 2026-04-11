@@ -44,3 +44,17 @@
  '(telephone-line-evil-emacs ((t (:background "#d4b99a" :foreground "#333"))))
  '(telephone-line-evil-replace ((t (:background "#d4a0a0" :foreground "#333")))))
 (telephone-line-mode 1)
+
+;; Corfu
+(custom-set-faces
+ '(corfu-default ((t (:background "#e8e8e8"))))
+ '(corfu-current ((t (:background "#c0c0c0" :foreground "#333")))))
+
+;; FlyMake
+(custom-set-faces
+ '(flymake-error ((t (:underline (:style line :color "#d4a0a0")))))
+ '(flymake-warning ((t (:underline (:style line :color "#d4b99a")))))
+ '(flymake-note ((t (:underline (:style line :color "#b5c9a8")))))
+ '(flymake-popon ((t (:background "#e8e8e8" :foreground "#333")))))
+(setq flymake-popon-diagnostic-formatter
+      #'my/flymake-popon-format-diagnostic)

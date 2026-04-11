@@ -47,3 +47,10 @@
   "lr" '(eglot-rename :which-key "rename")
   "la" '(eglot-code-actions :which-key "code actions")
   "lf" '(eglot-format :which-key "format"))
+
+;; Flymake
+(my-leader-def
+  "d" '(:ignore t :which-key "diagnostics" )
+  "dd" '(flymake-show-buffer-diagnostics :which-key "list diagnostics")
+  "dn" '(flymake-goto-next-error :which-key "next error")
+  "dp" '(flymake-goto-prev-error :which-key "prev error"))
