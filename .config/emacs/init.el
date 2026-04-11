@@ -11,8 +11,16 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
-;; Disable menu bar
+;; Disable menu bar, tool bar, scroll bar
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+
+;; Fonts
+(when (display-graphic-p)
+  (set-face-attribute 'default nil
+		      :family "FiraCode Nerd Font"
+		      :height 120))
 
 ;; Redirect custom-set-variables to a separate file to avoid init.el pollution
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
