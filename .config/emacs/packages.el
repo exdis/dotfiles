@@ -159,6 +159,12 @@
 (use-package nix-ts-mode
   :ensure t)
 
+(use-package zig-mode
+  :ensure t)
+
+(use-package haskell-mode
+  :ensure t)
+
 (use-package eglot
   :hook
   ((typescript-ts-mode js-ts-mode tsx-ts-mode) . eglot-ensure)
@@ -168,6 +174,8 @@
   (gleam-ts-mode . eglot-ensure)
   (python-ts-mode . eglot-ensure)
   (nix-ts-mode . eglot-ensure)
+  (zig-mode . eglot-ensure)
+  (haskell-mode . eglot-ensure)
   ((html-mode css-ts-mode) . eglot-ensure))
 
 (use-package flymake
