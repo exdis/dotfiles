@@ -55,3 +55,7 @@
   "dd" '(flymake-show-buffer-diagnostics :which-key "list diagnostics")
   "dn" '(flymake-goto-next-error :which-key "next error")
   "dp" '(flymake-goto-prev-error :which-key "prev error"))
+
+;; Avy
+(general-def 'normal
+  "s" 'avy-goto-char-timer)

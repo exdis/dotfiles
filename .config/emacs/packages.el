@@ -205,3 +205,6 @@
 (use-package telephone-line
   :ensure t
   :demand t)
+
+(use-package avy
+  :ensure t)
