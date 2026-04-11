@@ -41,62 +41,12 @@
     (flymake-eslint-enable)))
 
 (defun my/disable-flymake-eldoc ()
-  "Remove flymake from eldoc so diagnostics only show in popon."
+  "Remove flymake from eldoc so diagnostics only show in sideline."
   (setq-local eldoc-documentation-functions
               (remove #'flymake-eldoc-function eldoc-documentation-functions)))
 
-;; --- Flymake popon formatter ---
-
-(defun my/flymake-popon-format-diagnostic (diagnostic)
-  "Format DIAGNOSTIC with a box-drawing border."
-  (let* ((text (flymake-diagnostic-text diagnostic))
-         (type (flymake-diagnostic-type diagnostic))
-         (face (flymake--lookup-type-property type 'mode-line-face))
-         (icon (pcase type
-                 (:error "✗")
-                 (:warning "⚠")
-                 (_ "·")))
-         ;; Split text into first line and rest
-         (lines (split-string text "[\n\r]"))
-         (first-line (concat icon " " (car lines)))
-         (rest-lines (cdr lines))
-         ;; Build all content lines
-         (all-lines (cons first-line rest-lines))
-         ;; Inner width (content area, -4 for "│ " and " │")
-         (inner-width (- flymake-popon-width 4))
-         ;; Word-wrap and pad each line
-         (wrapped '())
-         (top (concat "┌" (make-string (+ inner-width 2) ?─) "┐"))
-         (bottom (concat "└" (make-string (+ inner-width 2) ?─) "┘")))
-    ;; Wrap long lines and collect them
-    (dolist (line all-lines)
-      (if (<= (length line) inner-width)
-          (push line wrapped)
-        ;; Simple word wrap
-        (let ((remaining line))
-          (while (> (length remaining) inner-width)
-            (let ((break-pos (or (cl-position ?\s remaining
-                                              :from-end t
-                                              :end inner-width)
-                                 inner-width)))
-              (push (substring remaining 0 break-pos) wrapped)
-              (setq remaining (string-trim-left
-                               (substring remaining break-pos)))))
-          (when (> (length remaining) 0)
-            (push remaining wrapped)))))
-    (setq wrapped (nreverse wrapped))
-    ;; Build bordered output
-    (let ((body (mapconcat
-                 (lambda (line)
-                   (let ((padded (concat line
-                                         (make-string
-                                          (max 0 (- inner-width (length line)))
-                                          ?\s))))
-                     (concat "│ " padded " │")))
-                 wrapped "\n")))
-      (concat top "\n" body "\n" bottom))))
-
 ;; --- Corfu ---
+
 (defun my/apply-frame-settings (&optional frame)
   "Apply frame-specific settings based on whether FRAME is graphical."
   (with-selected-frame (or frame (selected-frame))
@@ -114,6 +64,7 @@
       (corfu-terminal-mode 1))))
 
 ;; --- Editorconfig ---
+
 (defun my/editorconfig-set-evil-shift-width (props)
   "Sync evil-shift-width with editorconfig indent_size."
   (let ((width (gethash 'indent_size props)))

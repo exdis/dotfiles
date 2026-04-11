@@ -189,9 +189,17 @@
   :ensure t
   :after eglot)
 
-(use-package flymake-popon
+(use-package sideline
   :ensure t
-  :hook (flymake-mode . flymake-popon-mode))
+  :hook (flymake-mode . sideline-mode)
+  :init
+  (setq sideline-backends-right '(sideline-flymake)))
+
+(use-package sideline-flymake
+  :ensure t
+  :after sideline
+  :init
+  (setq sideline-flymake-display-mode 'point))
 
 (use-package consult
   :ensure t)

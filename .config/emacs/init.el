@@ -47,7 +47,10 @@
  '(flymake-error   ((t (:underline (:style line :color "#d4a0a0")))))
  '(flymake-warning ((t (:underline (:style line :color "#d4b99a")))))
  '(flymake-note    ((t (:underline (:style line :color "#b5c9a8")))))
- '(flymake-popon   ((t (:background "#e8e8e8" :foreground "#333")))))
+ ;; Sideline flymake
+ '(sideline-flymake-error   ((t (:foreground "#AA3731" :slant italic))))
+ '(sideline-flymake-warning ((t (:foreground "#CB8927" :slant italic))))
+ '(sideline-flymake-note    ((t (:foreground "#448C27" :slant italic)))))
 
 ;; --- Centaur tabs ---
 (setq centaur-tabs-set-icons t)
@@ -103,12 +106,6 @@
 (setq flymake-eslint-prefer-json-diagnostics t)
 (add-hook 'eglot-managed-mode-hook #'my/flymake-eslint-after-eglot)
 (add-hook 'eglot-managed-mode-hook #'my/disable-flymake-eldoc 100)
-
-;; --- Flymake Popon ---
-
-(setq flymake-popon-method 'popon)
-(setq flymake-popon-width 70)
-(setq flymake-popon-diagnostic-formatter #'my/flymake-popon-format-diagnostic)
 
 ;; --- Telephone line ---
 
