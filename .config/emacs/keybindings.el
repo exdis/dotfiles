@@ -4,7 +4,6 @@
  "ff" '(find-file :which-key "find file")
  "fs" '(save-buffer :which-key "save file")
  "b" '(:ignore t :which-key "buffer")
- "bb" '(switch-to-buffer :which-key "switch-buffer")
  "bd" '(kill-current-buffer :which-key "kill buffer"))
 
 ;; Help keys
@@ -32,3 +31,19 @@
 ;; NeoTree
 (my-leader-def
   "n" '(neotree-toggle :which-key "file tree"))
+
+;; Search
+(my-leader-def
+  "/" '(consult-ripgrep :which-key "ripgrep search")
+  "SPC" '(consult-fd :which-key "find file"))
+
+;; Enhanced buffer switching
+(my-leader-def
+  "bb" '(consult-buffer :which-key "switch buffer"))
+
+;; LSP actions
+(my-leader-def
+  "l" '(:ignore t :which-key "lsp")
+  "lr" '(eglot-rename :which-key "rename")
+  "la" '(eglot-code-actions :which-key "code actions")
+  "lf" '(eglot-format :which-key "format"))

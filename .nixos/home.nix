@@ -65,6 +65,9 @@
 
   programs.emacs = {
     enable = true;
+    extraPackages = epkgs: [
+      epkgs.treesit-grammars.with-all-grammars
+    ];
   };
 
   stylix.targets = {

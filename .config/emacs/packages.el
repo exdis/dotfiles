@@ -70,3 +70,54 @@
   (setq neo-theme 'nerd-icons)
   (setq neo-smart-open t)
   (setq neo-window-width 30))
+
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix 2)
+  :config
+  (global-corfu-mode))
+
+(use-package corfu-terminal
+  :ensure t
+  :after corfu
+  :config
+  (unless (display-graphic-p)
+    (corfu-terminal-mode 1)))
+
+(use-package vertico
+  :ensure t
+  :config
+  (vertico-mode))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  :ensure t
+  :config
+  (marginalia-mode))
+
+(use-package eglot
+  :hook
+  ((typescript-ts-mode js-ts-mode tsx-ts-mode) . eglot-ensure)
+  ((c-ts-mode c++-ts-mode) . eglot-ensure)
+  (rust-ts-mode . eglot-ensure)
+  (zig-mode . eglot-ensure)
+  (gleam-ts-mode . eglot-ensure)
+  (python-ts-mode . eglot-ensure)
+  ((html-mode css-ts-mode) . eglot-ensure))
+
+(use-package consult
+  :ensure t)
+
+(use-package treesit-auto
+  :ensure t
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))

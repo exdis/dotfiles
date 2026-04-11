@@ -84,18 +84,23 @@ in
     git
     gleam
     gnumake
+    haskell-language-server
     libffi
     lsof
     mesa
     ncurses
+    typescript-language-server
+    vscode-langservers-extracted
     openssl
     patch
     pyenv
+    pyright
     python3
     python3Packages.pip
     python3Packages.setuptools
     python3Packages.wheel
     readline
+    rust-analyzer
     rustc
     sqlite
     tk
@@ -106,6 +111,7 @@ in
     xz
     zig
     zlib
+    zls
   ];
 
   nixpkgs.config.allowUnfree = true;
