@@ -208,3 +208,6 @@
 
 (use-package avy
   :ensure t)
+
+(use-package fill-function-arguments
+  :ensure t)

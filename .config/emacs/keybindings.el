@@ -59,3 +59,7 @@
 ;; Avy
 (general-def 'normal
   "s" 'avy-goto-char-timer)
+
+;; Argwrap
+(my-leader-def
+  "a" '(fill-function-arguments-dwim :which-key "argwrap"))
