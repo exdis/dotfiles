@@ -112,3 +112,10 @@
       ;; Terminal: no tab bar, enable corfu-terminal
       (setq centaur-tabs-set-bar nil)
       (corfu-terminal-mode 1))))
+
+;; --- Editorconfig ---
+(defun my/editorconfig-set-evil-shift-width (props)
+  "Sync evil-shift-width with editorconfig indent_size."
+  (let ((width (gethash 'indent_size props)))
+    (when width
+      (setq-local evil-shift-width (string-to-number width)))))

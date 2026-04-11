@@ -9,6 +9,10 @@
 
 ;; --- Global settings ---
 
+;; Editorconfig
+(editorconfig-mode 1)
+(add-hook 'editorconfig-after-apply-functions #'my/editorconfig-set-evil-shift-width)
+
 ;; Relative line numbers
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
@@ -21,6 +25,10 @@
 ;; Backups and auto-save
 (setq backup-directory-alist '(("." . "~/.emacs-backup")))
 (setq auto-save-file-name-transforms '((".*" "~/.emacs-save/" t)))
+
+;; Trust common dir-locals values
+(setq safe-local-variable-values
+  '((evil-shift-width . 2)))
 
 ;; --- Face customizations ---
 

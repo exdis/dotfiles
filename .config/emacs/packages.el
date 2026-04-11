@@ -210,4 +210,6 @@
   :ensure t)
 
 (use-package fill-function-arguments
-  :ensure t)
+  :ensure t
+  :custom
+  (fill-function-arguments-indent-after-fill t))
