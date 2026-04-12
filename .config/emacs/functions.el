@@ -70,3 +70,16 @@
   (let ((width (gethash 'indent_size props)))
     (when width
       (setq-local evil-shift-width (string-to-number width)))))
+
+;; --- Perspective ---
+
+(defun my/persp-centaur-tabs-buffer-list ()
+  "Return buffer list scoped to current perspective."
+  (if (bound-and-true-p persp-mode)
+      (persp-current-buffers* t)
+    (centaur-tabs-buffer-list)))
+(defun my/project-persp-switch ()
+  "Switch to a perspective named after the current project."
+  (let ((project-name (project-name (project-current))))
+    (when project-name
+      (persp-switch project-name))))

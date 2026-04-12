@@ -74,3 +74,13 @@
 ;; Argwrap
 (my-leader-def
   "a" '(fill-function-arguments-dwim :which-key "argwrap"))
+
+;; Perspective
+(my-leader-def
+  "p" '(:ignore t :which-key "perspective")
+  "ps" '(persp-switch :which-key "switch/create")
+  "pk" '(persp-kill :which-key "kill")
+  "pr" '(persp-rename :which-key "rename")
+  "pn" '(persp-next :which-key "next")
+  "pp" '(persp-prev :which-key "prev")
+  "pl" '(persp-switch-last :which-key "last"))

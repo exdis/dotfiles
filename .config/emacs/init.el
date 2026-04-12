@@ -111,6 +111,21 @@
 (add-hook 'eglot-managed-mode-hook #'my/flymake-eslint-after-eglot)
 (add-hook 'eglot-managed-mode-hook #'my/disable-flymake-eldoc 100)
 
+;; --- Perspective ---
+
+(setq persp-show-modestring nil)     ;; disable default modeline (telephone-line handles it)
+(persp-mode 1)
+;; Scope centaur-tabs to current perspective
+(setq centaur-tabs-buffer-list-function #'my/persp-centaur-tabs-buffer-list)
+(add-hook 'persp-switch-hook
+          (lambda () (centaur-tabs-buffer-update-groups)))
+;; Auto-create perspective on project switch
+(add-hook 'project-after-switch-hook #'my/project-persp-switch)
+;; Scope consult-buffer to current perspective
+(with-eval-after-load 'consult
+  (consult-customize consult--source-buffer :hidden t :default nil)
+  (add-to-list 'consult-buffer-sources persp-consult-source))
+
 ;; --- Telephone line ---
 
 (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
@@ -120,7 +135,7 @@
 (setq telephone-line-lhs
       '((evil   . (telephone-line-evil-tag-segment))
         (accent . (telephone-line-buffer-segment))
-        (nil    . ())))
+        (nil    . (telephone-line-perspective-segment))))
 (setq telephone-line-rhs
       '((nil    . (telephone-line-major-mode-segment))
         (accent . (telephone-line-airline-position-segment))))

@@ -232,3 +232,9 @@
   :ensure t
   :hook
   (dired-mode . diff-hl-dired-mode))
+
+(use-package perspective
+  :ensure t
+  :init
+  (setq persp-mode-prefix-key nil)
+  (setq persp-suppress-no-prefix-key-warning t))
