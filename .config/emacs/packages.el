@@ -227,3 +227,8 @@
   :after evil
   :config
   (global-evil-surround-mode 1))
+
+(use-package diff-hl
+  :ensure t
+  :hook
+  (dired-mode . diff-hl-dired-mode))

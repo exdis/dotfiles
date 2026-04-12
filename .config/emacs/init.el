@@ -50,7 +50,11 @@
  ;; Sideline flymake
  '(sideline-flymake-error   ((t (:foreground "#AA3731" :slant italic))))
  '(sideline-flymake-warning ((t (:foreground "#CB8927" :slant italic))))
- '(sideline-flymake-note    ((t (:foreground "#448C27" :slant italic)))))
+ '(sideline-flymake-note    ((t (:foreground "#448C27" :slant italic))))
+ ;; Diff HL
+ '(diff-hl-margin-insert ((t (:foreground "#448C27" :inherit nil))))
+ '(diff-hl-margin-change ((t (:foreground "#FFBC5D" :inherit nil))))
+ '(diff-hl-margin-delete ((t (:foreground "#AA3731" :inherit nil)))))
 
 ;; --- Centaur tabs ---
 (setq centaur-tabs-set-icons t)
@@ -126,3 +130,13 @@
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(gleam-ts-mode . ("gleam" "lsp")))
   (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nixd"))))
+
+;; --- Diff HL ---
+(setq diff-hl-margin-symbols-alist
+      '((insert . "│")
+        (delete . "│")
+        (change . "│")
+        (unknown . "│")
+        (ignored . "│")))
+(diff-hl-margin-mode 1)
+(global-diff-hl-mode 1)
