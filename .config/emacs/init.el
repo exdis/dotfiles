@@ -57,6 +57,7 @@
  '(diff-hl-margin-delete ((t (:foreground "#AA3731" :inherit nil)))))
 
 ;; --- Centaur tabs ---
+(setq centaur-tabs-excluded-prefixes '("*which-key" "*Async-native-compile"))
 (setq centaur-tabs-set-icons t)
 (setq centaur-tabs-icon-type 'nerd-icons)
 (setq centaur-tabs-set-modified-marker t)
