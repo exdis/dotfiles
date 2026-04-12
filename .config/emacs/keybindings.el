@@ -18,10 +18,16 @@
 (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
 (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+(define-key evil-motion-state-map (kbd "C-h") 'evil-window-left)
+(define-key evil-motion-state-map (kbd "C-j") 'evil-window-down)
+(define-key evil-motion-state-map (kbd "C-k") 'evil-window-up)
+(define-key evil-motion-state-map (kbd "C-l") 'evil-window-right)
 
 ;; Tab navigation
 (define-key evil-normal-state-map (kbd "H") 'centaur-tabs-backward)
 (define-key evil-normal-state-map (kbd "L") 'centaur-tabs-forward)
+(define-key evil-motion-state-map (kbd "H") 'centaur-tabs-backward)
+(define-key evil-motion-state-map (kbd "L") 'centaur-tabs-forward)
 
 ;; Keep tab navigation in dired (override evil-collection-dired)
 (evil-define-key 'normal dired-mode-map
