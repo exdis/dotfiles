@@ -221,3 +221,9 @@
   :ensure t
   :custom
   (fill-function-arguments-indent-after-fill t))
+
+(use-package evil-surround
+  :ensure t
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
