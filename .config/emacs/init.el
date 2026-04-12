@@ -33,7 +33,7 @@
 ;; --- Face customizations ---
 
 (custom-set-faces
- ;; Centaur tabs
+ ;; Centaur tabs (also set in packages.el :init for XPM generation timing)
  '(centaur-tabs-active-bar-face     ((t (:background "#FFBC5D"))))
  '(centaur-tabs-default             ((t (:background "#f0f0f0" :foreground "#666"))))
  '(centaur-tabs-selected            ((t (:background "#f5e6cc" :foreground "#333" :weight bold))))
@@ -114,12 +114,16 @@
 
 ;; --- Perspective ---
 
-(setq persp-show-modestring nil)     ;; disable default modeline (telephone-line handles it)
+(setq persp-show-modestring nil)
+(when (daemonp)
+  (setq persp-started-after-server-mode t)
+  (add-hook 'delete-frame-functions #'my/persp-before-delete-frame)
+  (add-hook 'server-after-make-frame-hook #'my/persp-after-make-frame))
 (persp-mode 1)
+
 ;; Scope centaur-tabs to current perspective
 (setq centaur-tabs-buffer-list-function #'my/persp-centaur-tabs-buffer-list)
-(add-hook 'persp-switch-hook
-          (lambda () (centaur-tabs-buffer-update-groups)))
+(add-hook 'persp-switch-hook #'my/persp-refresh-tabs)
 ;; Auto-create perspective on project switch
 (add-hook 'project-after-switch-hook #'my/project-persp-switch)
 ;; Scope consult-buffer to current perspective

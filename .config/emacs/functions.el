@@ -1,13 +1,16 @@
 ;; --- File path utilities ---
 
-(defun copy-relative-file-path ()
+(defun my/copy-relative-file-path ()
   "Copy the current buffer's file path relative to the project root to the clipboard."
   (interactive)
-  (let ((path (file-relative-name (buffer-file-name) default-directory)))
+  (let* ((root (or (when-let ((proj (project-current)))
+                     (project-root proj))
+                   default-directory))
+         (path (file-relative-name (buffer-file-name) root)))
     (kill-new path)
     (message "Copied: %s" path)))
 
-(defun copy-absolute-file-path ()
+(defun my/copy-absolute-file-path ()
   "Copy the current buffer's file absolute path."
   (interactive)
   (let ((path (buffer-file-name)))
@@ -45,7 +48,7 @@
   (setq-local eldoc-documentation-functions
               (remove #'flymake-eldoc-function eldoc-documentation-functions)))
 
-;; --- Corfu ---
+;; --- Frame settings ---
 
 (defun my/apply-frame-settings (&optional frame)
   "Apply frame-specific settings based on whether FRAME is graphical."
@@ -78,8 +81,57 @@
   (if (bound-and-true-p persp-mode)
       (persp-current-buffers* t)
     (centaur-tabs-buffer-list)))
+
 (defun my/project-persp-switch ()
   "Switch to a perspective named after the current project."
   (let ((project-name (project-name (project-current))))
     (when project-name
       (persp-switch project-name))))
+
+(defun my/persp-refresh-tabs ()
+  "Refresh centaur-tabs groups after perspective switch."
+  (centaur-tabs-buffer-update-groups))
+
+(defvar my/persp--saved-hash nil
+  "Saved perspective hash for daemon frame persistence.")
+
+(defvar my/persp--saved-curr-name nil
+  "Saved current perspective name for daemon frame persistence.")
+
+(defun my/persp-before-delete-frame (frame)
+  "Save perspectives from FRAME before it is deleted."
+  (when (and (daemonp)
+             (bound-and-true-p persp-mode)
+             (frame-parameter frame 'persp--hash)
+             (> (hash-table-count (frame-parameter frame 'persp--hash)) 0))
+    (with-selected-frame frame
+      (persp-save)
+      (setq my/persp--saved-hash (copy-hash-table (perspectives-hash frame)))
+      (setq my/persp--saved-curr-name (persp-current-name)))))
+
+(defun my/persp-after-make-frame ()
+  "Share or restore perspectives for new client frame."
+  (when (and (daemonp) (bound-and-true-p persp-mode))
+    (let ((source-hash
+           (or
+            ;; First: share from a live client frame
+            (cl-some (lambda (f)
+                       (and (not (eq f (selected-frame)))
+                            (frame-parameter f 'client)
+                            (let ((h (frame-parameter f 'persp--hash)))
+                              (and h (> (hash-table-count h) 0) h))))
+                     (frame-list))
+            ;; Second: restore from saved hash
+            (and my/persp--saved-hash
+                 (> (hash-table-count my/persp--saved-hash) 0)
+                 my/persp--saved-hash))))
+      (when source-hash
+        (set-frame-parameter nil 'persp--hash source-hash)
+        (let* ((target-name (or my/persp--saved-curr-name
+                                persp-initial-frame-name))
+               (target-persp (gethash target-name source-hash)))
+          (when target-persp
+            (persp-activate target-persp)))
+        (persp-update-modestring)
+        (setq my/persp--saved-hash nil)
+        (setq my/persp--saved-curr-name nil)))))

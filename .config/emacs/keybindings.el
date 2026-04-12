@@ -36,8 +36,8 @@
 
 ;; Copy relative file path
 (my-leader-def
-  "yy" '(copy-relative-file-path :which-key "copy relative path")
-  "yY" '(copy-absolute-file-path :which-key "copy absolute path"))
+  "yy" '(my/copy-relative-file-path :which-key "copy relative path")
+  "yY" '(my/copy-absolute-file-path :which-key "copy absolute path"))
 
 ;; NeoTree
 (my-leader-def
@@ -46,7 +46,6 @@
 ;; Search
 (my-leader-def
   "/" '(consult-ripgrep :which-key "ripgrep search")
-  ;; "SPC" '(consult-fd :which-key "find file"))
   "SPC" '(project-find-file :which-key "find file"))
 
 ;; Enhanced buffer switching
@@ -62,7 +61,7 @@
 
 ;; Flymake
 (my-leader-def
-  "d" '(:ignore t :which-key "diagnostics" )
+  "d" '(:ignore t :which-key "diagnostics")
   "dd" '(flymake-show-buffer-diagnostics :which-key "list diagnostics")
   "dn" '(flymake-goto-next-error :which-key "next error")
   "dp" '(flymake-goto-prev-error :which-key "prev error"))

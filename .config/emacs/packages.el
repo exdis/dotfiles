@@ -119,8 +119,7 @@
    '(centaur-tabs-active-bar-face ((t (:background "#FFBC5D"))))))
 
 (use-package xclip
-  :ensure t
-  :after evil)
+  :ensure t)
 
 (use-package neotree
   :ensure t
@@ -178,7 +177,6 @@
   (gleam-ts-mode . eglot-ensure)
   (python-ts-mode . eglot-ensure)
   (nix-ts-mode . eglot-ensure)
-  (zig-mode . eglot-ensure)
   (haskell-mode . eglot-ensure)
   ((html-mode css-ts-mode) . eglot-ensure))
 
