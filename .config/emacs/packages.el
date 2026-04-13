@@ -19,6 +19,8 @@
 (use-package evil-collection
   :ensure t
   :after evil
+  :init
+  (setq evil-collection-key-blacklist '("H" "L"))
   :config
   (evil-collection-init '(neotree dired)))
 

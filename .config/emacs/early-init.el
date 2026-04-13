@@ -1,3 +1,6 @@
+;; Window bar
+(add-to-list 'default-frame-alist '(undecorated . t))
+
 ;; Fonts
 (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-12"))
 

@@ -54,7 +54,18 @@
  ;; Diff HL
  '(diff-hl-margin-insert ((t (:foreground "#448C27" :inherit nil))))
  '(diff-hl-margin-change ((t (:foreground "#FFBC5D" :inherit nil))))
- '(diff-hl-margin-delete ((t (:foreground "#AA3731" :inherit nil)))))
+ '(diff-hl-margin-delete ((t (:foreground "#AA3731" :inherit nil))))
+ ;; Telephone line
+ '(telephone-line-evil ((t (:foreground "#ffffff" :weight bold :inherit mode-line))))
+ '(telephone-line-evil-normal ((t (:background "#c45a5a" :inherit telephone-line-evil))))
+ '(telephone-line-evil-insert ((t (:background "#5a9e5a" :inherit telephone-line-evil))))
+ '(telephone-line-evil-visual ((t (:background "#d4a055" :inherit telephone-line-evil))))
+ '(telephone-line-evil-motion ((t (:background "#5570a8" :inherit telephone-line-evil))))
+ '(telephone-line-evil-emacs ((t (:background "#8a5aaa" :inherit telephone-line-evil))))
+ '(telephone-line-evil-operator ((t (:background "#a870b0" :inherit telephone-line-evil))))
+ '(telephone-line-evil-replace ((t (:background "#b05050" :inherit telephone-line-evil))))
+ '(telephone-line-accent-active ((t (:background "#d0d0d0" :foreground "#000000" :inherit mode-line))))
+ '(telephone-line-accent-inactive ((t (:background "#e8e8e8" :foreground "#777777" :inherit mode-line-inactive)))))
 
 ;; --- Centaur tabs ---
 (setq centaur-tabs-excluded-prefixes '("*which-key" "*Async-native-compile"))
@@ -65,6 +76,7 @@
 (setq centaur-tabs-buffer-groups-function #'my/centaur-tabs-buffer-groups)
 (centaur-tabs-mode 1)
 (centaur-tabs-headline-match)
+(centaur-tabs-change-fonts "FiraCode Nerd Font" 120)
 
 ;; --- Frame-specific settings (daemon-compatible) ---
 (if (daemonp)
@@ -128,7 +140,7 @@
 (add-hook 'project-after-switch-hook #'my/project-persp-switch)
 ;; Scope consult-buffer to current perspective
 (with-eval-after-load 'consult
-  (consult-customize consult--source-buffer :hidden t :default nil)
+  (consult-customize consult-source-buffer :hidden t :default nil)
   (add-to-list 'consult-buffer-sources persp-consult-source))
 
 ;; --- Telephone line ---

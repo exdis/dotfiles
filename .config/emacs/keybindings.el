@@ -29,11 +29,6 @@
 (define-key evil-motion-state-map (kbd "H") 'centaur-tabs-backward)
 (define-key evil-motion-state-map (kbd "L") 'centaur-tabs-forward)
 
-;; Keep tab navigation in dired (override evil-collection-dired)
-(evil-define-key 'normal dired-mode-map
-  "H" 'centaur-tabs-backward
-  "L" 'centaur-tabs-forward)
-
 ;; Copy relative file path
 (my-leader-def
   "yy" '(my/copy-relative-file-path :which-key "copy relative path")
@@ -42,6 +37,10 @@
 ;; NeoTree
 (my-leader-def
   "n" '(neotree-toggle :which-key "file tree"))
+
+;; Neotree: rebind hidden file toggle (H is blacklisted for tab nav)
+(evil-define-key 'normal neotree-mode-map
+  "gh" 'neotree-hidden-file-toggle)
 
 ;; Search
 (my-leader-def
