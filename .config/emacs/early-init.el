@@ -1,6 +1,11 @@
 ;; Window bar
 (add-to-list 'default-frame-alist '(undecorated . t))
 
+;; macOS modifier keys: use Command as Meta, Option as Super
+(when (eq system-type 'darwin)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'super))
+
 ;; Fonts
 (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-12"))
 

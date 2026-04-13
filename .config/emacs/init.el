@@ -68,7 +68,8 @@
  '(telephone-line-accent-inactive ((t (:background "#e8e8e8" :foreground "#777777" :inherit mode-line-inactive)))))
 
 ;; --- Centaur tabs ---
-(setq centaur-tabs-excluded-prefixes '("*which-key" "*Async-native-compile"))
+(dolist (prefix '(" *which-key" "*Async-native-compile"))
+  (add-to-list 'centaur-tabs-excluded-prefixes prefix))
 (setq centaur-tabs-set-icons t)
 (setq centaur-tabs-icon-type 'nerd-icons)
 (setq centaur-tabs-set-modified-marker t)

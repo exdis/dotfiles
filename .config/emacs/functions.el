@@ -79,7 +79,11 @@
 (defun my/persp-centaur-tabs-buffer-list ()
   "Return buffer list scoped to current perspective."
   (if (bound-and-true-p persp-mode)
-      (cl-remove-if-not #'buffer-live-p (persp-current-buffers* t))
+      (seq-filter (lambda (b)
+                    (and (buffer-live-p b)
+                         (or (buffer-file-name b)
+                             (not (char-equal ?\  (aref (buffer-name b) 0))))))
+                  (persp-current-buffers* t))
     (centaur-tabs-buffer-list)))
 
 (defun my/project-persp-switch ()
