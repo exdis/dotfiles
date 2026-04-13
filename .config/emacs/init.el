@@ -44,8 +44,8 @@
  '(corfu-default ((t (:background "#e8e8e8"))))
  '(corfu-current ((t (:background "#c0c0c0" :foreground "#333"))))
  ;; Flymake
- '(flymake-error   ((t (:underline (:style line :color "#d4a0a0")))))
- '(flymake-warning ((t (:underline (:style line :color "#d4b99a")))))
+ '(flymake-error   ((t (:underline (:style wave :color "#d4a0a0")))))
+ '(flymake-warning ((t (:underline (:style wave :color "#d4b99a")))))
  '(flymake-note    ((t (:underline (:style line :color "#b5c9a8")))))
  ;; Sideline flymake
  '(sideline-flymake-error   ((t (:foreground "#AA3731" :slant italic))))
