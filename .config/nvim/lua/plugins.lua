@@ -56,6 +56,20 @@ require("lazy").setup({
         end,
         desc = "Open file picker",
       },
+      {
+        "fg",
+        function() require('fff').live_grep() end,
+        desc = 'LiFFFe grep',
+      },
+      {
+        "fz",
+        function() require('fff').live_grep({
+          grep = {
+            modes = { 'fuzzy', 'plain' }
+          }
+        }) end,
+        desc = 'Live fffuzy grep',
+      },
     },
   },
 
