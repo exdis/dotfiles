@@ -4,7 +4,8 @@
  "ff" '(find-file :which-key "find file")
  "fs" '(save-buffer :which-key "save file")
  "b" '(:ignore t :which-key "buffer")
- "bd" '(kill-current-buffer :which-key "kill buffer"))
+ "bd" '(kill-current-buffer :which-key "kill buffer")
+ "q" '(kill-current-buffer :which-key "close buffer"))
 
 ;; Help keys
 (my-leader-def
@@ -57,6 +58,12 @@
   "lr" '(eglot-rename :which-key "rename")
   "la" '(eglot-code-actions :which-key "code actions")
   "lf" '(eglot-format :which-key "format"))
+
+;; Hover documentation
+(define-key evil-normal-state-map (kbd "K") 'eldoc-box-help-at-point)
+
+;; Go to implementation (gI, since gi is evil-insert-resume)
+(define-key evil-normal-state-map (kbd "gI") 'eglot-find-implementation)
 
 ;; Flymake
 (my-leader-def

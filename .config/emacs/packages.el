@@ -22,7 +22,7 @@
   :init
   (setq evil-collection-key-blacklist '("H" "L"))
   :config
-  (evil-collection-init '(neotree dired)))
+  (evil-collection-init '(neotree dired xref)))
 
 (use-package evil-commentary
   :ensure t
@@ -191,6 +191,9 @@
 (use-package flymake-eslint
   :ensure t
   :after eglot)
+
+(use-package eldoc-box
+  :ensure t)
 
 (use-package sideline
   :ensure t

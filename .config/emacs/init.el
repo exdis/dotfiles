@@ -162,6 +162,27 @@
         (accent . (telephone-line-airline-position-segment))))
 (telephone-line-mode 1)
 
+;; --- Eldoc box ---
+;; Guard against nil eldoc--doc-buffer and stale docs from other buffers.
+;; Instead of immediately showing whatever is in the global eldoc--doc-buffer
+;; (which may be from a different language server), request fresh documentation
+;; from the current buffer's eldoc backends first.
+(with-eval-after-load 'eldoc-box
+  (define-advice eldoc-box-help-at-point (:around (orig-fn) fresh-docs)
+    "Request fresh docs from current buffer before displaying."
+    (if (eldoc-box--frame-visible-p)
+        ;; Frame already visible — just focus it (same as original).
+        (eldoc-box-focus-frame)
+      (if (not (and (boundp 'eldoc--doc-buffer) eldoc--doc-buffer))
+          (message "No documentation available at point")
+        ;; Clear the doc buffer so we don't show stale content.
+        (with-current-buffer eldoc--doc-buffer
+          (let ((inhibit-read-only t))
+            (erase-buffer)))
+        ;; Now call original — it will show "no doc" initially, then the
+        ;; async update hook will populate it when backends respond.
+        (funcall orig-fn)))))
+
 ;; --- Eglot ---
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(gleam-ts-mode . ("gleam" "lsp")))
