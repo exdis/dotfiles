@@ -17,6 +17,9 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
+;; Auto-close brackets, parens, quotes
+(electric-pair-mode 1)
+
 ;; Redirect custom-set-variables to a separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
