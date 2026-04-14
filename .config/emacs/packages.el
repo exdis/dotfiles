@@ -166,6 +166,9 @@
 (use-package haskell-mode
   :ensure t)
 
+(use-package markdown-mode
+  :ensure t)
+
 (use-package gleam-ts-mode
   :ensure t
   :mode "\\.gleam\\'")
