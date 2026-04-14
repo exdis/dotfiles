@@ -46,7 +46,8 @@
 ;; Search
 (my-leader-def
   "/" '(consult-ripgrep :which-key "ripgrep search")
-  "SPC" '(project-find-file :which-key "find file"))
+  "SPC" '(fff-find-file :which-key "fff find file")
+  "sf" '(project-find-file :which-key "project find file"))
 
 ;; Enhanced buffer switching
 (my-leader-def

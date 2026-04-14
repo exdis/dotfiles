@@ -251,3 +251,7 @@
   :init
   (setq persp-mode-prefix-key nil)
   (setq persp-suppress-no-prefix-key-warning t))
+
+;; --- fff (fast file finder) ---
+(add-to-list 'load-path (expand-file-name "fff-emacs" user-emacs-directory))
+(require 'fff)
