@@ -145,10 +145,13 @@
   :config
   (vertico-mode))
 
+(use-package hotfuzz
+  :ensure t)
+
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
+  (completion-styles '(hotfuzz orderless basic))
   (orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
@@ -208,7 +211,11 @@
   (setq sideline-flymake-display-mode 'point))
 
 (use-package consult
-  :ensure t)
+  :ensure t
+  :init
+  ;; Use valid Unicode range for tofu chars (hotfuzz compat)
+  (setq consult--tofu-char #x100000
+        consult--tofu-range #x00fffe))
 
 (use-package treesit-auto
   :ensure t
