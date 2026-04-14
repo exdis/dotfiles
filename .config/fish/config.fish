@@ -142,3 +142,14 @@ set -g fish_cursor_default block
 set -g fish_cursor_insert block
 set -g fish_cursor_replace block
 set -g fish_cursor_visual block
+
+# Emacs
+function erestart -d "Restart Emacs daemon"
+    emacsclient -e '(kill-emacs)' 2>/dev/null
+    sleep 1
+    rm -f "$TMPDIR"emacs(id -u)/server 2>/dev/null
+    launchctl kickstart -k gui/(id -u)/org.gnu.emacs
+end
+
+alias emc='emacsclient -nw'
+alias em='emacs -nw'
