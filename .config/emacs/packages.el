@@ -44,7 +44,9 @@
   (which-key-mode))
 
 (use-package nerd-icons
-  :ensure t)
+  :ensure t
+  :init
+  (setq nerd-icons-font-family "FiraCode Nerd Font"))
 
 (use-package ligature
   :ensure t
