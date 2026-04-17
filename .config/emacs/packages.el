@@ -13,6 +13,8 @@
   :init
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
+  (setq evil-symbol-word-search t)     ; * / # match symbols (incl. _), not just words
+  (setq evil-search-module 'evil-search) ; vim-style hlsearch: persistent match highlighting
   :config
   (evil-mode 1))
 
