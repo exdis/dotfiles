@@ -25,9 +25,13 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; Backups and auto-save
-(setq backup-directory-alist '(("." . "~/.emacs-backup")))
-(setq auto-save-file-name-transforms '((".*" "~/.emacs-save/" t)))
+;; Disable backups and lockfiles
+(setq make-backup-files nil)
+(setq create-lockfiles nil)
+(setq backup-by-copying t)
+
+;; Auto-revert files changed on disk
+(global-auto-revert-mode 1)
 
 ;; Trust common dir-locals values
 (setq safe-local-variable-values
