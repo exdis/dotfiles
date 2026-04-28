@@ -167,25 +167,43 @@
 (telephone-line-mode 1)
 
 ;; --- Eldoc box ---
-;; Guard against nil eldoc--doc-buffer and stale docs from other buffers.
-;; Instead of immediately showing whatever is in the global eldoc--doc-buffer
-;; (which may be from a different language server), request fresh documentation
-;; from the current buffer's eldoc backends first.
+;; Guard against stale docs from other buffers and force a fresh eldoc query.
+;; The default `eldoc-box-help-at-point` shows whatever is currently in the
+;; global `eldoc--doc-buffer` (which may be nil or from a different buffer)
+;; and relies on an async hook to update the frame later. We:
+;;   1. Clear stale content in the doc buffer.
+;;   2. Install the async-update hook.
+;;   3. Display a placeholder childframe.
+;;   4. Trigger a fresh eldoc query so backends repopulate the frame.
 (with-eval-after-load 'eldoc-box
   (define-advice eldoc-box-help-at-point (:around (orig-fn) fresh-docs)
-    "Request fresh docs from current buffer before displaying."
+    "Force a fresh eldoc query before/while displaying the childframe."
     (if (eldoc-box--frame-visible-p)
-        ;; Frame already visible — just focus it (same as original).
         (eldoc-box-focus-frame)
-      (if (not (and (boundp 'eldoc--doc-buffer) eldoc--doc-buffer))
-          (message "No documentation available at point")
-        ;; Clear the doc buffer so we don't show stale content.
+      ;; Wipe stale content.
+      (when (and (boundp 'eldoc--doc-buffer)
+                 (buffer-live-p eldoc--doc-buffer))
         (with-current-buffer eldoc--doc-buffer
-          (let ((inhibit-read-only t))
-            (erase-buffer)))
-        ;; Now call original — it will show "no doc" initially, then the
-        ;; async update hook will populate it when backends respond.
-        (funcall orig-fn)))))
+          (let ((inhibit-read-only t)) (erase-buffer))))
+      ;; Install the async update hook locally (orig-fn does this only if
+      ;; eldoc--doc-buffer is already bound to a live buffer).
+      (add-hook 'eldoc-display-functions
+                #'eldoc-box--help-at-point-async-update 0 t)
+      ;; Show placeholder frame at point.
+      (let ((eldoc-box-position-function eldoc-box-at-point-position-function))
+        (eldoc-box--display "Loading documentation…"))
+      (setq eldoc-box--help-at-point-last-point (point))
+      (run-with-timer 0.1 nil #'eldoc-box--help-at-point-cleanup)
+      (when eldoc-box-clear-with-C-g
+        (advice-add #'keyboard-quit :before #'eldoc-box--quit-frame-not-in-childframe))
+      ;; Force backends to send fresh docs; the async hook updates the frame.
+      (eldoc-print-current-symbol-info t))))
+
+;; Don't pop up the *eldoc* buffer in a split — childframe (eldoc-box) handles K.
+;; Echo area still shows passive eldoc hints.
+(with-eval-after-load 'eldoc
+  (setq eldoc-display-functions
+        (remq 'eldoc-display-in-buffer eldoc-display-functions)))
 
 ;; --- Eglot ---
 (with-eval-after-load 'eglot
