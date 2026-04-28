@@ -63,6 +63,9 @@
 ;; Hover documentation
 (define-key evil-normal-state-map (kbd "K") 'eldoc-box-help-at-point)
 
+;; Clear search highlight on RET in normal state (vim muscle memory)
+(define-key evil-normal-state-map (kbd "RET") 'evil-ex-nohighlight)
+
 ;; Go to implementation (gI, since gi is evil-insert-resume)
 (define-key evil-normal-state-map (kbd "gI") 'eglot-find-implementation)
 
