@@ -106,6 +106,11 @@
 (setq dashboard-set-file-icons t)
 (dashboard-setup-startup-hook)
 
+;; Show dashboard (instead of *scratch*) for both initial frame and every
+;; emacsclient-created frame.
+(setq initial-buffer-choice
+      (lambda () (get-buffer-create "*dashboard*")))
+
 ;; --- Clipboard ---
 
 (when (and (getenv "WAYLAND_DISPLAY") (executable-find "wl-copy"))
