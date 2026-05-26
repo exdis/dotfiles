@@ -1,54 +1,12 @@
 -- Utils
 local Map = require('utils').Map
 
--- Plugins
+-- Leader key (must be set before plugins load)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+-- Plugins (setup now lives in lua/plugins.lua via lazy specs)
 require('plugins')
 
--- Main config (theme, keybingings etc.)
+-- Main config (theme, keybindings etc.)
 require('main-config')
-
--- LSP
-require('lsp-config')
-
--- Autoclose / autopairs
-require('nvim-autopairs').setup()
-
--- NeoScroll
-require('neoscroll').setup()
-
--- Nvim tree
-require('nvimtree-config')
-
--- LuaLine
-require('lualine-config')
-
--- Trouble
-require('trouble').setup()
-
--- Scrollbar
-require('scrollbar-config')
-
--- Git signs
-require('gitsigns').setup()
-require('scrollbar.handlers.gitsigns').setup()
-
--- IndentLine
-require('indentline-config')
-
--- Telescope
-require('telescope-config')
-
--- NeoFormat
-require('neoformat-config')
-
--- TreeSitter
-require('treesitter')
-
--- Spectre (find/replace)
-require('spectre-config')
-
--- TagBar
-Map('n', '<leader>t', ':TagbarToggle<CR>')
-
--- Trouble
-Map('n', 'tt', '<cmd>TroubleToggle<cr>')
