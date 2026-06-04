@@ -5,13 +5,13 @@
 # nix-darwin does NOT install Homebrew; it manages a Brewfile and runs
 # `brew bundle` on activation against the existing /opt/homebrew install.
 #
-# This list encodes the DESIRED end-state, i.e. the current machine MINUS the
-# tools we've decided are obsolete (see "Retired at Phase 6 cutover" below).
-# During the transition `onActivation.cleanup = "none"`, so nothing is ever
-# removed or upgraded -- activation only ensures the declared items are present
-# (they already are, so it's effectively a no-op). At the Phase 6 cutover we
-# flip cleanup to "zap", at which point everything still installed but no longer
-# declared here (the obsolete tools) gets uninstalled automatically.
+# This list encodes the DESIRED end-state, i.e. the machine MINUS the tools
+# we've decided are obsolete (see "Retired at Phase 6 cutover" below).
+# `onActivation.cleanup = "zap"` (flipped at the Phase 6 cutover): every brew
+# package still installed but no longer declared here is uninstalled (and its
+# support files zapped) on activation. The installed set was diffed against this
+# list before flipping -- zap removes exactly the obsolete items and nothing
+# else. This list is now authoritative: anything not declared here is removed.
 #
 # Derived from the Phase 0 snapshot ~/.config/migration-snapshot/Brewfile, but:
 #   * only LEAVES are declared (explicitly-requested formulae); Homebrew pulls
@@ -20,12 +20,13 @@
 #     NOT managed here -- those are npm/cargo globals (auth tooling + dev CLIs),
 #     not Homebrew packages, and are churny/work-specific. Left as-is for now.
 #
-# Retired at Phase 6 cutover (deliberately absent here; removed by cleanup="zap"
-# once flipped, plus brew uninstall / yadm rm of their leftover configs):
+# Retired at the Phase 6 cutover (deliberately absent here; removed by
+# cleanup="zap", plus brew service stop / yadm rm of their leftover configs):
 #   taps : felixkratz/formulae, koekeishiya/formulae
 #   brews: yabai, skhd, sketchybar          (replaced by AeroSpace)
 #   casks: amethyst, phoenix                (other window managers)
 #          alacritty, chromedriver          (unused; user-confirmed)
+#          font-fira-code-nerd-font         (moved to nixpkgs fonts.packages)
 # Also dropped vs snapshot, as no longer needed declaratively:
 #   tap homebrew/cask-fonts (archived -> merged into homebrew/cask)
 #   tap homebrew/services   (auto-tapped by `brew services`)
@@ -33,9 +34,9 @@
   homebrew = {
     enable = true;
 
-    # Non-destructive during the transition. Flip cleanup -> "zap" at Phase 6.
+    # Authoritative end-state: uninstall + zap anything not declared here.
     onActivation = {
-      cleanup = "none";
+      cleanup = "zap";
       autoUpdate = false;
       upgrade = false;
     };
@@ -116,9 +117,8 @@
       "claude-code"
       "dotnet-sdk"
       "emacs-app"
-      # font-fira-code-nerd-font: moved to nixpkgs (fonts.packages in
-      # ./default.nix). Still installed via brew until the Phase 6 cleanup="zap"
-      # removes it; the nixpkgs copy is installed alongside in the meantime.
+      # font-fira-code-nerd-font moved to nixpkgs (fonts.packages in
+      # ./default.nix); the brew cask is removed by cleanup="zap" on activation.
       "font-sf-pro"
       "ghostty"
       "git-credential-manager"
