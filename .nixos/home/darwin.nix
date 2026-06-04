@@ -1,0 +1,29 @@
+{ ... }:
+
+# macOS-specific home-manager configuration. Imports the shared cross-platform
+# module and adds anything that only applies to the Mac.
+{
+  imports = [ ./common.nix ];
+
+  home.username = "dkolesnikov";
+  home.homeDirectory = "/Users/dkolesnikov";
+
+  home.stateVersion = "25.05";
+
+  # --- kanata config ----------------------------------------------------
+  # ~/.config/kanata.kbd (home-row mods + Cyrillic deflocalkeys). macOS-only
+  # here because the config uses deflocalkeys-macos / macos-dev-names-exclude;
+  # a Linux host would ship its own .kbd. Static (kanata never writes back), so
+  # delivered as a read-only /nix/store copy. The launchd daemon that runs
+  # kanata against this path is declared in hosts/darwin/default.nix.
+  xdg.configFile."kanata.kbd".source = ./kanata/kanata.kbd;
+
+  # --- AeroSpace (tiling window manager) --------------------------------
+  # ~/.config/aerospace/aerospace.toml. Self-contained (no external scripts),
+  # static (AeroSpace never writes it back), so delivered as a read-only
+  # /nix/store copy. Edit the source then rebuild + reload-config in AeroSpace
+  # (alt-shift-semicolon -> esc). The AeroSpace cask is declared via homebrew
+  # in Phase 3; obsolete neighbours (yabai, sketchybar, phoenix, skhd) are left
+  # unmanaged and retired at the Phase 6 cutover.
+  xdg.configFile."aerospace/aerospace.toml".source = ./aerospace/aerospace.toml;
+}

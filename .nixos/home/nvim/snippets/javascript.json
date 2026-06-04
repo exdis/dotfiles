@@ -1,0 +1,14 @@
+{
+	"console.log": {
+		"prefix": "cl",
+		"body":[
+			"console.log('$1');"
+		],
+		"description": "Log output to console"
+	},
+	"debugger": {
+		"prefix": "db",
+		"body": ["debugger;"],
+		"description": "Debugger"
+	}
+}

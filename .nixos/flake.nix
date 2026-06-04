@@ -5,6 +5,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,6 +45,13 @@
         {
           programs.mango.enable = true;
         }
+      ];
+      specialArgs = { inherit inputs; };
+    };
+
+    darwinConfigurations."Deniss-MacBook-Pro" = inputs.nix-darwin.lib.darwinSystem {
+      modules = [
+        ./hosts/darwin/default.nix
       ];
       specialArgs = { inherit inputs; };
     };
