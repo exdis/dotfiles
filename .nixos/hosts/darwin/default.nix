@@ -4,6 +4,7 @@
   imports = [
     inputs.home-manager.darwinModules.home-manager
     ./homebrew.nix
+    ./defaults.nix
   ];
 
   # --- home-manager -----------------------------------------------------
