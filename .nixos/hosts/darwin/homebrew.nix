@@ -39,6 +39,9 @@
       cleanup = "zap";
       autoUpdate = false;
       upgrade = false;
+      # Homebrew >=5.x requires explicit confirmation to run a bundle cleanup;
+      # nix-darwin's command omits it, so pass it through here non-interactively.
+      extraFlags = [ "--force-cleanup" ];
     };
 
     taps = [
