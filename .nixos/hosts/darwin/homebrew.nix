@@ -7,11 +7,10 @@
 #
 # This list encodes the DESIRED end-state, i.e. the machine MINUS the tools
 # we've decided are obsolete (see "Retired at Phase 6 cutover" below).
-# `onActivation.cleanup = "zap"` (flipped at the Phase 6 cutover): every brew
-# package still installed but no longer declared here is uninstalled (and its
-# support files zapped) on activation. The installed set was diffed against this
-# list before flipping -- zap removes exactly the obsolete items and nothing
-# else. This list is now authoritative: anything not declared here is removed.
+# `onActivation.cleanup = "uninstall"` (set at the Phase 6 cutover): every brew
+# package still installed but no longer declared here is uninstalled on
+# activation. This list is now authoritative: anything not declared here is
+# removed. (See the onActivation block for why "uninstall" over "zap".)
 #
 # Derived from the Phase 0 snapshot ~/.config/migration-snapshot/Brewfile, but:
 #   * only LEAVES are declared (explicitly-requested formulae); Homebrew pulls
@@ -21,7 +20,8 @@
 #     not Homebrew packages, and are churny/work-specific. Left as-is for now.
 #
 # Retired at the Phase 6 cutover (deliberately absent here; removed by
-# cleanup="zap", plus brew service stop / yadm rm of their leftover configs):
+# cleanup="uninstall", plus brew service stop / yadm rm of their leftover
+# configs):
 #   taps : felixkratz/formulae, koekeishiya/formulae
 #   brews: yabai, skhd, sketchybar          (replaced by AeroSpace)
 #   casks: amethyst, phoenix                (other window managers)
@@ -34,9 +34,14 @@
   homebrew = {
     enable = true;
 
-    # Authoritative end-state: uninstall + zap anything not declared here.
+    # Authoritative end-state: uninstall anything not declared here. We use
+    # "uninstall" rather than "zap" because zap also deletes app-support files
+    # in TCC-protected locations (~/Library/...), which silently fails during
+    # activation unless the process has Full Disk Access -- leaving casks only
+    # partially removed. "uninstall" reliably removes the package without that
+    # dependency (leftover preference files can be cleaned manually if desired).
     onActivation = {
-      cleanup = "zap";
+      cleanup = "uninstall";
       autoUpdate = false;
       upgrade = false;
       # Homebrew >=5.x requires explicit confirmation to run a bundle cleanup;
