@@ -1,5 +1,15 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 
+let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+
+  # tmux-thumbs "copy to clipboard" command. macOS has pbcopy; Linux picks
+  # wl-copy (Wayland) when present, else xclip (X11). The chosen tool must be
+  # installed on the host (wl-clipboard / xclip) -- add it in the Linux home.
+  thumbsCopy =
+    if isDarwin then "pbcopy"
+    else "(command -v wl-copy >/dev/null 2>&1 && wl-copy || xclip -selection clipboard)";
+in
 # Cross-platform home-manager configuration shared between the macOS
 # (nix-darwin) and Linux (NixOS) hosts. Keep ONLY things that make sense on
 # both platforms here. Host-specific bits live in ./darwin.nix / ./linux.nix.
@@ -14,10 +24,11 @@
   programs.git = {
     enable = true;
 
-    # TRANSITION ONLY: generate ~/.config/git/config but install NO git binary,
-    # so the system's /usr/bin/git stays the active git and nothing changes.
-    # At cutover, delete this line (defaults to pkgs.git) and remove ~/.gitconfig.
-    package = pkgs.emptyDirectory;
+    # TRANSITION ONLY (macOS): generate ~/.config/git/config but install NO git
+    # binary, so the system's /usr/bin/git stays the active git and nothing
+    # changes. On Linux there is no system git, so HM provides the default
+    # pkgs.git. At the macOS cutover, drop this and remove ~/.gitconfig.
+    package = lib.mkIf isDarwin pkgs.emptyDirectory;
 
     # Keep machine/work-specific settings (credential helpers, azrepos creds)
     # out of the dotfiles, in untracked ~/.gitlocal.
@@ -83,8 +94,8 @@
   # The original config is delivered verbatim via extraConfig. Plugins stay
   # managed by TPM (the original `run '~/.tmux/plugins/tpm/tpm'` is kept),
   # because one plugin (aaronpowell/tmux-weather) isn't packaged in nixpkgs.
-  # NOTE: line `@thumbs-command 'pbcopy'` is macOS-specific; parameterize for
-  # Linux (wl-copy/xclip) when wiring common.nix into the NixOS host.
+  # The tmux-thumbs copy command is parameterized per-platform (see `thumbsCopy`
+  # in the let block at the top): pbcopy on macOS, wl-copy/xclip on Linux.
   programs.tmux = {
     enable = true;
     sensibleOnTop = false; # tmux-sensible is already loaded via TPM
@@ -123,8 +134,9 @@
         "select-layout even-vertical" \
         "select-layout even-horizontal"
 
-      # reload configuration
-      bind r source-file ~/.tmux.conf
+      # reload configuration (HM writes the config here; ~/.tmux.conf is the
+      # legacy path that still wins until it's removed from yadm at cutover)
+      bind r source-file ~/.config/tmux/tmux.conf
 
       # panes navigation
       unbind k
@@ -245,8 +257,8 @@
       # vim
       set-option -s escape-time 10
 
-      # tmux-thumbs
-      set -g @thumbs-command 'echo -n {} | pbcopy'
+      # tmux-thumbs (copy command is platform-specific, see thumbsCopy)
+      set -g @thumbs-command 'echo -n {} | ${thumbsCopy}'
 
       # Init TPM
       run '~/.tmux/plugins/tpm/tpm'
@@ -268,9 +280,9 @@
   #   * `set -U fish_user_paths $HOME/.pyenv/bin ...` - it mutated universal
   #     state on every load; pyenv's own `pyenv init` handles PATH.
   #
-  # NOTE: a few bits are macOS-specific (the /usr/local/* PATH entries and the
-  # `erestart` launchctl logic). Parameterize when wiring common.nix into the
-  # NixOS host.
+  # The macOS-specific bits are now parameterized per-platform: the /usr/local
+  # PATH entries (shellInit) and the `erestart` launchctl logic are guarded by
+  # `isDarwin`, with Linux equivalents provided.
   programs.fish = {
     enable = true;
 
@@ -349,12 +361,19 @@
 
       erestart = {
         description = "Restart Emacs daemon";
-        body = ''
-          emacsclient -e '(kill-emacs)' 2>/dev/null
-          sleep 1
-          rm -f "$TMPDIR"emacs(id -u)/server 2>/dev/null
-          launchctl kickstart -k gui/(id -u)/org.gnu.emacs
-        '';
+        body =
+          if isDarwin then ''
+            emacsclient -e '(kill-emacs)' 2>/dev/null
+            sleep 1
+            rm -f "$TMPDIR"emacs(id -u)/server 2>/dev/null
+            launchctl kickstart -k gui/(id -u)/org.gnu.emacs
+          '' else ''
+            emacsclient -e '(kill-emacs)' 2>/dev/null
+            sleep 1
+            # If you manage the daemon via systemd (services.emacs), replace the
+            # line below with: systemctl --user restart emacs.service
+            emacs --daemon
+          '';
       };
 
       __fish_complete_pip = ''
@@ -378,8 +397,11 @@
       # Go
       set -gx GOPATH $HOME/dev/golang
 
-      # PATH (macOS dev tools)
-      set -gx PATH /usr/local/go/bin /usr/local/bin $GOPATH/bin /usr/local/sbin $HOME/.cargo/bin $HOME/.krew/bin $PATH
+      # PATH (cross-platform user tool dirs)
+      set -gx PATH $GOPATH/bin $HOME/.cargo/bin $HOME/.krew/bin $PATH
+      ${lib.optionalString isDarwin ''
+      # macOS-only legacy/manual install dirs (manual Go, /usr/local prefix)
+      set -gx PATH /usr/local/go/bin /usr/local/bin /usr/local/sbin $PATH''}
 
       set -gx KUBECONFIG $HOME/.kube/config
     '';
@@ -400,8 +422,10 @@
       set -g fish_cursor_replace block
       set -g fish_cursor_visual block
 
-      # pyenv (pyenv binary comes from the existing fish_user_paths universal var)
-      pyenv init - | source
+      # pyenv (only when installed; binary comes from fish_user_paths universal var)
+      if command -v pyenv >/dev/null 2>&1
+        pyenv init - | source
+      end
 
       # pip completion
       complete -fa "(__fish_complete_pip)" -c pip3
