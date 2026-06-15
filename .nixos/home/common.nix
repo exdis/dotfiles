@@ -87,40 +87,29 @@ in
   # so the two machines can diverge if ever needed.
 
   # --- tmux -------------------------------------------------------------
-  # Home-manager writes ~/.config/tmux/tmux.conf. tmux prefers ~/.tmux.conf
-  # when it exists, so during the transition the old file keeps winning;
-  # cutover = removing ~/.tmux.conf from yadm.
+  # Home-manager writes ~/.config/tmux/tmux.conf.
   #
-  # The original config is delivered verbatim via extraConfig. Plugins stay
-  # managed by TPM (the original `run '~/.tmux/plugins/tpm/tpm'` is kept),
-  # because one plugin (aaronpowell/tmux-weather) isn't packaged in nixpkgs.
+  # Plugins are managed declaratively via programs.tmux.plugins (nixpkgs
+  # tmuxPlugins), so TPM is no longer used. tmux-sensible is loaded at the top
+  # via sensibleOnTop; the remaining plugins are sourced after extraConfig.
   # The tmux-thumbs copy command is parameterized per-platform (see `thumbsCopy`
   # in the let block at the top): pbcopy on macOS, wl-copy/xclip on Linux.
   programs.tmux = {
     enable = true;
-    sensibleOnTop = false; # tmux-sensible is already loaded via TPM
+    sensibleOnTop = true; # load tmux-sensible near the top; extraConfig overrides
     clock24 = true; # match tmux's default 24h clock (baseline would force 12h)
 
+    plugins = with pkgs.tmuxPlugins; [
+      urlview
+      vim-tmux-navigator
+      {
+        plugin = tmux-thumbs;
+        # copy command is platform-specific (pbcopy / wl-copy / xclip)
+        extraConfig = "set -g @thumbs-command 'echo -n {} | ${thumbsCopy}'";
+      }
+    ];
+
     extraConfig = ''
-      # Plugins
-      # tpm picks its plugin dir based on whether an XDG config file exists: when
-      # ~/.config/tmux/tmux.conf is present (which HM creates) it switches to
-      # ~/.config/tmux/plugins/ instead of the legacy ~/.tmux/plugins/ where the
-      # plugins are actually installed. Pin the path so tpm finds them. tpm only
-      # sets its own default when this is unset, so this wins.
-      set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
-
-      set -g @plugin 'tmux-plugins/tpm'
-      set -g @plugin 'tmux-plugins/tmux-sensible'
-      set -g @plugin 'tmux-plugins/tmux-urlview'
-      set -g @plugin 'aaronpowell/tmux-weather'
-      set -g @plugin 'christoomey/vim-tmux-navigator'
-      set -g @plugin 'fcsonline/tmux-thumbs'
-
-      # weather
-      set -g @forecast-location Prague
-      set -g @forecast-format '%c%t'+'|'+'%h'+'|'+'%w'+'|'+'%d'
-
       # prefix
       unbind C-b
       set-option -g prefix `
@@ -253,7 +242,7 @@ in
 
       # Statusline segments (soft pastel separators)
       set-option -g status-left "#{?client_prefix,#[bg=colour68],#[bg=colour235]}#[fg=colour252] #S #{?client_prefix,#[fg=colour68],#[fg=colour235]}#[bg=colour235,nobold,noitalics,nounderscore]"
-      set-option -g status-right "#[bg=colour235,fg=colour236 nobold, nounderscore, noitalics]#[bg=colour236,fg=colour246] %Y-%m-%d  %H:%M #[bg=colour236,fg=colour252,nobold,noitalics,nounderscore]#[bg=colour252,fg=colour235] #{forecast} #[bg=colour252,fg=colour235] "
+      set-option -g status-right "#[bg=colour235,fg=colour236 nobold, nounderscore, noitalics]#[bg=colour236,fg=colour246] %Y-%m-%d  %H:%M #[bg=colour236,fg=colour252,nobold,noitalics,nounderscore]#[bg=colour252,fg=colour235] "
 
       # active window: blue block smoothly blending into status bar
       set-window-option -g window-status-current-format "#[bg=colour68,fg=colour235,nobold,noitalics,nounderscore]#[bg=colour68,fg=colour235] #I #[bg=colour68,fg=colour235,bold] #W#{?window_zoomed_flag,*Z,} #[bg=colour235,fg=colour68,nobold,noitalics,nounderscore]"
@@ -263,12 +252,6 @@ in
 
       # vim
       set-option -s escape-time 10
-
-      # tmux-thumbs (copy command is platform-specific, see thumbsCopy)
-      set -g @thumbs-command 'echo -n {} | ${thumbsCopy}'
-
-      # Init TPM
-      run '~/.tmux/plugins/tpm/tpm'
     '';
   };
 
