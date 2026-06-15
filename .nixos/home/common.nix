@@ -103,6 +103,13 @@ in
 
     extraConfig = ''
       # Plugins
+      # tpm picks its plugin dir based on whether an XDG config file exists: when
+      # ~/.config/tmux/tmux.conf is present (which HM creates) it switches to
+      # ~/.config/tmux/plugins/ instead of the legacy ~/.tmux/plugins/ where the
+      # plugins are actually installed. Pin the path so tpm finds them. tpm only
+      # sets its own default when this is unset, so this wins.
+      set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
+
       set -g @plugin 'tmux-plugins/tpm'
       set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'tmux-plugins/tmux-urlview'
