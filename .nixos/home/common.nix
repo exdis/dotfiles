@@ -178,6 +178,14 @@ in
       set-window-option -g mode-keys vi
       set-window-option -g automatic-rename off
 
+      # Run the login shell directly. This also stops tmux-sensible from wrapping
+      # default-command in reattach-to-user-namespace (nixpkgs' sensible bundles
+      # its own copy in the store, unlike the old Homebrew one which was absent):
+      # that wrapper is obsolete on modern macOS and made new windows show up
+      # named "reattach-to-user-namespace". sensible only sets default-command
+      # when it's still the default "".
+      set -g default-command "$SHELL"
+
       # statusbar on top
       set-option -g status-position top
 
@@ -241,14 +249,14 @@ in
       set-window-option -g window-status-separator ""
 
       # Statusline segments (soft pastel separators)
-      set-option -g status-left "#{?client_prefix,#[bg=colour68],#[bg=colour235]}#[fg=colour252] #S #{?client_prefix,#[fg=colour68],#[fg=colour235]}#[bg=colour235,nobold,noitalics,nounderscore]"
-      set-option -g status-right "#[bg=colour235,fg=colour236 nobold, nounderscore, noitalics]#[bg=colour236,fg=colour246] %Y-%m-%d  %H:%M #[bg=colour236,fg=colour252,nobold,noitalics,nounderscore]#[bg=colour252,fg=colour235] "
+      set-option -g status-left "#{?client_prefix,#[bg=colour68],#[bg=colour235]}#[fg=colour252] #S #{?client_prefix,#[fg=colour68],#[fg=colour235]}#[bg=colour235,nobold,noitalics,nounderscore]"
+      set-option -g status-right "#[bg=colour235,fg=colour236 nobold, nounderscore, noitalics]#[bg=colour236,fg=colour246] %Y-%m-%d  %H:%M "
 
       # active window: blue block smoothly blending into status bar
-      set-window-option -g window-status-current-format "#[bg=colour68,fg=colour235,nobold,noitalics,nounderscore]#[bg=colour68,fg=colour235] #I #[bg=colour68,fg=colour235,bold] #W#{?window_zoomed_flag,*Z,} #[bg=colour235,fg=colour68,nobold,noitalics,nounderscore]"
+      set-window-option -g window-status-current-format "#[bg=colour68,fg=colour235,nobold,noitalics,nounderscore]#[bg=colour68,fg=colour235] #I #[bg=colour68,fg=colour235,bold] #W#{?window_zoomed_flag,*Z,} #[bg=colour235,fg=colour68,nobold,noitalics,nounderscore]"
 
       # inactive windows: soft gray blocks
-      set-window-option -g window-status-format "#[bg=colour236,fg=colour235,noitalics]#[bg=colour236,fg=colour252] #I #[bg=colour236,fg=colour252] #W #[bg=colour235,fg=colour236,noitalics]"
+      set-window-option -g window-status-format "#[bg=colour236,fg=colour235,noitalics]#[bg=colour236,fg=colour252] #I #[bg=colour236,fg=colour252] #W #[bg=colour235,fg=colour236,noitalics]"
 
       # vim
       set-option -s escape-time 10
