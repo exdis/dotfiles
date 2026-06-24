@@ -81,6 +81,7 @@
       "gh"
       "ghc"
       "ghostscript"
+      "git-lfs"
       "gleam"
       "glow"
       "gnu-sed"
