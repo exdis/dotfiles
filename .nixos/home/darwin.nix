@@ -1,7 +1,20 @@
-{ ... }:
+{ lib, pkgs, config, ... }:
 
 # macOS-specific home-manager configuration. Imports the shared cross-platform
 # module and adds anything that only applies to the Mac.
+let
+  # Non-official Homebrew taps that must be trusted (keep in sync with the
+  # `taps` in hosts/darwin/homebrew.nix).
+  trustedTaps = [
+    "azure/functions"
+    "nikitabobko/tap"
+    "oven-sh/bun"
+    "powershell/tap"
+    "universal-ctags/universal-ctags"
+  ];
+  homebrewTrustFile = pkgs.writeText "homebrew-trust.json"
+    (builtins.toJSON { trustedtaps = trustedTaps; });
+in
 {
   imports = [ ./common.nix ];
 
@@ -30,26 +43,24 @@
   # --- Homebrew tap trust -----------------------------------------------
   # Homebrew 6.0 enforces HOMEBREW_REQUIRE_TAP_TRUST by default: it refuses to
   # load formulae/casks from non-official taps unless they're trusted with
-  # `brew trust`, which otherwise halts `brew bundle` during activation. We
-  # declare the trust list rather than running `brew trust` imperatively.
-  # XDG_CONFIG_HOME is unset on this machine, so Homebrew reads ~/.homebrew/
-  # trust.json (it would use $XDG_CONFIG_HOME/homebrew/trust.json otherwise).
-  # Keep this list in sync with the non-official `taps` in
-  # hosts/darwin/homebrew.nix.
+  # `brew trust`, which otherwise halts `brew bundle` during activation.
+  #
+  # Homebrew requires the trust store to be a REAL file in a user-owned,
+  # writable directory: a read-only /nix/store symlink (what home.file would
+  # create) is rejected with "Refusing to write insecure trust store". So we
+  # materialise a real file via an activation script instead. XDG_CONFIG_HOME is
+  # unset on this machine, so Homebrew reads ~/.homebrew/trust.json (it would use
+  # $XDG_CONFIG_HOME/homebrew/trust.json otherwise).
   #
   # NOTE: nix-darwin runs `brew bundle` BEFORE home-manager activation, so this
-  # file is written one generation "behind" -- it's read from the previous
-  # generation's symlink, which is fine steady-state. A brand-new machine needs
-  # a one-time `brew trust --tap <name>` for each tap below before the first
-  # successful activation.
-  home.file.".homebrew/trust.json".text = builtins.toJSON {
-    trustedtaps = [
-      "azure/functions"
-      "nikitabobko/tap"
-      "oven-sh/bun"
-      "powershell/tap"
-      "universal-ctags/universal-ctags"
-      "wez/wezterm"
-    ];
-  };
+  # file is refreshed one generation "behind" -- brew reads the file written by
+  # the previous activation, which is fine steady-state. A brand-new machine
+  # needs a one-time `brew trust --tap <name>` (or this file written by hand)
+  # before the first successful activation.
+  home.activation.homebrewTrust = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run mkdir -p "${config.home.homeDirectory}/.homebrew"
+    run rm -f "${config.home.homeDirectory}/.homebrew/trust.json"
+    run ${pkgs.coreutils}/bin/install -m 0644 ${homebrewTrustFile} \
+      "${config.home.homeDirectory}/.homebrew/trust.json"
+  '';
 }
