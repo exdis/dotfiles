@@ -38,6 +38,32 @@
   # home/common.nix.)
   programs.fish.enable = true;
 
+  # --- Karabiner VirtualHIDDevice daemon --------------------------------
+  # kanata emits keystrokes on macOS through the Karabiner DriverKit
+  # VirtualHIDDevice. The driver extension is installed + activated (via the
+  # Karabiner-VirtualHIDDevice-Manager / Karabiner-Elements.app), but its
+  # userspace daemon must be running for kanata to connect. Normally
+  # Karabiner-Elements.app starts it; since we don't run that at login, kanata
+  # would silently stop working after a reboot (the process stays up but can't
+  # grab/emit keys). Run the daemon ourselves as a root launchd daemon so it
+  # always comes up at boot. kanata's KeepAlive retries until the daemon is
+  # ready, so no explicit ordering is needed.
+  #
+  # The binary ships with the driver bundle at a fixed /Library path (root-owned,
+  # updated by the Karabiner installer), so referencing it directly is stable.
+  launchd.daemons.karabiner-vhidd = {
+    serviceConfig = {
+      Label = "dev.exdis.karabiner-vhidd";
+      ProgramArguments = [
+        "/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon"
+      ];
+      RunAtLoad = true;
+      KeepAlive = true;
+      StandardOutPath = "/Library/Logs/Kanata/karabiner-vhidd.out.log";
+      StandardErrorPath = "/Library/Logs/Kanata/karabiner-vhidd.err.log";
+    };
+  };
+
   # --- kanata (keyboard remapper) ---------------------------------------
   # Declarative replacement for the hand-installed
   # /Library/LaunchDaemons/dev.exdis.kanata.plist.
