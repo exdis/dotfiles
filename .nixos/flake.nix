@@ -25,6 +25,14 @@
       url = "github:DreamMaoMao/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    herdr = {
+      url = "github:ogulcancelik/herdr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vim-herdr-navigation = {
+      url = "github:paulbkim-dev/vim-herdr-navigation";
+      flake = false;
+    };
   };
   outputs = { nixpkgs, mango, ... } @inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {

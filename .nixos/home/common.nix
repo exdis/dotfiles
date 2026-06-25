@@ -401,6 +401,13 @@ in
       # macOS-only legacy/manual install dirs (manual Go, /usr/local prefix)
       set -gx PATH /usr/local/go/bin /usr/local/bin /usr/local/sbin $PATH''}
 
+      # Nix profiles. home-manager's home.packages land in the per-user profile
+      # and nix-darwin/NixOS system packages in current-system, but nix-darwin's
+      # fish integration does not add these to PATH (unlike zsh). Append them
+      # (low priority, so they never shadow homebrew/usr-local) so tools like
+      # herdr resolve. Non-existent dirs are simply ignored by fish.
+      set -gx PATH $PATH /etc/profiles/per-user/$USER/bin /run/current-system/sw/bin
+
       set -gx KUBECONFIG $HOME/.kube/config
     '';
 

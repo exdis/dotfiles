@@ -63,10 +63,32 @@ Map('n', 'gb', ':BufferLinePick<CR>')
 
 -- Split navigation
 Map('n', '<leader>w', '<C-w>w')
-Map('n', '<C-j>', ':TmuxNavigateDown<CR>')
-Map('n', '<C-k>', ':TmuxNavigateUp<CR>')
-Map('n', '<C-l>', ':TmuxNavigateRight<CR>')
-Map('n', '<C-h>', ':TmuxNavigateLeft<CR>')
+-- Seamless <C-h/j/k/l> across nvim splits and the surrounding multiplexer.
+-- Vendored from paulbkim-dev/vim-herdr-navigation (editor/nvim.lua, MIT): move
+-- the nvim split; at a split edge hand off to herdr (when $HERDR_PANE_ID is set)
+-- or tmux (when $TMUX is set, via vim-tmux-navigator). The herdr side lives in
+-- ~/.config/herdr/navigate.sh (see home/herdr/config.toml). Disable
+-- vim-tmux-navigator's own mappings so it doesn't re-grab these on lazy-load.
+vim.g.tmux_navigator_no_mappings = 1
+local function herdr_nav(wincmd, dir)
+  local prev = vim.api.nvim_get_current_win()
+  vim.cmd('wincmd ' .. wincmd)
+  if vim.api.nvim_get_current_win() ~= prev then
+    return -- moved within nvim
+  end
+  if vim.env.HERDR_PANE_ID and vim.env.HERDR_PANE_ID ~= '' then
+    local herdr = vim.env.HERDR_BIN_PATH
+    if herdr == nil or herdr == '' then herdr = 'herdr' end
+    vim.fn.system({ herdr, 'pane', 'focus', '--direction', dir, '--current' })
+  elseif vim.env.TMUX and vim.env.TMUX ~= '' then
+    local tmux = { left = 'Left', down = 'Down', up = 'Up', right = 'Right' }
+    pcall(vim.cmd, 'TmuxNavigate' .. tmux[dir])
+  end
+end
+Map('n', '<C-h>', function() herdr_nav('h', 'left') end)
+Map('n', '<C-j>', function() herdr_nav('j', 'down') end)
+Map('n', '<C-k>', function() herdr_nav('k', 'up') end)
+Map('n', '<C-l>', function() herdr_nav('l', 'right') end)
 
 -- Split resizing
 Map('n', '>', ':vertical resize +10<CR>')

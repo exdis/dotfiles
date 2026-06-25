@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, inputs, ... }:
 
 # macOS-specific home-manager configuration. Imports the shared cross-platform
 # module and adds anything that only applies to the Mac.
@@ -39,6 +39,19 @@ in
   # in Phase 3; obsolete neighbours (yabai, sketchybar, phoenix, skhd) are left
   # unmanaged and retired at the Phase 6 cutover.
   xdg.configFile."aerospace/aerospace.toml".source = ./aerospace/aerospace.toml;
+
+  # --- herdr (experimental tmux alternative) ----------------------------
+  # "agent multiplexer" (Rust) from github:ogulcancelik/herdr, built from the
+  # flake input. Config ported from the tmux setup (see home/herdr/config.toml).
+  # Delivered read-only from the store; herdr would normally write settings back
+  # here, so in-app Settings changes won't persist -- edit the source + rebuild.
+  home.packages = [ inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+  xdg.configFile."herdr/config.toml".source = ./herdr/config.toml;
+  # Seamless vim/herdr Ctrl+h/j/k/l navigation: the herdr side of
+  # paulbkim-dev/vim-herdr-navigation (a plain, non-flake repo input). Bound via
+  # [[keys.command]] in herdr/config.toml; the nvim side is in
+  # home/nvim/lua/main-config.lua. Needs jq (in homebrew.nix brews).
+  xdg.configFile."herdr/navigate.sh".source = "${inputs.vim-herdr-navigation}/navigate.sh";
 
   # --- Homebrew tap trust -----------------------------------------------
   # Homebrew 6.0 enforces HOMEBREW_REQUIRE_TAP_TRUST by default: it refuses to
