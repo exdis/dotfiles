@@ -4,6 +4,7 @@
   # home.enableNixpkgsReleaseCheck = false;
 
   imports = [
+    ./home/common.nix
     inputs.zen-browser.homeModules.beta
     ./modules/librewolf.nix
   ];

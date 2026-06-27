@@ -43,6 +43,9 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          # Back up pre-existing real files HM wants to manage (e.g. opencode/tui.json)
+          # instead of aborting activation. Mirrors the darwin host.
+          home-manager.backupFileExtension = "before-hm";
 
           home-manager.users.exdis = import ./home.nix;
 
