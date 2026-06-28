@@ -245,12 +245,20 @@ in
       set-option -g status-left-style none
       set-option -g status-left-length "80"
       set-option -g status-right-style none
-      set-option -g status-right-length "80"
+      set-option -g status-right-length "120"
+
+      # Refresh the status line every 2s so the agent-monitor indicator stays
+      # current (default is 15s).
+      set-option -g status-interval 2
       set-window-option -g window-status-separator ""
 
       # Statusline segments (soft pastel separators)
       set-option -g status-left "#{?client_prefix,#[bg=colour68],#[bg=colour235]}#[fg=colour252] #S #{?client_prefix,#[fg=colour68],#[fg=colour235]}#[bg=colour235,nobold,noitalics,nounderscore]"
-      set-option -g status-right "#[bg=colour235,fg=colour236 nobold, nounderscore, noitalics]#[bg=colour236,fg=colour246] %Y-%m-%d  %H:%M "
+      # agent-monitor indicator (coding-agent session status), prepended to the
+      # date/time. The script prints a colored segment (red=waiting,
+      # accent=active, dim=idle) or nothing when no agents run / the API is down.
+      # It mirrors the noctalia bar widget and refreshes on status-interval (2s).
+      set-option -g status-right "#[bg=colour235]#(${config.home.homeDirectory}/.nixos/scripts/agent-monitor-tmux.sh)#[bg=colour235,fg=colour236 nobold, nounderscore, noitalics]#[bg=colour236,fg=colour246] %Y-%m-%d  %H:%M "
 
       # active window: blue block smoothly blending into status bar
       set-window-option -g window-status-current-format "#[bg=colour68,fg=colour235,nobold,noitalics,nounderscore]#[bg=colour68,fg=colour235] #I #[bg=colour68,fg=colour235,bold] #W#{?window_zoomed_flag,*Z,} #[bg=colour235,fg=colour68,nobold,noitalics,nounderscore]"
