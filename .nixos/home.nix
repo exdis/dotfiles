@@ -33,7 +33,6 @@
     fastfetch
     neovim
     nodejs
-    oh-my-fish
     p7zip
     rebar3
     ripgrep
