@@ -1,0 +1,43 @@
+# noctalia v5 plugin manifest for the agent-monitor bar widget.
+# Installed to ~/.local/share/noctalia/plugins/agent-monitor/ and referenced in
+# the bar as "exdis/agent-monitor:status".
+
+id = "exdis/agent-monitor"
+name = "Agent Monitor"
+version = "0.1.0"
+author = "exdis"
+license = "MIT"
+icon = "robot"
+description = "Shows running coding-agent (opencode/copilot) session status: active, idle, and blocked/waiting."
+min_noctalia = "5.0.0"
+
+[[widget]]
+id = "status"
+entry = "widget.lua"
+
+  # Per-instance settings (override in the bar widget config or plugin settings).
+  [[widget.setting]]
+  key = "api_url"
+  type = "string"
+  default = "http://127.0.0.1:7654"
+  label = "agent-monitor API base URL"
+
+  [[widget.setting]]
+  key = "interval_ms"
+  type = "int"
+  default = 2000
+  min = 250
+  max = 60000
+  label = "Poll interval (ms)"
+
+  [[widget.setting]]
+  key = "terminal"
+  type = "string"
+  default = "ghostty"
+  label = "Terminal used to open the TUI on click"
+
+  [[widget.setting]]
+  key = "tui_command"
+  type = "string"
+  default = "/home/exdis/dev/agent-monitor/bin/agent-monitor"
+  label = "Command that launches the agent-monitor TUI"

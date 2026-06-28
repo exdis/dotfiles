@@ -133,6 +133,7 @@
           start = [ "workspaces" ];
           center = [ "active_window" ];
           end = [
+            "exdis/agent-monitor:status"
             "sysmon_cpu"
             "sysmon_ram"
             "sysmon_net_rx"
@@ -146,6 +147,11 @@
         };
 
         dock.enabled = false;
+
+        # Enable the locally-installed agent-monitor plugin (see home.file below
+        # and noctalia-plugins/agent-monitor/). Declaring it here keeps the bar
+        # widget working after a fresh `noctalia` state.
+        plugins.enabled = [ "exdis/agent-monitor" ];
 
         widget = {
           workspaces = {
@@ -181,6 +187,15 @@
           };
         };
       };
+    };
+
+    # Install the agent-monitor bar widget plugin into noctalia's local plugin
+    # directory (~/.local/share/noctalia/plugins/<plugin>/). noctalia scans this
+    # dir for plugin.toml manifests; the bar references it as
+    # "exdis/agent-monitor:status".
+    home.file.".local/share/noctalia/plugins/agent-monitor" = {
+      source = ../noctalia-plugins/agent-monitor;
+      recursive = true;
     };
   };
 }
