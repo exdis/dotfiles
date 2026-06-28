@@ -4,6 +4,7 @@
   # home.enableNixpkgsReleaseCheck = false;
 
   imports = [
+    ./home/common.nix
     inputs.zen-browser.homeModules.beta
     ./modules/librewolf.nix
   ];
@@ -32,7 +33,6 @@
     fastfetch
     neovim
     nodejs
-    oh-my-fish
     p7zip
     rebar3
     ripgrep

@@ -5,6 +5,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,6 +25,14 @@
       url = "github:DreamMaoMao/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    herdr = {
+      url = "github:ogulcancelik/herdr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vim-herdr-navigation = {
+      url = "github:paulbkim-dev/vim-herdr-navigation";
+      flake = false;
+    };
   };
   outputs = { nixpkgs, mango, ... } @inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
@@ -31,6 +43,9 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          # Back up pre-existing real files HM wants to manage (e.g. opencode/tui.json)
+          # instead of aborting activation. Mirrors the darwin host.
+          home-manager.backupFileExtension = "before-hm";
 
           home-manager.users.exdis = import ./home.nix;
 
@@ -41,6 +56,13 @@
         {
           programs.mango.enable = true;
         }
+      ];
+      specialArgs = { inherit inputs; };
+    };
+
+    darwinConfigurations."Deniss-MacBook-Pro" = inputs.nix-darwin.lib.darwinSystem {
+      modules = [
+        ./hosts/darwin/default.nix
       ];
       specialArgs = { inherit inputs; };
     };

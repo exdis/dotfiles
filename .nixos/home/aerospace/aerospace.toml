@@ -86,6 +86,8 @@ outer.right =      0
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 cmd-slash = 'layout tiles horizontal vertical'
 cmd-period = 'layout accordion horizontal vertical'
+# Toggle the focused container between horizontal and vertical orientation
+cmd-shift-slash = 'layout horizontal vertical'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 cmd-h = 'focus left'

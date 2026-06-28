@@ -51,3 +51,5 @@
   tool = vimdiff
 [include]
 	path = ~/.gitlocal
+[credential "azrepos:org/domoreexp"]
+	username = dkolesnikov@microsoft.com
