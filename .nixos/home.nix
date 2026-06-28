@@ -18,8 +18,8 @@
     azure-functions-core-tools
     bat
     diff-so-fancy
-    elixir
-    erlang
+    beamPackages.elixir
+    beamPackages.erlang
     eza
     fd
     filezilla
@@ -34,7 +34,7 @@
     neovim
     nodejs
     p7zip
-    rebar3
+    beamPackages.rebar3
     ripgrep
     rofi
     streamcontroller
@@ -50,6 +50,10 @@
 
   programs.zen-browser.enable = true;
   programs.firefox.enable = true;
+  # Adopt the new XDG default profile location (~/.config/mozilla/firefox).
+  # NOTE: the existing profile data was moved from ~/.mozilla/firefox manually;
+  # HM regenerates profiles.ini at the new path automatically.
+  programs.firefox.configPath = "${config.xdg.configHome}/mozilla/firefox";
 
   programs.quickshell.enable = true;
 

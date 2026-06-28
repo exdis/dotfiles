@@ -16,7 +16,7 @@ let
     cairo
     glib
     webkitgtk_4_1
-    xorg.libX11
+    libx11
     libxkbcommon
     udev
   ];
