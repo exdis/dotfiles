@@ -97,6 +97,17 @@
           custom_palette = "alabaster";
         };
 
+        # Wallpaper. noctalia v5 manages the wallpaper itself (replacing the old
+        # hyprpaper setup). The image lives next to this config in ~/.nixos.
+        # `default.path` is the initial/desktop wallpaper; noctalia also persists
+        # the active choice to ~/.local/state/noctalia/settings.toml (which is
+        # deep-merged ON TOP of this file), so changing it later in the GUI sticks.
+        wallpaper = {
+          enabled = true;
+          fill_mode = "crop"; # center | crop | fit | stretch | repeat | span
+          default.path = "/home/exdis/.nixos/wp-space-planet.jpg";
+        };
+
         # was general.radiusRatio = 0.2 (v5 scale: 1.0 = default, 0 = square)
         shell.corner_radius_scale = 0.2;
 

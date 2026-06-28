@@ -27,7 +27,7 @@
     ghostty
     github-copilot-cli
     gradle
-    hyprpaper
+    # hyprpaper  # replaced by noctalia's built-in wallpaper management
     jdk21
     nautilus
     fastfetch
@@ -99,10 +99,13 @@
     };
   };
 
-  xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ~/.nixos/uwp1.jpeg
-    wallpaper = ,~/.nixos/uwp1.jpeg
-  '';
+  # Wallpaper is now handled by noctalia (see modules/noctalia.nix), which
+  # conflicts with hyprpaper. Keeping this disabled to avoid two daemons
+  # fighting over the background.
+  # xdg.configFile."hypr/hyprpaper.conf".text = ''
+  #   preload = ~/.nixos/uwp1.jpeg
+  #   wallpaper = ,~/.nixos/uwp1.jpeg
+  # '';
 
   home.stateVersion = "25.05";
 }
