@@ -535,6 +535,9 @@ in
       # vi mode + bobthefish theme display options
       set fish_key_bindings fish_vi_key_bindings
       set theme_display_ruby no
+      # Disable the bobthefish Go segment (go.mod version indicator) -- it
+      # doesn't behave well, so keep it off.
+      set theme_display_go no
       set theme_display_vi yes
       set theme_display_git_master_branch yes
 
