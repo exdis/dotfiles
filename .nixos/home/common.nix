@@ -83,6 +83,64 @@ in
     };
   };
 
+  # --- global git ignore ------------------------------------------------
+  # Home-manager owns ~/.gitignore -- the exact path that BOTH the legacy
+  # ~/.gitconfig and the HM-generated git config point at via
+  # core.excludesFile (= "~/.gitignore", set above). Managing the file here
+  # (rather than programs.git.ignores, which would write the unused
+  # ~/.config/git/ignore) makes the global ignore declarative NOW, during the
+  # ~/.gitconfig transition, and it keeps working after the cutover.
+  # Cross-platform: .DS_Store is simply a no-op on Linux.
+  home.file.".gitignore".text = ''
+    # Managed by home-manager (home/common.nix). Do not edit ~/.gitignore directly.
+
+    # macOS Finder metadata
+    .DS_Store
+
+    # Claude Code local dir
+    .claude
+
+    # jujutsu working-copy dir in colocated (jj + git) repos
+    .jj/
+  '';
+
+  # --- jujutsu (jj) VCS -------------------------------------------------
+  # Cross-platform DVCS, available on both macOS and Linux via this shared
+  # module. `enable` installs pkgs.jujutsu (the `jj` binary) and writes the
+  # user config to the platform-appropriate location. The identity mirrors the
+  # git config above so jj can create commits out of the box.
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Denis Kolesnikov";
+        email = "exdis@proton.me";
+      };
+
+      # Ported from the git aliases above, adapted to jj's model. jj aliases map
+      # a name to an argument list. Only aliases with a clean jj equivalent are
+      # ported; the git ones that rely on a staging index (unstage) or on
+      # `--abort`/`--continue` (ra, ma, rc) have NO jj analog -- in jj you undo
+      # any operation with `jj undo` / `jj op undo`, and there's no index.
+      aliases = {
+        s = [ "status" ];
+        d = [ "diff" ];
+        c = [ "commit" ];
+        b = [ "bookmark" ];
+        # git `co` (checkout) -> point the working copy at a revision.
+        co = [ "edit" ];
+        r = [ "rebase" ];
+        # git tree/log -> jj's log is already a graph/tree by default.
+        tree = [ "log" ];
+        l = [ "log" ];
+        # push/fetch go through the git backend (colocated or git-backed repos).
+        ph = [ "git" "push" ];
+        pl = [ "git" "fetch" ];
+        pr = [ "git" "fetch" ];
+      };
+    };
+  };
+
   # home.stateVersion is intentionally NOT set here; each host sets its own
   # so the two machines can diverge if ever needed.
 
@@ -396,6 +454,59 @@ in
             bind -M $mode \cf forward-char
         end
       '';
+
+      # jujutsu segment for the right prompt. bobthefish supports git/hg/fossil
+      # but has NO jujutsu support and no config option for it, so we override
+      # its fish_right_prompt. This override wins because ~/.config/fish/functions
+      # (where HM writes this) precedes the bobthefish plugin dir in
+      # $fish_function_path.
+      #
+      # NOTE: bobthefish's duration/timestamp helpers (__bobthefish_cmd_duration,
+      # __bobthefish_timestamp) are defined *inside* its own fish_right_prompt.fish
+      # -- they are file-local, not standalone autoload functions -- so once we
+      # shadow that file they no longer exist. We therefore re-implement the
+      # duration + timestamp inline (matching bobthefish's defaults) instead of
+      # calling them, keeping this function fully self-contained.
+      #
+      # `--ignore-working-copy` keeps the prompt side-effect-free (never triggers
+      # a working-copy snapshot) and fast; the jj segment only appears inside a jj
+      # repo, showing the short change id, any bookmarks, and an "empty" marker.
+      fish_right_prompt = {
+        description = "jujutsu status + duration + timestamp (self-contained)";
+        body = ''
+          # --- jujutsu segment (only inside a jj repo) ---
+          if command -q jj; and jj root --ignore-working-copy >/dev/null 2>&1
+              set -l jj_seg (jj log --no-graph --ignore-working-copy --color never -r @ \
+                  -T 'change_id.shortest(8) ++ if(bookmarks, " " ++ bookmarks.join(",")) ++ if(empty, " ∅")' 2>/dev/null)
+              if test -n "$jj_seg"
+                  set_color AA89AA
+                  echo -ns "$jj_seg  "
+                  set_color normal
+              end
+          end
+
+          # --- command duration (bobthefish default: shown when >= 100ms) ---
+          if test "$theme_display_cmd_duration" != no; and test -n "$CMD_DURATION"; and test "$CMD_DURATION" -ge 100
+              set_color $fish_color_autosuggestion
+              if test "$CMD_DURATION" -lt 1000
+                  echo -ns "$CMD_DURATION"ms
+              else
+                  echo -ns (math -s1 "$CMD_DURATION/1000")s
+              end
+              echo -ns ' '
+              set_color normal
+          end
+
+          # --- timestamp (bobthefish default format: %c, unless disabled) ---
+          if test "$theme_display_date" != no
+              set -l fmt +%c
+              set -q theme_date_format; and set fmt $theme_date_format
+              set_color $fish_color_autosuggestion
+              date $fmt
+              set_color normal
+          end
+        '';
+      };
     };
 
     # Runs in every fish (login/non-login/non-interactive): environment + PATH.
