@@ -89,6 +89,20 @@ cmd-period = 'layout accordion horizontal vertical'
 # Toggle the focused container between horizontal and vertical orientation
 cmd-shift-slash = 'layout horizontal vertical'
 
+# --- Rescue keys for "windows I can never get to" ---------------------------
+# Toggle the focused window between floating and tiling. If an app's popup /
+# utility window got tiled and stuck behind your full-size window, focus it
+# (cmd-h/j/k/l or the cycle below) and hit this to pop it out to floating, then
+# drag it wherever you want. Also lets you manually float any window on demand.
+cmd-shift-space = 'layout floating tiling'
+
+# Cycle focus through EVERY window in the workspace -- including floating ones
+# and windows hidden behind a fullscreened window -- in tree (DFS) order.
+# Focusing a tiled window auto-exits another window's fullscreen, so the target
+# becomes visible. This guarantees nothing is ever unreachable.
+cmd-backtick = 'focus dfs-next --boundaries-action wrap-around-the-workspace'
+cmd-shift-backtick = 'focus dfs-prev --boundaries-action wrap-around-the-workspace'
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 cmd-h = 'focus left'
 cmd-j = 'focus down'
@@ -208,12 +222,48 @@ alt-shift-l = ['join-with right', 'mode main']
 9 = ['secondary', 2]
 10 = 'main'
 
-[[on-window-detected]]
-if.app-id = 'com.linguee.DeepLCopyTranslator'
-check-further-callbacks = true
-run = 'layout floating'
+# --- Window float policy: FLOAT BY DEFAULT, tile only a whitelist -----------
+# on-window-detected callbacks run top-to-bottom; the first matching rule
+# WITHOUT check-further-callbacks wins and stops processing. So the order is:
+#   1. special-case floats (must come before the app's tiling rule),
+#   2. the tiling whitelist (the only apps allowed into the layout),
+#   3. a catch-all with no `if` that floats everything else.
+# cmd-h/j/k/l traverse floating + tiling windows together automatically
+# (AeroSpace treats floating windows as part of the focus tree; we never pass
+# --ignore-floating), so focus moves between floated and tiled windows freely.
+#
+# To apply changes to already-open windows without relaunching, after reload:
+#   aerospace run-callback --for-every-window on-window-detected
 
+# (1) Special cases: keep these floating even though their app is whitelisted.
 [[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
 if.window-title-regex-substring = 'Picture-in-Picture'
-run = ['layout floating']
+run = 'layout floating'
+
+# (2) Tiling whitelist -- ONLY these apps participate in the tiling layout.
+#     Everything not listed here is floated by the catch-all below.
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'          # Zen browser
+run = 'layout tiling'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.edgemac'        # Microsoft Edge
+run = 'layout tiling'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'        # Ghostty terminal
+run = 'layout tiling'
+
+[[on-window-detected]]
+if.app-id = 'ru.keepcoder.Telegram'        # Telegram
+run = 'layout tiling'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'             # Finder
+run = 'layout tiling'
+
+# (3) Catch-all: no `if` means it matches every other window -> float it.
+#     Must stay LAST.
+[[on-window-detected]]
+run = 'layout floating'
