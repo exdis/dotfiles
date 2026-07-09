@@ -263,7 +263,8 @@ run = 'layout tiling'
 if.app-id = 'com.apple.finder'             # Finder
 run = 'layout tiling'
 
-# (3) Catch-all: no `if` means it matches every other window -> float it.
-#     Must stay LAST.
+# (3) Catch-all: `if = 'true'` matches every other window -> float it.
+#     Must stay LAST. (0.21+ requires an explicit `if`; omitting it is an error.)
 [[on-window-detected]]
+if = 'true'
 run = 'layout floating'

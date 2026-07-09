@@ -455,55 +455,96 @@ in
         end
       '';
 
-      # jujutsu segment for the right prompt. bobthefish supports git/hg/fossil
-      # but has NO jujutsu support and no config option for it, so we override
-      # its fish_right_prompt. This override wins because ~/.config/fish/functions
-      # (where HM writes this) precedes the bobthefish plugin dir in
-      # $fish_function_path.
+      # jujutsu segment for the LEFT prompt. bobthefish supports git/hg/fossil but
+      # has NO jujutsu support, so we render our own segment using bobthefish's
+      # own segment helpers (__bobthefish_path_segment / __bobthefish_start_segment)
+      # for a pixel-perfect stylistic match (same powerline arrows + colors as the
+      # git segment). It is wired in via a wrapper around __bobthefish_prompt_git
+      # (see interactiveShellInit): inside a colocated jj+git repo this jj segment
+      # REPLACES the git segment; plain git repos are unaffected. The old approach
+      # put jj on the right prompt, which double-rendered VCS state (git left +
+      # jj right) in colocated repos -- this fixes that.
       #
-      # NOTE: bobthefish's duration/timestamp helpers (__bobthefish_cmd_duration,
-      # __bobthefish_timestamp) are defined *inside* its own fish_right_prompt.fish
-      # -- they are file-local, not standalone autoload functions -- so once we
-      # shadow that file they no longer exist. We therefore re-implement the
-      # duration + timestamp inline (matching bobthefish's defaults) instead of
-      # calling them, keeping this function fully self-contained.
+      # `--ignore-working-copy` keeps the prompt side-effect-free (never triggers a
+      # working-copy snapshot) and fast; all state comes from a single jj query.
+      # Because of that, "empty"/change flags reflect the last recorded snapshot,
+      # not un-snapshotted edits -- the usual, accepted tradeoff for a fast prompt.
       #
-      # `--ignore-working-copy` keeps the prompt side-effect-free (never triggers
-      # a working-copy snapshot) and fast; the jj segment only appears inside a jj
-      # repo, showing the short change id, any bookmarks, and an "empty" marker.
-      fish_right_prompt = {
-        description = "jujutsu status + duration + timestamp (self-contained)";
+      # Layout (mirrors the git segment): [repo dir] > [ jj id + flags] > [subdir]
+      #   id     : bookmark(s) then short change id (or just the change id)
+      #   flags  : * = working copy non-empty (jj analog of git-dirty)
+      #            ~ = no description set   ✖ = conflict   ⚠ = divergent
+      #   colors : empty/clean -> color_repo; changes/conflict -> color_repo_dirty
+      __bobthefish_prompt_jj = {
+        description = "Display jujutsu working-copy state (bobthefish-styled)";
+        noScopeShadowing = true;
         body = ''
-          # --- jujutsu segment (only inside a jj repo) ---
-          if command -q jj; and jj root --ignore-working-copy >/dev/null 2>&1
-              set -l jj_seg (jj log --no-graph --ignore-working-copy --color never -r @ \
-                  -T 'change_id.shortest(8) ++ if(bookmarks, " " ++ bookmarks.join(",")) ++ if(empty, " ∅")' 2>/dev/null)
-              if test -n "$jj_seg"
-                  set_color AA89AA
-                  echo -ns "$jj_seg  "
-                  set_color normal
-              end
+          set -l jj_root_dir $argv[1]
+          set -l real_pwd $argv[2]
+
+          # One side-effect-free query for everything we display.
+          set -l fields (command jj log --no-graph --ignore-working-copy --no-pager \
+              --color never -r @ \
+              -T 'change_id.shortest(8) ++ "\t" ++ bookmarks.join(",") ++ "\t" ++ if(empty,"e","n") ++ "\t" ++ if(conflict,"c","-") ++ "\t" ++ if(divergent,"v","-") ++ "\t" ++ if(description,"d","-")' 2>/dev/null)
+
+          # jj present but query failed (e.g. brand-new repo): show just the dir.
+          if [ -z "$fields" ]
+              __bobthefish_path_segment $jj_root_dir project
+              return
           end
 
-          # --- command duration (bobthefish default: shown when >= 100ms) ---
-          if test "$theme_display_cmd_duration" != no; and test -n "$CMD_DURATION"; and test "$CMD_DURATION" -ge 100
-              set_color $fish_color_autosuggestion
-              if test "$CMD_DURATION" -lt 1000
-                  echo -ns "$CMD_DURATION"ms
+          set -l parts (string split \t -- $fields)
+          set -l change_id $parts[1]
+          set -l bookmarks $parts[2]
+          set -l is_empty $parts[3]
+          set -l is_conflict $parts[4]
+          set -l is_divergent $parts[5]
+          set -l has_desc $parts[6]
+
+          # Flags cluster, styled after bobthefish's git glyphs.
+          set -l flags ""
+          [ "$is_empty" = n ]; and set flags "$flags$git_dirty_glyph"
+          [ "$has_desc" = - ]; and set flags "$flags~"
+          [ "$is_conflict" = c ]; and set flags "$flags✖"
+          [ "$is_divergent" = v ]; and set flags "$flags⚠"
+          [ -n "$flags" ]; and set flags " $flags"
+
+          # Segment color: clean (empty) -> repo color; changes/conflict -> dirty.
+          set -l flag_colors $color_repo
+          if [ "$is_conflict" = c ]
+              set flag_colors $color_repo_dirty
+          else if [ "$is_empty" = n ]
+              set flag_colors $color_repo_dirty
+          end
+
+          # Repo dir segment (path color), then the jj info segment (repo color).
+          __bobthefish_path_segment $jj_root_dir project
+
+          __bobthefish_start_segment $flag_colors
+          echo -ns $branch_glyph ' '
+          if [ -n "$bookmarks" ]
+              # bookmark(s) first, then the change id in the work-tree accent color
+              echo -ns $bookmarks ' '
+              set_color normal
+              set_color -b $color_repo_work_tree
+              echo -ns $change_id
+              set_color normal
+              set_color -b $flag_colors[1]
+          else
+              echo -ns $change_id
+          end
+          echo -ns "$flags" ' '
+          set_color normal
+
+          # Subdirectory within the repo (matches bobthefish git behavior).
+          set -l project_pwd (__bobthefish_project_pwd $jj_root_dir $real_pwd)
+          if [ -n "$project_pwd" ]
+              if [ -w "$real_pwd" ]
+                  __bobthefish_start_segment $color_path
               else
-                  echo -ns (math -s1 "$CMD_DURATION/1000")s
+                  __bobthefish_start_segment $color_path_nowrite
               end
-              echo -ns ' '
-              set_color normal
-          end
-
-          # --- timestamp (bobthefish default format: %c, unless disabled) ---
-          if test "$theme_display_date" != no
-              set -l fmt +%c
-              set -q theme_date_format; and set fmt $theme_date_format
-              set_color $fish_color_autosuggestion
-              date $fmt
-              set_color normal
+              echo -ns $project_pwd ' '
           end
         '';
       };
@@ -556,6 +597,29 @@ in
 
       # pip completion
       complete -fa "(__fish_complete_pip)" -c pip3
+
+      # --- jujutsu: replace bobthefish's git segment in colocated jj+git repos ---
+      # bobthefish defines __bobthefish_prompt_git (and all its helpers) INSIDE
+      # its fish_prompt.fish, which is sourced on the first prompt reference. That
+      # sourcing redefines the function, so a plain autoload override in
+      # ~/.config/fish/functions can't win. Instead we force the theme to load,
+      # copy the original git segment aside, and wrap it: colocated repos (a .jj
+      # dir at the git root) render our jj segment; everything else is untouched.
+      # Set `theme_display_jj no` to opt out.
+      if command -q jj
+          functions fish_prompt >/dev/null 2>&1 # force-source the theme -> defines helpers
+          if functions -q __bobthefish_prompt_git
+              functions -e __bobthefish_prompt_git_orig
+              functions --copy __bobthefish_prompt_git __bobthefish_prompt_git_orig
+              function __bobthefish_prompt_git -S -a git_root_dir -a real_pwd
+                  if test "$theme_display_jj" != no; and test -d "$git_root_dir/.jj"
+                      __bobthefish_prompt_jj $git_root_dir $real_pwd
+                  else
+                      __bobthefish_prompt_git_orig $git_root_dir $real_pwd
+                  end
+              end
+          end
+      end
     '';
   };
 
