@@ -92,6 +92,94 @@
     };
   };
 
+  # --- komorebi + skhd (primary tiling window manager) ------------------
+  # komorebi-for-mac (the WM) and skhd (its hotkey daemon) are declared as
+  # per-user launchd agents, but with RunAtLoad = false and KeepAlive = false:
+  # nix-darwin registers/loads them, but they do NOT start at login and are NOT
+  # auto-restarted -- you start them yourself with `komorebi-start` (and
+  # `komorebi-stop` to stop). We still run them under launchd rather than by hand
+  # from a terminal because it gives skhd a STABLE Accessibility identity (the
+  # grant is keyed to /opt/homebrew/bin/skhd itself, not to whichever terminal
+  # launched it), which is what makes the shortcuts reliable.
+  #
+  # Trade-off of KeepAlive = false: if komorebi/skhd crash they stay down until
+  # you re-run `komorebi-start`. Flip RunAtLoad/KeepAlive back to true if you
+  # later want login-autostart + crash-restart.
+  #
+  # Config files are the HM-delivered ~/.config/komorebi/{komorebi.json,skhdrc}
+  # (see home/darwin.nix, which also documents the one-time Accessibility +
+  # Screen Recording grants these two binaries need). We keep the Homebrew
+  # binaries (stable /opt/homebrew/bin paths) for the same TCC-stability reason
+  # as kanata above.
+  #
+  # PATH is set so skhd can resolve the shell it spawns hotkey commands with;
+  # the skhdrc itself calls komorebic by absolute path regardless.
+  launchd.user.agents.komorebi = {
+    serviceConfig = {
+      Label = "dev.exdis.komorebi";
+      ProgramArguments = [
+        "/opt/homebrew/bin/komorebi"
+        "--config"
+        "/Users/dkolesnikov/.config/komorebi/komorebi.json"
+      ];
+      RunAtLoad = false;
+      KeepAlive = false;
+      ProcessType = "Interactive";
+      EnvironmentVariables = {
+        PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+      };
+      StandardOutPath = "/tmp/komorebi.out.log";
+      StandardErrorPath = "/tmp/komorebi.err.log";
+    };
+  };
+  launchd.user.agents.skhd = {
+    serviceConfig = {
+      Label = "dev.exdis.skhd";
+      ProgramArguments = [
+        "/opt/homebrew/bin/skhd"
+        "-c"
+        "/Users/dkolesnikov/.config/komorebi/skhdrc"
+      ];
+      RunAtLoad = false;
+      KeepAlive = false;
+      ProcessType = "Interactive";
+      EnvironmentVariables = {
+        PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+      };
+      StandardOutPath = "/tmp/skhd.out.log";
+      StandardErrorPath = "/tmp/skhd.err.log";
+    };
+  };
+
+  # komorebi 0.1.0 ignores the static-config `animation` field on load, so we
+  # disable animations at RUNTIME once komorebi is up. This agent runs ONLY
+  # `komorebic` -- a socket client that talks to komorebi over a Unix socket and
+  # never touches the Accessibility / event-tap / screen-recording APIs -- so it
+  # does NOT require (or prompt for) any permissions. It's not the komorebi
+  # binary, so it can't affect komorebi's own TCC identity. Not autostarted
+  # (RunAtLoad = false); `komorebi-start` kickstarts it after komorebi is up. It
+  # waits for the socket, sends "animation disable", and exits.
+  launchd.user.agents.komorebi-animations = {
+    serviceConfig = {
+      Label = "dev.exdis.komorebi-animations";
+      ProgramArguments = [
+        "${pkgs.writeShellScript "komorebi-animations-off" ''
+          komorebic=/opt/homebrew/bin/komorebic
+          i=0
+          while [ "$i" -lt 100 ]; do
+            "$komorebic" state >/dev/null 2>&1 && break
+            sleep 0.3; i=$((i + 1))
+          done
+          exec "$komorebic" animation disable
+        ''}"
+      ];
+      RunAtLoad = false;
+      KeepAlive = false;
+      StandardOutPath = "/tmp/komorebi-animations.out.log";
+      StandardErrorPath = "/tmp/komorebi-animations.err.log";
+    };
+  };
+
   # --- Fonts ------------------------------------------------------------
   # System-level font install (/Library/Fonts/Nix Fonts/), which macOS Core
   # Text discovers -- unlike the home-manager profile, which GUI apps such as

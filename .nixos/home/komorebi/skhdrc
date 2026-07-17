@@ -1,0 +1,84 @@
+# skhd hotkeys for komorebi-for-mac -- mirrors the cmd-based AeroSpace workflow
+# in home/aerospace/aerospace.toml. Start with:
+#   skhd --config ~/.config/komorebi/skhdrc
+#
+# skhd installs a global CGEventTap, so it swallows these chords before the
+# focused app sees them -- exactly like AeroSpace did (so cmd-l, cmd-1..0 etc.
+# drive the WM instead of the browser). Keycodes (0x..) are used for punctuation
+# keys because skhd matches those by physical key, not by the shifted glyph.
+
+# --- Focus (AeroSpace: cmd-h/j/k/l) ------------------------------------------
+cmd - h : /opt/homebrew/bin/komorebic focus left
+cmd - j : /opt/homebrew/bin/komorebic focus down
+cmd - k : /opt/homebrew/bin/komorebic focus up
+cmd - l : /opt/homebrew/bin/komorebic focus right
+
+# Cycle focus through every window (AeroSpace: cmd-` / cmd-shift-`)
+cmd - 0x32         : /opt/homebrew/bin/komorebic cycle-focus next      # 0x32 is `
+cmd + shift - 0x32 : /opt/homebrew/bin/komorebic cycle-focus previous
+
+# --- Move window (AeroSpace: cmd-shift-h/j/k/l) ------------------------------
+cmd + shift - h : /opt/homebrew/bin/komorebic move left
+cmd + shift - j : /opt/homebrew/bin/komorebic move down
+cmd + shift - k : /opt/homebrew/bin/komorebic move up
+cmd + shift - l : /opt/homebrew/bin/komorebic move right
+
+# Promote focused window to the main tile (komorebi extra, no AeroSpace equiv)
+cmd + shift - return : /opt/homebrew/bin/komorebic promote
+
+# --- Resize (AeroSpace: cmd-shift-minus / cmd-shift-equal) -------------------
+# AeroSpace's "smart" resize is split here: shift = horizontal, plain = vertical.
+cmd + shift - 0x1B : /opt/homebrew/bin/komorebic resize-axis horizontal decrease  # 0x1B is -
+cmd + shift - 0x18 : /opt/homebrew/bin/komorebic resize-axis horizontal increase  # 0x18 is =
+cmd - 0x1B         : /opt/homebrew/bin/komorebic resize-axis vertical decrease
+cmd - 0x18         : /opt/homebrew/bin/komorebic resize-axis vertical increase
+
+# --- Layout (AeroSpace: cmd-slash tiles, cmd-period accordion, cmd-shift-slash flip)
+cmd - 0x2C         : /opt/homebrew/bin/komorebic cycle-layout next     # 0x2C is /
+cmd - 0x2F         : /opt/homebrew/bin/komorebic toggle-monocle        # 0x2F is . (accordion-like)
+cmd + shift - 0x2C : /opt/homebrew/bin/komorebic flip-layout horizontal
+
+# --- Float toggle (AeroSpace: cmd-shift-space) ------------------------------
+cmd + shift - space : /opt/homebrew/bin/komorebic toggle-float
+
+# --- Stacking (komorebi extra; ctrl+cmd + h/j/k/l, ctrl+cmd-u to unstack) ----
+ctrl + cmd - h : /opt/homebrew/bin/komorebic stack left
+ctrl + cmd - j : /opt/homebrew/bin/komorebic stack down
+ctrl + cmd - k : /opt/homebrew/bin/komorebic stack up
+ctrl + cmd - l : /opt/homebrew/bin/komorebic stack right
+ctrl + cmd - u : /opt/homebrew/bin/komorebic unstack
+
+# --- Reset / retile (AeroSpace service-mode: r = flatten-workspace-tree) -----
+cmd + shift - r : /opt/homebrew/bin/komorebic retile
+
+# --- Workspaces: focus (AeroSpace: cmd-1..cmd-0) ----------------------------
+# Bound by workspace NAME (not monitor index), so the same bindings work under
+# either profile (komorebi-profile home|office). Which monitor holds 7/8/9 is
+# decided by the active profile's komorebi.json; the keys just say "go to the
+# workspace named N". cmd-0 is the workspace named "10".
+cmd - 1 : /opt/homebrew/bin/komorebic focus-named-workspace 1
+cmd - 2 : /opt/homebrew/bin/komorebic focus-named-workspace 2
+cmd - 3 : /opt/homebrew/bin/komorebic focus-named-workspace 3
+cmd - 4 : /opt/homebrew/bin/komorebic focus-named-workspace 4
+cmd - 5 : /opt/homebrew/bin/komorebic focus-named-workspace 5
+cmd - 6 : /opt/homebrew/bin/komorebic focus-named-workspace 6
+cmd - 7 : /opt/homebrew/bin/komorebic focus-named-workspace 7
+cmd - 8 : /opt/homebrew/bin/komorebic focus-named-workspace 8
+cmd - 9 : /opt/homebrew/bin/komorebic focus-named-workspace 9
+cmd - 0 : /opt/homebrew/bin/komorebic focus-named-workspace 10
+
+# --- Workspaces: send window there (AeroSpace: ctrl-shift-1..0) --------------
+# move-to-named-workspace <name>; focus follows the window to that workspace.
+ctrl + shift - 1 : /opt/homebrew/bin/komorebic move-to-named-workspace 1
+ctrl + shift - 2 : /opt/homebrew/bin/komorebic move-to-named-workspace 2
+ctrl + shift - 3 : /opt/homebrew/bin/komorebic move-to-named-workspace 3
+ctrl + shift - 4 : /opt/homebrew/bin/komorebic move-to-named-workspace 4
+ctrl + shift - 5 : /opt/homebrew/bin/komorebic move-to-named-workspace 5
+ctrl + shift - 6 : /opt/homebrew/bin/komorebic move-to-named-workspace 6
+ctrl + shift - 7 : /opt/homebrew/bin/komorebic move-to-named-workspace 7
+ctrl + shift - 8 : /opt/homebrew/bin/komorebic move-to-named-workspace 8
+ctrl + shift - 9 : /opt/homebrew/bin/komorebic move-to-named-workspace 9
+ctrl + shift - 0 : /opt/homebrew/bin/komorebic move-to-named-workspace 10
+
+# --- Back-and-forth to previous workspace (AeroSpace: alt-tab) ---------------
+alt - tab : /opt/homebrew/bin/komorebic focus-last-workspace
