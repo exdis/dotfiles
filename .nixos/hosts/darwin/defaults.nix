@@ -15,6 +15,15 @@
     # --- Global / NSGlobalDomain --------------------------------------
     NSGlobalDomain = {
       AppleInterfaceStyle = "Dark"; # system-wide dark mode
+
+      # Kill macOS's own window open/close/move/resize animation. komorebi moves
+      # and hides (off-screen) windows via the Accessibility API, and macOS
+      # animates those position/size changes -- that's the sliding you still see
+      # on workspace switches even with komorebi's own animations disabled.
+      NSAutomaticWindowAnimationsEnabled = false;
+      # Near-instant window resize (default ~0.2s). 0.001 = effectively no
+      # animation for AX-driven resizes/moves. Standard yabai/komorebi tweak.
+      NSWindowResizeTime = 0.001;
     };
 
     # --- Dock ----------------------------------------------------------

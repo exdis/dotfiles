@@ -27,11 +27,11 @@ cmd + shift - l : /opt/homebrew/bin/komorebic move right
 cmd + shift - return : /opt/homebrew/bin/komorebic promote
 
 # --- Resize (AeroSpace: cmd-shift-minus / cmd-shift-equal) -------------------
-# AeroSpace's "smart" resize is split here: shift = horizontal, plain = vertical.
-cmd + shift - 0x1B : /opt/homebrew/bin/komorebic resize-axis horizontal decrease  # 0x1B is -
-cmd + shift - 0x18 : /opt/homebrew/bin/komorebic resize-axis horizontal increase  # 0x18 is =
-cmd - 0x1B         : /opt/homebrew/bin/komorebic resize-axis vertical decrease
-cmd - 0x18         : /opt/homebrew/bin/komorebic resize-axis vertical increase
+# Only cmd+shift is bound (like AeroSpace) so plain cmd+- / cmd+= stay free for
+# browser/app zoom. horizontal-and-vertical grows/shrinks the tile on both axes,
+# approximating AeroSpace's "smart" resize.
+cmd + shift - 0x1B : /opt/homebrew/bin/komorebic resize-axis horizontal-and-vertical decrease  # 0x1B is -
+cmd + shift - 0x18 : /opt/homebrew/bin/komorebic resize-axis horizontal-and-vertical increase  # 0x18 is =
 
 # --- Layout (AeroSpace: cmd-slash tiles, cmd-period accordion, cmd-shift-slash flip)
 cmd - 0x2C         : /opt/homebrew/bin/komorebic cycle-layout next     # 0x2C is /

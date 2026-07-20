@@ -128,9 +128,10 @@
       "qemu"
       "ripgrep"
       # skhd: hotkey daemon for komorebi-for-mac (config: ~/.config/komorebi/
-      # skhdrc, delivered by home/darwin.nix). Run manually while trialling:
-      #   skhd --config ~/.config/komorebi/skhdrc
-      "skhd"
+      # skhdrc, delivered by home/darwin.nix). Fully-qualified because another
+      # tap (asmvik/formulae) also ships an `skhd` formula, which makes the bare
+      # name ambiguous and fails `brew bundle`.
+      "koekeishiya/formulae/skhd"
       "superfile"
       "thefuck"
       "tldr"

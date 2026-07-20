@@ -120,7 +120,11 @@
       ProgramArguments = [
         "/opt/homebrew/bin/komorebi"
         "--config"
-        "/Users/dkolesnikov/.config/komorebi/komorebi.json"
+        # Mutable "active" config (a real file, seeded/overwritten by
+        # komorebi-start / komorebi-profile). Profiles are switched by copying
+        # komorebi.<profile>.json onto this and RESTARTING komorebi -- live
+        # `replace-configuration` deadlocks komorebi-for-mac 0.1.0.
+        "/Users/dkolesnikov/.config/komorebi/komorebi.active.json"
       ];
       RunAtLoad = false;
       KeepAlive = false;
