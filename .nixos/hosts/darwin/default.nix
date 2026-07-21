@@ -92,28 +92,21 @@
     };
   };
 
-  # --- komorebi + skhd (primary tiling window manager) ------------------
-  # komorebi-for-mac (the WM) and skhd (its hotkey daemon) are declared as
-  # per-user launchd agents, but with RunAtLoad = false and KeepAlive = false:
-  # nix-darwin registers/loads them, but they do NOT start at login and are NOT
-  # auto-restarted -- you start them yourself with `komorebi-start` (and
-  # `komorebi-stop` to stop). We still run them under launchd rather than by hand
-  # from a terminal because it gives skhd a STABLE Accessibility identity (the
-  # grant is keyed to /opt/homebrew/bin/skhd itself, not to whichever terminal
-  # launched it), which is what makes the shortcuts reliable.
+  # --- komorebi (tiling WM, being phased out) + skhd (now a standalone app
+  #     launcher) --------------------------------------------------------------
+  # komorebi-for-mac (the WM) is a per-user launchd agent with RunAtLoad = false
+  # / KeepAlive = false: nix-darwin registers it but it does NOT start at login;
+  # you start it yourself with `komorebi-start` (and `komorebi-stop`). We run it
+  # under launchd (not by hand) so its Accessibility grant is keyed to the stable
+  # /opt/homebrew/bin path (same TCC-stability reason as kanata above).
   #
-  # Trade-off of KeepAlive = false: if komorebi/skhd crash they stay down until
-  # you re-run `komorebi-start`. Flip RunAtLoad/KeepAlive back to true if you
-  # later want login-autostart + crash-restart.
-  #
-  # Config files are the HM-delivered ~/.config/komorebi/{komorebi.json,skhdrc}
-  # (see home/darwin.nix, which also documents the one-time Accessibility +
-  # Screen Recording grants these two binaries need). We keep the Homebrew
-  # binaries (stable /opt/homebrew/bin paths) for the same TCC-stability reason
-  # as kanata above.
-  #
-  # PATH is set so skhd can resolve the shell it spawns hotkey commands with;
-  # the skhdrc itself calls komorebic by absolute path regardless.
+  # skhd is REPURPOSED: it no longer drives komorebi hotkeys -- it's now a
+  # standalone global app launcher (~/.config/skhd/skhdrc: cmd+N -> open -a App,
+  # see home/skhd/skhdrc). It autostarts (RunAtLoad + KeepAlive) and is fully
+  # independent of the komorebi lifecycle. Only one skhd can run per user (single
+  # pid-file), so komorebi's old ~/.config/komorebi/skhdrc bindings are inactive
+  # while this is in use -- fine, since window management is moving to Raycast.
+  # skhd needs Accessibility granted to /opt/homebrew/bin/skhd.
   launchd.user.agents.komorebi = {
     serviceConfig = {
       Label = "dev.exdis.komorebi";
@@ -142,10 +135,10 @@
       ProgramArguments = [
         "/opt/homebrew/bin/skhd"
         "-c"
-        "/Users/dkolesnikov/.config/komorebi/skhdrc"
+        "/Users/dkolesnikov/.config/skhd/skhdrc"
       ];
-      RunAtLoad = false;
-      KeepAlive = false;
+      RunAtLoad = true;
+      KeepAlive = true;
       ProcessType = "Interactive";
       EnvironmentVariables = {
         PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin";

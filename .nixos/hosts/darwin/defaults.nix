@@ -51,8 +51,10 @@
     };
 
     # --- Spaces --------------------------------------------------------
-    # "Displays have separate Spaces" is OFF -> one Space spans all displays.
-    # Takes effect after logout.
-    spaces.spans-displays = true;
+    # "Displays have separate Spaces" is ON -> each display has its own Spaces
+    # (macOS default). Was previously OFF (spans-displays = true) for the
+    # komorebi/AeroSpace tiling setup; restored to ON now that window management
+    # is moving to Raycast. Takes effect after logout.
+    spaces.spans-displays = false;
   };
 }

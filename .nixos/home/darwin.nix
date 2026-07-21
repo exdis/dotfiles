@@ -204,19 +204,16 @@ let
     }
     start dev.exdis.komorebi
     sleep 1
-    start dev.exdis.skhd
     start dev.exdis.komorebi-animations
-    echo "komorebi + skhd + animations-off (launchd agents) started."
+    echo "komorebi + animations-off (launchd agents) started."
   '';
   komorebiStopScript = pkgs.writeShellScriptBin "komorebi-stop" ''
     set -u
     uid="$(id -u)"
-    # Bootout skhd first so the keyboard is freed, then komorebi (SIGTERM makes
-    # komorebi restore all managed windows on the way out).
-    launchctl bootout "gui/$uid/dev.exdis.skhd" 2>/dev/null || true
+    # skhd is now an independent app launcher, so komorebi-stop leaves it alone.
     launchctl bootout "gui/$uid/dev.exdis.komorebi-animations" 2>/dev/null || true
     launchctl bootout "gui/$uid/dev.exdis.komorebi" 2>/dev/null || true
-    echo "komorebi + skhd (launchd agents) stopped. AeroSpace can take over now."
+    echo "komorebi (launchd agent) stopped."
   '';
 in
 {
@@ -283,6 +280,24 @@ in
   xdg.configFile."komorebi/komorebi.office.json".text = builtins.toJSON komorebiOffice;
   xdg.configFile."komorebi/applications.json".source = ./komorebi/applications.json;
   xdg.configFile."komorebi/skhdrc".source = ./komorebi/skhdrc;
+
+  # --- skhd app launcher (standalone) -----------------------------------
+  # skhd is repurposed as a global app launcher (cmd+N -> App), decoupled from
+  # komorebi. Its launchd agent (dev.exdis.skhd, hosts/darwin/default.nix)
+  # autostarts this and needs Accessibility on /opt/homebrew/bin/skhd. Window
+  # management itself is moving to Raycast; komorebi's own skhdrc is inactive
+  # while this runs (only one skhd per user).
+  xdg.configFile."skhd/skhdrc".source = ./skhd/skhdrc;
+  xdg.configFile."skhd/ghostty-focus-or-cycle.sh".source = ./skhd/ghostty-focus-or-cycle.sh;
+
+  # skhd does NOT watch its config, and its launchd plist doesn't change when
+  # only the (store-symlinked) skhdrc changes, so a `darwin-rebuild switch` alone
+  # leaves skhd running the OLD keymap until it's told to reload. Send it SIGUSR1
+  # (skhd's reload signal) on every activation so config edits actually take
+  # effect. `|| true` so activation never fails if skhd isn't running yet.
+  home.activation.reloadSkhd = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    /usr/bin/killall -USR1 skhd 2>/dev/null || true
+  '';
 
   # --- herdr (experimental tmux alternative) ----------------------------
   # "agent multiplexer" (Rust) from github:ogulcancelik/herdr, built from the

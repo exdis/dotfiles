@@ -1,0 +1,26 @@
+# skhd -- global app launcher / focus hotkeys (standalone; NOT tied to komorebi).
+#
+# `activate` (via osascript) launches the app if needed AND force-raises it to
+# the front -- unlike `open -a`, which often fails to re-focus an app that's
+# already running (esp. with windows on another Space). First use of each app
+# prompts once for Automation (skhd -> that app); allow it.
+#
+# cmd+digit is captured globally by skhd's event tap, so these intentionally
+# override any app's own cmd+N (browser tabs etc.). Managed by the dev.exdis.skhd
+# launchd agent (hosts/darwin/default.nix); skhd needs Accessibility on
+# /opt/homebrew/bin/skhd.
+
+cmd - 1 : osascript -e 'tell application "Microsoft Outlook" to activate'
+cmd - 2 : /bin/sh "$HOME/.config/skhd/ghostty-focus-or-cycle.sh"
+cmd - 3 : osascript -e 'tell application "Microsoft Teams" to activate'
+cmd - 4 : osascript -e 'tell application "Telegram" to activate'
+cmd - 8 : osascript -e 'tell application "Zen Browser" to activate'
+cmd - 9 : osascript -e 'tell application "Microsoft Edge" to activate'
+
+# Swallow the remaining cmd+digit combos so apps never receive them (e.g. stop
+# browsers switching tabs on cmd+5..7 / cmd+0). Binding to `true` (a shell no-op)
+# does nothing, but skhd still consumes the keypress because a handler exists.
+cmd - 5 : true
+cmd - 6 : true
+cmd - 7 : true
+cmd - 0 : true
