@@ -101,11 +101,12 @@
   # /opt/homebrew/bin path (same TCC-stability reason as kanata above).
   #
   # skhd is REPURPOSED: it no longer drives komorebi hotkeys -- it's now a
-  # standalone global app launcher (~/.config/skhd/skhdrc: cmd+N -> open -a App,
-  # see home/skhd/skhdrc). It autostarts (RunAtLoad + KeepAlive) and is fully
-  # independent of the komorebi lifecycle. Only one skhd can run per user (single
-  # pid-file), so komorebi's old ~/.config/komorebi/skhdrc bindings are inactive
-  # while this is in use -- fine, since window management is moving to Raycast.
+  # standalone global app launcher (~/.config/skhd/skhdrc: cmd+N -> focus app,
+  # see home/skhd/skhdrc). The bindings shell out to yabai (below) to focus an
+  # app's main window across Spaces/displays. It autostarts (RunAtLoad +
+  # KeepAlive) and is fully independent of the komorebi lifecycle. Only one skhd
+  # can run per user (single pid-file), so komorebi's old
+  # ~/.config/komorebi/skhdrc bindings are inactive while this is in use.
   # skhd needs Accessibility granted to /opt/homebrew/bin/skhd.
   launchd.user.agents.komorebi = {
     serviceConfig = {
@@ -145,6 +146,28 @@
       };
       StandardOutPath = "/tmp/skhd.out.log";
       StandardErrorPath = "/tmp/skhd.err.log";
+    };
+  };
+
+  # yabai runs purely as a FOCUS ENGINE for skhd's cmd+N bindings (it never
+  # tiles/moves windows -- ~/.config/yabai/yabairc sets layout=float and
+  # manage=off). Its persistent daemon holds a proper WindowServer connection,
+  # so `yabai -m window --focus <id>` reliably focuses windows on background
+  # Spaces/other displays (incl. Zen's main window) -- something a short-lived
+  # process spawned by skhd cannot do. Runs WITHOUT the scripting addition (no
+  # SIP disable). Autostarts; needs Accessibility on /opt/homebrew/bin/yabai.
+  launchd.user.agents.yabai = {
+    serviceConfig = {
+      Label = "dev.exdis.yabai";
+      ProgramArguments = [ "/opt/homebrew/bin/yabai" ];
+      RunAtLoad = true;
+      KeepAlive = true;
+      ProcessType = "Interactive";
+      EnvironmentVariables = {
+        PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+      };
+      StandardOutPath = "/tmp/yabai.out.log";
+      StandardErrorPath = "/tmp/yabai.err.log";
     };
   };
 

@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# yabai config -- yabai is used ONLY as a focus engine for skhd's cmd+N
+# bindings (see home/skhd/skhdrc), NOT as a tiling window manager. These two
+# lines make sure yabai never moves, resizes, or tiles any window:
+#   * layout float      -- no automatic tiling
+#   * rule manage=off   -- yabai observes windows but leaves them alone
+# yabai runs without the scripting addition (no SIP disable required).
+yabai -m config layout float
+yabai -m rule --add app=".*" manage=off

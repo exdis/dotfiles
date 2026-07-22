@@ -132,6 +132,13 @@
       # tap (asmvik/formulae) also ships an `skhd` formula, which makes the bare
       # name ambiguous and fails `brew bundle`.
       "koekeishiya/formulae/skhd"
+      # yabai: window manager, used here ONLY as a focus engine (layout=float,
+      # manage=off -- it never tiles/moves windows). skhd's cmd+N bindings shell
+      # out to `yabai -m window --focus` to reliably focus an app's main window
+      # across Spaces/displays (incl. Zen, whose main window AX can't reach).
+      # Runs WITHOUT the scripting addition, so no SIP disable is needed. Needs
+      # Accessibility granted to /opt/homebrew/bin/yabai.
+      "koekeishiya/formulae/yabai"
       "superfile"
       "thefuck"
       "tldr"

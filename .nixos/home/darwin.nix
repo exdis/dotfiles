@@ -281,22 +281,35 @@ in
   xdg.configFile."komorebi/applications.json".source = ./komorebi/applications.json;
   xdg.configFile."komorebi/skhdrc".source = ./komorebi/skhdrc;
 
-  # --- skhd app launcher (standalone) -----------------------------------
-  # skhd is repurposed as a global app launcher (cmd+N -> App), decoupled from
-  # komorebi. Its launchd agent (dev.exdis.skhd, hosts/darwin/default.nix)
-  # autostarts this and needs Accessibility on /opt/homebrew/bin/skhd. Window
-  # management itself is moving to Raycast; komorebi's own skhdrc is inactive
-  # while this runs (only one skhd per user).
+  # --- skhd app launcher + yabai focus engine ---------------------------
+  # skhd is a standalone global app launcher (cmd+N -> focus app), decoupled
+  # from komorebi. Its launchd agent (dev.exdis.skhd, hosts/darwin/default.nix)
+  # autostarts it and needs Accessibility on /opt/homebrew/bin/skhd. The cmd+N
+  # bindings shell out to the yabai-focus helpers below, which ask the yabai
+  # daemon (dev.exdis.yabai) to focus an app's main window across Spaces/
+  # displays. komorebi's own skhdrc is inactive while this runs (one skhd/user).
   xdg.configFile."skhd/skhdrc".source = ./skhd/skhdrc;
-  xdg.configFile."skhd/ghostty-focus-or-cycle.sh".source = ./skhd/ghostty-focus-or-cycle.sh;
+  xdg.configFile."skhd/yabai-focus.sh".source = ./skhd/yabai-focus.sh;
+  xdg.configFile."skhd/yabai-focus-ghostty.sh".source = ./skhd/yabai-focus-ghostty.sh;
 
-  # skhd does NOT watch its config, and its launchd plist doesn't change when
-  # only the (store-symlinked) skhdrc changes, so a `darwin-rebuild switch` alone
-  # leaves skhd running the OLD keymap until it's told to reload. Send it SIGUSR1
-  # (skhd's reload signal) on every activation so config edits actually take
-  # effect. `|| true` so activation never fails if skhd isn't running yet.
+  # yabai reads this on start (layout=float, manage=off) so it acts purely as a
+  # focus engine and never tiles/moves windows. yabai looks for it at
+  # ~/.config/yabai/yabairc; it must be executable (yabai execs it).
+  xdg.configFile."yabai/yabairc" = {
+    source = ./yabai/yabairc;
+    executable = true;
+  };
+
+  # Neither skhd nor yabai watch their configs, and their launchd plists don't
+  # change when only the (store-symlinked) config changes, so a `darwin-rebuild
+  # switch` alone leaves them running the OLD config. skhd reloads on SIGUSR1;
+  # yabai reloads by restarting its launchd service (it's nix-managed as
+  # dev.exdis.yabai, NOT via `yabai --start-service`, so kickstart the agent
+  # rather than `yabai --restart-service`). `|| true` so activation never fails
+  # if they aren't running yet.
   home.activation.reloadSkhd = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     /usr/bin/killall -USR1 skhd 2>/dev/null || true
+    /bin/launchctl kickstart -k "gui/$(/usr/bin/id -u)/dev.exdis.yabai" 2>/dev/null || true
   '';
 
   # --- herdr (experimental tmux alternative) ----------------------------
