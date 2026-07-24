@@ -11,7 +11,7 @@
 #
 # cmd+2 (Ghostty) is special: focus the laptop-display terminal first, then
 # cycle through Ghostty windows on repeat (see yabai-focus-ghostty.sh).
-# ctrl+cmd+2 focuses Ghostty on the OTHER (external) monitors instead.
+# cmd+7 focuses Ghostty on the OTHER (external) monitors instead.
 #
 # cmd+digit is captured globally by skhd's event tap, so these intentionally
 # override any app's own cmd+N (browser tabs etc.). Managed by the dev.exdis.skhd
@@ -20,7 +20,7 @@
 
 cmd - 1 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Microsoft Outlook" com.microsoft.Outlook
 cmd - 2 : /bin/sh "$HOME/.config/skhd/yabai-focus-ghostty.sh"
-ctrl + cmd - 2 : /bin/sh "$HOME/.config/skhd/yabai-focus-ghostty-external.sh"
+cmd - 7 : /bin/sh "$HOME/.config/skhd/yabai-focus-ghostty.sh" external
 cmd - 3 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Microsoft Teams" com.microsoft.teams2
 cmd - 4 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Telegram" ru.keepcoder.Telegram
 cmd - 8 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Zen" app.zen-browser.zen
@@ -31,5 +31,4 @@ cmd - 9 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Microsoft Edge" com.micro
 # does nothing, but skhd still consumes the keypress because a handler exists.
 cmd - 5 : true
 cmd - 6 : true
-cmd - 7 : true
 cmd - 0 : true

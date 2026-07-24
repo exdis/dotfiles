@@ -291,7 +291,6 @@ in
   xdg.configFile."skhd/skhdrc".source = ./skhd/skhdrc;
   xdg.configFile."skhd/yabai-focus.sh".source = ./skhd/yabai-focus.sh;
   xdg.configFile."skhd/yabai-focus-ghostty.sh".source = ./skhd/yabai-focus-ghostty.sh;
-  xdg.configFile."skhd/yabai-focus-ghostty-external.sh".source = ./skhd/yabai-focus-ghostty-external.sh;
 
   # yabai reads this on start (layout=float, manage=off) so it acts purely as a
   # focus engine and never tiles/moves windows. yabai looks for it at
