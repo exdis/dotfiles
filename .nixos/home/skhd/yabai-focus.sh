@@ -1,6 +1,7 @@
 #!/bin/sh
-# yabai-focus <yabai-app-name> <bundle-id> -- focus an app's MAIN window,
-# reliably across Spaces/displays. Bound to cmd+N in ~/.config/skhd/skhdrc.
+# yabai-focus <yabai-app-name> <bundle-id> [open] -- focus an app's MAIN
+# window, reliably across Spaces/displays. Bound to cmd+N in
+# ~/.config/skhd/skhdrc.
 #
 # We ask yabai (a persistent daemon holding a real WindowServer connection) to
 # focus the app's largest window -- this crosses background Spaces and other
@@ -10,10 +11,16 @@
 # app). If yabai can't focus the window (some windows report can-move=false,
 # e.g. Outlook) or the app isn't running, fall back to `open -b`, which uses
 # LaunchServices to activate + switch Space correctly.
-app="$1"; bundle="$2"
-id=$(/opt/homebrew/bin/yabai -m query --windows 2>/dev/null \
-  | /usr/bin/jq -r --arg a "$app" '[.[] | select(.app == $a)] | max_by(.frame.w * .frame.h) | .id // empty')
-if [ -n "$id" ] && /opt/homebrew/bin/yabai -m window --focus "$id" 2>/dev/null; then
-  exit 0
+#
+# Pass "open" as a 3rd arg to SKIP yabai and go straight to `open -b`: some apps
+# CRASH on yabai's synthetic focus events (notably recent Microsoft Teams), so
+# those must be activated via LaunchServices only.
+app="$1"; bundle="$2"; method="$3"
+if [ "$method" != "open" ]; then
+  id=$(/opt/homebrew/bin/yabai -m query --windows 2>/dev/null \
+    | /usr/bin/jq -r --arg a "$app" '[.[] | select(.app == $a)] | max_by(.frame.w * .frame.h) | .id // empty')
+  if [ -n "$id" ] && /opt/homebrew/bin/yabai -m window --focus "$id" 2>/dev/null; then
+    exit 0
+  fi
 fi
 /usr/bin/open -b "$bundle"

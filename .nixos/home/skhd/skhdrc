@@ -7,7 +7,9 @@
 # background Spaces / other displays -- including Zen (Firefox), whose main
 # window the Accessibility API can't reach -- and picks the main window over
 # e.g. Zen's floating PiP. If the app isn't running (or a window isn't
-# yabai-focusable), the helper falls back to `open -b <bundle>`.
+# yabai-focusable), the helper falls back to `open -b <bundle>`. Teams passes a
+# 3rd "open" arg to use `open -b` ONLY -- recent Teams crashes on yabai's
+# synthetic focus events.
 #
 # cmd+2 (Ghostty) is special: focus the laptop-display terminal first, then
 # cycle through Ghostty windows on repeat (see yabai-focus-ghostty.sh).
@@ -21,7 +23,7 @@
 cmd - 1 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Microsoft Outlook" com.microsoft.Outlook
 cmd - 2 : /bin/sh "$HOME/.config/skhd/yabai-focus-ghostty.sh"
 cmd - 7 : /bin/sh "$HOME/.config/skhd/yabai-focus-ghostty.sh" external
-cmd - 3 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Microsoft Teams" com.microsoft.teams2
+cmd - 3 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Microsoft Teams" com.microsoft.teams2 open
 cmd - 4 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Telegram" ru.keepcoder.Telegram
 cmd - 8 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Zen" app.zen-browser.zen
 cmd - 9 : /bin/sh "$HOME/.config/skhd/yabai-focus.sh" "Microsoft Edge" com.microsoft.edgemac
