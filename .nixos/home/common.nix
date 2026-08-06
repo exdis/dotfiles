@@ -16,6 +16,12 @@ in
 {
   programs.home-manager.enable = true;
 
+  # Packages wanted on BOTH macOS and Linux. Host-specific packages live in the
+  # per-host home.packages (./darwin.nix, ../home.nix).
+  home.packages = [
+    pkgs.weechat
+  ];
+
   # --- git --------------------------------------------------------------
   # Faithful port of ~/.gitconfig. Home-manager writes this to
   # ~/.config/git/config, which git reads with LOWER precedence than the

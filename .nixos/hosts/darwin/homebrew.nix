@@ -114,6 +114,7 @@
       "lynx"
       "midnight-commander"
       "mitmproxy"
+      "mole"
       "mosquitto"
       "n"
       "ncdu"
@@ -146,7 +147,6 @@
       # HEAD build, matching the snapshot.
       { name = "universal-ctags"; args = [ "HEAD" ]; }
       "urlview"
-      "weechat"
       "wget"
       "yadm"
       "yazi"

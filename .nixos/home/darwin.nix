@@ -217,7 +217,7 @@ let
   '';
 in
 {
-  imports = [ ./common.nix ];
+  imports = [ ./common.nix ./weechat.nix ];
 
   home.username = "dkolesnikov";
   home.homeDirectory = "/Users/dkolesnikov";

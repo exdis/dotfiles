@@ -40,7 +40,6 @@
     streamcontroller
     telegram-desktop
     waybar
-    weechat
     wofi
     yadm
     zoxide
