@@ -18,7 +18,7 @@
 app="$1"; bundle="$2"; method="$3"
 if [ "$method" != "open" ]; then
   id=$(/opt/homebrew/bin/yabai -m query --windows 2>/dev/null \
-    | /usr/bin/jq -r --arg a "$app" '[.[] | select(.app == $a)] | max_by(.frame.w * .frame.h) | .id // empty')
+    | /usr/bin/jq -r --arg a "$app" '($a | ascii_downcase) as $al | [.[] | select((.app | ascii_downcase) == $al)] | max_by(.frame.w * .frame.h) | .id // empty')
   if [ -n "$id" ] && /opt/homebrew/bin/yabai -m window --focus "$id" 2>/dev/null; then
     exit 0
   fi

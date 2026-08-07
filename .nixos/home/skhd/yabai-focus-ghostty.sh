@@ -20,10 +20,11 @@ disps=$("$YABAI" -m query --displays 2>/dev/null)
 
 # One jq does it all: pick the Ghostty window group (laptop vs external), then
 # either cycle to the next window in that group (if a group window is focused)
-# or jump to the group's largest window.
+# or jump to the group's largest window. App name matched case-insensitively
+# (yabai may report "Ghostty" or "ghostty" depending on version/OS).
 target=$(printf '%s' "$wins" | "$JQ" -r --argjson disps "$disps" --arg lap "$LAPTOP_UUID" --arg mode "$mode" '
   ($disps[] | select(.uuid == $lap) | .index) as $lapidx
-  | [ .[] | select(.app == "Ghostty") ] as $all
+  | [ .[] | select((.app | ascii_downcase) == "ghostty") ] as $all
   | ( if $mode == "external" then [ $all[] | select(.display != $lapidx) ]
                              else [ $all[] | select(.display == $lapidx) ] end ) as $g0
   | ( if ($g0 | length) > 0 then $g0 else $all end ) as $grp
