@@ -33,6 +33,14 @@
       url = "github:paulbkim-dev/vim-herdr-navigation";
       flake = false;
     };
+    # pyroclear: `clear` replacement that burns the screen down first (Rust).
+    # Linux-only -- its flake exposes x86_64-linux/aarch64-linux only and
+    # package.nix sets meta.platforms = linux -- so it is consumed from the
+    # NixOS home (./home.nix), never from home/common.nix.
+    pyroclear = {
+      url = "github:shreyanth-sureshkrishnaa/pyroclear";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { nixpkgs, mango, ... } @inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {

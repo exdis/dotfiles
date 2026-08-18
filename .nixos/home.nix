@@ -43,7 +43,18 @@
     wofi
     yadm
     zoxide
+  ] ++ [
+    # pyroclear -- animated `clear` (Rust, github:shreyanth-sureshkrishnaa/pyroclear).
+    # Built from the flake input; not in nixpkgs. Kept here rather than in
+    # home/common.nix because upstream is Linux-only (its flake has no darwin
+    # system and meta.platforms = lib.platforms.linux), so the Mac must not see
+    # it. Exposed as the `cls` alias below -- `clear` stays coreutils.
+    inputs.pyroclear.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
+
+  # Linux-only alias; the shared aliases live in home/common.nix, which the
+  # darwin host also imports and where `pyroclear` would not resolve.
+  programs.fish.shellAliases.cls = "pyroclear";
 
   programs.home-manager.enable = true;
 

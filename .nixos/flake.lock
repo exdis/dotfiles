@@ -336,6 +336,26 @@
         "type": "github"
       }
     },
+    "pyroclear": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786952616,
+        "narHash": "sha256-zkMx8tLgYPF5bL3ggFhFSg2GSL29pNKCK7tzsrjnNuc=",
+        "owner": "shreyanth-sureshkrishnaa",
+        "repo": "pyroclear",
+        "rev": "39d79fd2aabedf9fea64043a6e48c16311217dbe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "shreyanth-sureshkrishnaa",
+        "repo": "pyroclear",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "herdr": "herdr",
@@ -344,6 +364,7 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
+        "pyroclear": "pyroclear",
         "stylix": "stylix",
         "vim-herdr-navigation": "vim-herdr-navigation",
         "zen-browser": "zen-browser"
