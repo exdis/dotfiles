@@ -5,11 +5,8 @@ cursor-style = block
 shell-integration-features = no-cursor
 window-decoration = none
 
-# Cross-monitor Ghostty window cycling, driven by cmd+2 (see
-# ~/.config/skhd/ghostty-focus-or-cycle.sh). This is a "private" combo that
-# skhd synthesizes only when Ghostty is already frontmost -- so cmd+2 focuses
-# Ghostty from elsewhere, and cycles its windows (across monitors) when you're
-# already in it. Native cmd+` is left untouched for other apps.
-keybind = cmd+ctrl+alt+2=goto_window:next
-keybind = cmd+ctrl+alt+shift+2=goto_window:previous
+# NOTE: cross-monitor Ghostty window cycling (cmd+2 / cmd+7 on macOS) is handled
+# entirely outside Ghostty by home/skhd/yabai-focus-ghostty.sh, which asks yabai
+# to focus the next Ghostty window. Ghostty has no window-cycling keybind action
+# (only goto_tab / goto_split), so there is deliberately nothing to bind here.
 
