@@ -14,6 +14,10 @@ in
 # (nix-darwin) and Linux (NixOS) hosts. Keep ONLY things that make sense on
 # both platforms here. Host-specific bits live in ./darwin.nix / ./linux.nix.
 {
+  imports = [
+    ./haskell.nix
+  ];
+
   programs.home-manager.enable = true;
 
   # Packages wanted on BOTH macOS and Linux. Host-specific packages live in the

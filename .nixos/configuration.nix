@@ -84,7 +84,6 @@ in
     git
     gleam
     gnumake
-    haskell-language-server
     libffi
     lsof
     mesa
