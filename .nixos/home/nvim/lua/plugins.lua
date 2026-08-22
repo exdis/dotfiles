@@ -57,9 +57,23 @@ require("lazy").setup({
   },
 
   -- FFF (File Finder) -------------------------------------------------------
+  -- The picker is a Rust cdylib (target/release/libfff_nvim.so) loaded via
+  -- package.cpath; without it `require('fff.core')` fails and the plugin's
+  -- UIEnter hook errors out.
+  --
+  -- It cannot be built with the stable `cargo` from nixpkgs: the neo_frizbee
+  -- dependency needs `#![feature(portable_simd)]`, and its `std::simd`
+  -- LaneCount/SupportedLaneCount API only exists in the exact nightly pinned by
+  -- the plugin's rust-toolchain.toml (nightly-2025-09-01). That file is a rustup
+  -- concept, so our non-rustup cargo silently ignores it and the build breaks.
+  --
+  -- fff.nvim ships its own flake whose `release` app builds the library with
+  -- rust-overlay at the pinned nightly and copies it into target/release. That is
+  -- the upstream-documented NixOS path, so drive the build through it instead of
+  -- pulling rustup (and a second, unmanaged Rust) onto the system.
   {
     "dmtrKovalenko/fff.nvim",
-    build = "cargo build --release",
+    build = "nix run .#release",
     opts = {},
     keys = {
       {
