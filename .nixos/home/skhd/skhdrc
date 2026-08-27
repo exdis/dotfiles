@@ -3,13 +3,16 @@
 #
 # cmd+N focuses an app's MAIN window via the yabai-focus helper, which asks the
 # yabai daemon (see hosts/darwin/default.nix + home/yabai/yabairc) to focus the
-# app's largest window. yabai's persistent process reliably focuses windows on
-# background Spaces / other displays -- including Zen (Firefox), whose main
-# window the Accessibility API can't reach -- and picks the main window over
-# e.g. Zen's floating PiP. If the app isn't running (or a window isn't
-# yabai-focusable), the helper falls back to `open -b <bundle>`. Teams passes a
-# 3rd "open" arg to use `open -b` ONLY -- recent Teams crashes on yabai's
-# synthetic focus events.
+# app's largest window -- that is what keeps cmd+8 on Zen's browser window
+# rather than its much smaller Picture-in-Picture video popup. yabai's
+# persistent process reliably focuses windows on background Spaces / other
+# displays. When yabai has no Accessibility reference for the window (Zen only
+# publishes windows whose Space is visible, so a yabai restart while Zen sits on
+# a background Space leaves it unreachable), the helper reveals that Space and
+# raises the window over the PiP itself -- see the comments in yabai-focus.sh.
+# If the app isn't running, the helper falls back to `open -b <bundle>`. Teams
+# passes a 3rd "open" arg to use `open -b` ONLY -- recent Teams crashes on
+# yabai's synthetic focus events.
 #
 # cmd+2 (Ghostty) is special: focus the laptop-display terminal first, then
 # cycle through Ghostty windows on repeat (see yabai-focus-ghostty.sh).

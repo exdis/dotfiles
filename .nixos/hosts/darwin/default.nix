@@ -153,9 +153,16 @@
   # tiles/moves windows -- ~/.config/yabai/yabairc sets layout=float and
   # manage=off). Its persistent daemon holds a proper WindowServer connection,
   # so `yabai -m window --focus <id>` reliably focuses windows on background
-  # Spaces/other displays (incl. Zen's main window) -- something a short-lived
-  # process spawned by skhd cannot do. Runs WITHOUT the scripting addition (no
-  # SIP disable). Autostarts; needs Accessibility on /opt/homebrew/bin/yabai.
+  # Spaces/other displays -- something a short-lived process spawned by skhd
+  # cannot do. Runs WITHOUT the scripting addition (no SIP disable). Autostarts;
+  # needs Accessibility on /opt/homebrew/bin/yabai.
+  #
+  # NOTE: yabai enumerates windows once at startup and never retries, and
+  # Firefox/Zen only publishes a window to the Accessibility API while that
+  # window's Space is visible. So restarting this agent (which
+  # home.activation.reloadSkhd does on every rebuild) while Zen sits on a
+  # background Space leaves yabai unable to focus it. yabai-focus.sh detects
+  # that and recovers on its own -- see the comments there.
   launchd.user.agents.yabai = {
     serviceConfig = {
       Label = "dev.exdis.yabai";
