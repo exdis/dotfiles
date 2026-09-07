@@ -186,7 +186,7 @@ in
   # Virtualization
 
   virtualisation.virtualbox.host = {
-    enable = false;
+    enable = true;
     enableExtensionPack = true;
   };
 
