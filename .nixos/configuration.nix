@@ -48,50 +48,13 @@ in
     xwayland.enable = true;
   };
 
-  # Graphical login screen, replacing the bare tty1 console login.
-  #
-  # Enabling regreet pulls in services.greetd with a default_session that runs
-  # ReGreet inside cage (a kiosk Wayland compositor) under dbus-run-session, and
-  # enables accounts-daemon so it can list users. greetd takes over tty1: it
-  # sets services.greetd.settings.terminal.vt = 1, disables autovt@tty1 and
-  # Conflicts with getty@tty1 -- which is why the uwsm autostart that used to
-  # live in home.nix's programs.fish.loginShellInit is gone; it could never fire
-  # again (`uwsm check may-start` only passes on VT 1).
-  #
-  # Theming is handled by stylix: its regreet target autoEnables on Linux, so
-  # the greeter picks up the Alabaster Dark scheme, fonts and cursor from the
-  # stylix block below without any extra configuration here.
-  #
-  # Pick the "Hyprland (uwsm-managed)" entry at the greeter -- that is
-  # hyprland-uwsm.desktop, whose Exec is `uwsm start -e -D Hyprland
-  # hyprland.desktop`. The plain "Hyprland" entry runs start-hyprland bare and
-  # would reintroduce the dead graphical-session.target / broken portal problem.
+  # Greeter on tty1. Pick the "Hyprland (uwsm-managed)" session entry; the plain
+  # one starts bare and leaves graphical-session.target dead (breaks portals).
   services.displayManager.regreet.enable = true;
 
-  # Run ReGreet inside Hyprland rather than the default cage.
-  #
-  # cage has no way to select an output mode -- it always takes the EDID
-  # preferred mode -- which put the greeter on the wrong mode on DP-3. Hyprland
-  # takes the same `monitor` line the real session uses, so the greeter comes up
-  # at native 3440x1440@175 and the handover into the session is seamless.
-  # Everything expensive (animations, blur, shadows) is off; the config just
-  # launches ReGreet and exits the compositor when it returns.
-  #
-  # Written in Lua for the same reason ~/.config/hypr/hyprland.lua is: hyprlang
-  # .conf is now the "legacy" format. Verify with:
-  #   Hyprland --verify-config -c <the store path in greetd.toml>
-  #
-  # This assignment overrides the regreet module's own mkDefault, which trips a
-  # stylix warning about a custom default_session.command -- expected, and the
-  # theming (regreet.css/regreet.toml) is unaffected since it does not depend on
-  # which compositor hosts the greeter.
-  # Launched through `start-hyprland`, not the `Hyprland` binary directly.
-  # Hyprland 0.56 checks for the watchdog fd that start-hyprland passes
-  # (`Hyprland --watchdog-fd N`) and throws up an error overlay reading
-  # "Hyprland was started without start-hyprland. This is strongly discouraged
-  # unless you are in a debugging environment." when it is missing. Arguments
-  # after `--` are forwarded to Hyprland. The user session already went through
-  # start-hyprland via hyprland.desktop; only the greeter was launching bare.
+  # ReGreet hosted by Hyprland instead of the default cage: cage always takes the
+  # EDID preferred mode, which is the wrong one here. start-hyprland (not the
+  # Hyprland binary) or Hyprland shows a "started without start-hyprland" overlay.
   services.greetd.settings.default_session.command =
     let
       greeterConfig = pkgs.writeText "greetd-hyprland.lua" ''
@@ -125,18 +88,8 @@ in
     in
     "${lib.getExe' pkgs.dbus "dbus-run-session"} ${lib.getExe' config.programs.hyprland.package "start-hyprland"} -- -c ${greeterConfig}";
 
-  # ReGreet records the last user and their last session in
-  # /var/lib/regreet/state.toml, which is why the right entry is preselected
-  # after the first login. Seed it so that is declarative rather than a side
-  # effect of having logged in once, and so it survives a wipe of /var/lib.
-  #
-  # Type `f` (not `f+`) writes the file only when it is missing, leaving ReGreet
-  # free to keep updating it afterwards. Runs after the regreet module's own
-  # "10-regreet" rules, which create the directory.
-  #
-  # The argument must contain REAL newlines: the tmpfiles module runs it through
-  # lib.strings.escapeC, so a literal "\n" here would be re-escaped to "\x5cn"
-  # and land in the file as a backslash and an n, producing invalid TOML.
+  # Seeds ReGreet's remembered user/session. `f` only writes it when missing.
+  # Newlines must be literal; the argument is run through lib.strings.escapeC.
   systemd.tmpfiles.settings."11-regreet-state"."/var/lib/regreet/state.toml".f = {
     user = "greeter";
     group = "greeter";
@@ -158,6 +111,9 @@ in
   hardware.bluetooth.enable = true;
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
+
+  # No auto-lock / auto-suspend on idle.
+  services.logind.settings.Login.IdleAction = "ignore";
 
   services.yggdrasil = {
     enable = true;

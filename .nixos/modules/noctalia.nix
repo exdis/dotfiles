@@ -90,6 +90,14 @@
 
       # v5 TOML settings; deep-merged with noctalia defaults.
       settings = {
+        # No auto-lock / auto-suspend. screen-off is off too until the display's
+        # own deep-sleep is disabled, since it currently fails to wake.
+        idle.behavior = {
+          lock.enabled = false;
+          "lock-and-suspend".enabled = false;
+          "screen-off".enabled = false;
+        };
+
         # Select the custom Alabaster palette above.
         theme = {
           mode = "dark";

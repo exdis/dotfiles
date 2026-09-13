@@ -56,23 +56,8 @@
   # darwin host also imports and where `pyroclear` would not resolve.
   programs.fish.shellAliases.cls = "pyroclear";
 
-  # NOTE: the uwsm autostart that used to live here
-  # (programs.fish.loginShellInit -> `uwsm check may-start && exec uwsm start
-  # hyprland.desktop`) was removed when the greeter went in. greetd owns tty1
-  # (terminal.vt = 1, autovt@tty1 disabled, Conflicts=getty@tty1), so there is
-  # no console login left on VT 1 and `uwsm check may-start` -- which only
-  # passes on VT 1 -- could never succeed again. The session is now started by
-  # the "Hyprland (uwsm-managed)" entry picked in ReGreet; see
-  # services.displayManager.regreet in configuration.nix.
-
-  # uwsm sources this into the systemd user manager and the D-Bus activation
-  # environment, which is what portals and dbus-activated services read. The
-  # `env = ` lines in ~/.config/hypr/hyprland.conf only reach processes Hyprland
-  # spawns itself, so these are mirrored here rather than moved.
-  #
-  # Still required now that the session is started from the greeter rather than
-  # from a login shell: the "Hyprland (uwsm-managed)" entry also goes through
-  # `uwsm start`, so the same env preloader applies.
+  # uwsm exports these into the systemd/D-Bus activation environment; the
+  # `env =` lines in hyprland.lua only reach Hyprland's own children.
   xdg.configFile."uwsm/env".text = ''
     export XCURSOR_SIZE=24
     export HYPRCURSOR_SIZE=24
