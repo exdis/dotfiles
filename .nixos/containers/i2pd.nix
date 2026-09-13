@@ -14,12 +14,13 @@
 
       services.i2pd = {
         enable = true;
-        address = "0.0.0.0";
-        proto = {
-          http.enable = true;
-          socksProxy.enable = true;
-          httpProxy.enable = true;
-          sam.enable = true;
+        settings = {
+          host = "0.0.0.0";
+
+          http.enabled = true;
+          socksproxy.enabled = true;
+          httpproxy.enabled = true;
+          sam.enabled = true;
         };
       };
     };

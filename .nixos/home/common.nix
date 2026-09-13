@@ -112,6 +112,12 @@ in
 
     # jujutsu working-copy dir in colocated (jj + git) repos
     .jj/
+
+    # Nix build artifacts. `nix build` / `nh os build` drop a `result` symlink
+    # into /nix/store next to the flake; it must never be committed. Relevant on
+    # both hosts (nix-darwin produces one too).
+    result
+    result-*
   '';
 
   # --- jujutsu (jj) VCS -------------------------------------------------

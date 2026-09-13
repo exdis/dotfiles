@@ -56,6 +56,33 @@
   # darwin host also imports and where `pyroclear` would not resolve.
   programs.fish.shellAliases.cls = "pyroclear";
 
+  # NOTE: the uwsm autostart that used to live here
+  # (programs.fish.loginShellInit -> `uwsm check may-start && exec uwsm start
+  # hyprland.desktop`) was removed when the greeter went in. greetd owns tty1
+  # (terminal.vt = 1, autovt@tty1 disabled, Conflicts=getty@tty1), so there is
+  # no console login left on VT 1 and `uwsm check may-start` -- which only
+  # passes on VT 1 -- could never succeed again. The session is now started by
+  # the "Hyprland (uwsm-managed)" entry picked in ReGreet; see
+  # services.displayManager.regreet in configuration.nix.
+
+  # uwsm sources this into the systemd user manager and the D-Bus activation
+  # environment, which is what portals and dbus-activated services read. The
+  # `env = ` lines in ~/.config/hypr/hyprland.conf only reach processes Hyprland
+  # spawns itself, so these are mirrored here rather than moved.
+  #
+  # Still required now that the session is started from the greeter rather than
+  # from a login shell: the "Hyprland (uwsm-managed)" entry also goes through
+  # `uwsm start`, so the same env preloader applies.
+  xdg.configFile."uwsm/env".text = ''
+    export XCURSOR_SIZE=24
+    export HYPRCURSOR_SIZE=24
+    export GDK_SCALE=1
+    export GDK_DPI_SCALE=1
+    export QT_AUTO_SCREEN_SCALE_FACTOR=1
+    export QT_SCALE_FACTOR=1
+    export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+  '';
+
   programs.home-manager.enable = true;
 
   programs.zen-browser.enable = true;
@@ -102,13 +129,16 @@
       enable = true;
       profileNames = [ "default" ];
     };
-    hyprland = {
-      enable = true;
-    };
     hyprpaper = {
       enable = false;
     };
     emacs = {
+      enable = false;
+    };
+    # Stylix gained a noctalia target which forces
+    # programs.noctalia.settings.theme.custom_palette = "stylix", conflicting
+    # with the hand-written "alabaster" palette in modules/noctalia.nix.
+    noctalia = {
       enable = false;
     };
   };
