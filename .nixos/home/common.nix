@@ -9,6 +9,111 @@ let
   thumbsCopy =
     if isDarwin then "pbcopy"
     else "(command -v wl-copy >/dev/null 2>&1 && wl-copy || xclip -selection clipboard)";
+
+  # Palette lifted from p00f/alabaster.nvim, light branch of colors/alabaster.lua.
+  alabaster = {
+    bg = "#f7f7f7";
+    fg = "#000000";
+    punct = "#777777";
+    definition = "#325cc0";
+    constant = "#7a3e9d";
+    string = "#448c27";
+    comment = "#aa3731";
+    yellow = "#cb9000";
+    pmenu = "#e7e7e7";
+    folded = "#dddddd";
+    split = "#abbdc0";
+    cursorline = "#E2EEEE";
+    lineNr = "#7d7c7c";
+    accentMuted = "#94a9db";
+    diffAddBg = "#ADFFB7";
+    diffAddFg = "#0A7816";
+    diffDelBg = "#F8B28F";
+    diffDelFg = "#872C28";
+  };
+
+  hunkConfig = (pkgs.formats.toml { }).generate "hunk-config.toml" {
+    theme = "alabaster-light";
+    mode = "auto";
+    line_numbers = true;
+    tab_width = 4;
+    sidebar = "auto";
+    wrap_lines = false;
+    agent_notes = true;
+
+    themes.alabaster-light = {
+      base = "min-light";
+      label = "Alabaster Light";
+
+      background = alabaster.bg;
+      panel = alabaster.pmenu;
+      panelAlt = alabaster.folded;
+      border = alabaster.split;
+      accent = alabaster.definition;
+      accentMuted = alabaster.accentMuted;
+      text = alabaster.fg;
+      muted = alabaster.punct;
+
+      addedBg = "#D4F9D9";
+      addedContentBg = alabaster.diffAddBg;
+      addedSignColor = alabaster.diffAddFg;
+      removedBg = "#F6D6C7";
+      removedContentBg = alabaster.diffDelBg;
+      removedSignColor = alabaster.diffDelFg;
+      movedAddedBg = "#C5D0E9";
+      movedRemovedBg = "#D7C8E0";
+      contextBg = alabaster.bg;
+      contextContentBg = alabaster.bg;
+      selectedHunk = alabaster.cursorline;
+
+      lineNumberBg = alabaster.bg;
+      lineNumberFg = alabaster.lineNr;
+
+      badgeAdded = alabaster.diffAddFg;
+      badgeRemoved = alabaster.diffDelFg;
+      badgeNeutral = alabaster.punct;
+      fileNew = alabaster.string;
+      fileDeleted = alabaster.comment;
+      fileRenamed = alabaster.definition;
+      fileModified = alabaster.yellow;
+      fileUntracked = alabaster.constant;
+
+      noteBorder = alabaster.constant;
+      noteBackground = alabaster.pmenu;
+      noteTitleBackground = alabaster.folded;
+      noteTitleText = alabaster.fg;
+
+      syntax_scopes = {
+        "comment" = alabaster.comment;
+        "punctuation.definition.comment" = alabaster.comment;
+        "string" = alabaster.string;
+        "string.quoted" = alabaster.string;
+        "punctuation.definition.string" = alabaster.string;
+        "constant.numeric" = alabaster.constant;
+        "constant.language" = alabaster.constant;
+        "constant.character" = alabaster.constant;
+        "constant.character.escape" = alabaster.punct;
+        "entity.name.function" = alabaster.definition;
+        "entity.name.type" = alabaster.definition;
+        "entity.name.class" = alabaster.definition;
+        "keyword" = alabaster.fg;
+        "keyword.control" = alabaster.fg;
+        "keyword.operator" = alabaster.punct;
+        "storage" = alabaster.fg;
+        "storage.type" = alabaster.fg;
+        "storage.modifier" = alabaster.fg;
+        "support.function" = alabaster.fg;
+        "support.type" = alabaster.fg;
+        "support.class" = alabaster.fg;
+        "variable" = alabaster.fg;
+        "variable.other" = alabaster.fg;
+        "variable.parameter" = alabaster.fg;
+        "entity.name.tag" = alabaster.fg;
+        "entity.other.attribute-name" = alabaster.fg;
+        "punctuation" = alabaster.punct;
+      };
+    };
+  };
 in
 # Cross-platform home-manager configuration shared between the macOS
 # (nix-darwin) and Linux (NixOS) hosts. Keep ONLY things that make sense on
@@ -24,6 +129,7 @@ in
   # per-host home.packages (./darwin.nix, ../home.nix).
   home.packages = [
     pkgs.weechat
+    pkgs.hunk
   ];
 
   # --- git --------------------------------------------------------------
@@ -665,6 +771,8 @@ in
       "ghostty/config".source = ./ghostty/config;
       "ghostty/themes/alabaster-dark".source = ./ghostty/themes/alabaster-dark;
       "wezterm/wezterm.lua".source = ./wezterm/wezterm.lua;
+
+      "hunk/config.toml".source = hunkConfig;
     }
     // builtins.listToAttrs (map
       (f: {
