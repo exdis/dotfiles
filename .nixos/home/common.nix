@@ -130,6 +130,8 @@ in
   home.packages = [
     pkgs.weechat
     pkgs.hunk
+    pkgs.exiftool
+    pkgs.imagemagick
   ];
 
   # --- git --------------------------------------------------------------
