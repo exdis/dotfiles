@@ -42,63 +42,46 @@ in
 
   console.keyMap = "us";
 
+  # Aquamarine 0.15.0 can leave stale KMS state after monitor power-off / KVM
+  # switching (hyprwm/aquamarine#386, #407). 0.15.1 includes upstream fix #410.
+  # Remove this overlay once the pinned nixpkgs provides 0.15.1 or newer.
+  nixpkgs.overlays = [
+    (final: prev: {
+      aquamarine = if lib.versionOlder prev.aquamarine.version "0.15.1" then
+        prev.aquamarine.overrideAttrs (_: {
+          version = "0.15.1";
+          src = final.fetchFromGitHub {
+            owner = "hyprwm";
+            repo = "aquamarine";
+            tag = "v0.15.1";
+            hash = "sha256-jiUl3+k9K+BASO4hvKFhlCMUpHPPoy2q5uZMl3pzOF0=";
+          };
+        })
+      else prev.aquamarine;
+    })
+  ];
+
   programs.hyprland = {
     enable = true;
     withUWSM = true;
     xwayland.enable = true;
   };
 
-  # Greeter on tty1. Pick the "Hyprland (uwsm-managed)" session entry; the plain
-  # one starts bare and leaves graphical-session.target dead (breaks portals).
-  services.displayManager.regreet.enable = true;
-
-  # ReGreet hosted by Hyprland instead of the default cage: cage always takes the
-  # EDID preferred mode, which is the wrong one here. start-hyprland (not the
-  # Hyprland binary) or Hyprland shows a "started without start-hyprland" overlay.
-  services.greetd.settings.default_session.command =
-    let
-      greeterConfig = pkgs.writeText "greetd-hyprland.lua" ''
-        hl.monitor({
-            output   = "DP-3",
-            mode     = "3440x1440@175",
-            position = "0x0",
-            scale    = 1,
-        })
-
-        hl.config({
-            animations = { enabled = false },
-            decoration = {
-                blur   = { enabled = false },
-                shadow = { enabled = false },
-            },
-            misc = {
-                disable_hyprland_logo   = true,
-                force_default_wallpaper = 0,
-                vrr                     = 0,
-            },
-            input = {
-                kb_layout = "us,ru",
-            },
-        })
-
-        hl.on("hyprland.start", function()
-            hl.exec_cmd("${lib.getExe config.services.displayManager.regreet.package}; ${config.programs.hyprland.package}/bin/hyprctl dispatch exit")
-        end)
-      '';
-    in
-    "${lib.getExe' pkgs.dbus "dbus-run-session"} ${lib.getExe' config.programs.hyprland.package "start-hyprland"} -- -c ${greeterConfig}";
-
-  # Seeds ReGreet's remembered user/session. `f` only writes it when missing.
-  # Newlines must be literal; the argument is run through lib.strings.escapeC.
-  systemd.tmpfiles.settings."11-regreet-state"."/var/lib/regreet/state.toml".f = {
-    user = "greeter";
-    group = "greeter";
-    mode = "0644";
-    argument = ''
-      last_user = "exdis"
-      [user_to_last_sess]
-      exdis = "Hyprland (uwsm-managed)"
-    '';
+  # Text login on tty1; Hyprland starts only after authentication. UWSM starts
+  # the desktop entry (start-hyprland) and manages graphical-session.target.
+  services.greetd = {
+    enable = true;
+    useTextGreeter = true;
+    settings.default_session = {
+      user = "greeter";
+      command = lib.getExe pkgs.tuigreet + " " + lib.escapeShellArgs [
+        "--time"
+        "--user" "exdis"
+        "--remember"
+        "--asterisks"
+        "--cmd" "${lib.getExe config.programs.uwsm.package} start -- hyprland.desktop"
+      ];
+    };
   };
 
   hardware.nvidia = {
@@ -265,4 +248,3 @@ in
 
   system.stateVersion = "25.05";
 }
-
