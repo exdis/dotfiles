@@ -79,6 +79,7 @@ in
         "--user" "exdis"
         "--remember"
         "--asterisks"
+        "--background" "matrix"
         "--cmd" "${lib.getExe config.programs.uwsm.package} start -- hyprland.desktop"
       ];
     };
