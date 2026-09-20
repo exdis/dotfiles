@@ -244,8 +244,8 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
 -- Keyboard layout switching
-hl.bind("CTRL + ALT + BACKSLASH",         hl.dsp.exec_cmd("hyprctl keyword input:kb_layout us"))
-hl.bind("CTRL + ALT + SHIFT + BACKSLASH", hl.dsp.exec_cmd("hyprctl keyword input:kb_layout ru"))
+hl.bind("CTRL + ALT + BACKSLASH",         hl.dsp.exec_cmd("hyprctl switchxkblayout all 0"))
+hl.bind("CTRL + ALT + SHIFT + BACKSLASH", hl.dsp.exec_cmd("hyprctl switchxkblayout all 1"))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
