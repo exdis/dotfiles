@@ -124,7 +124,7 @@
     (on-idle-fakekey to-base tap 20)
   )
 
-  ralt @npad
+  ralt (tap-dance $tap-time (@npad ralt))
   lalt @nnav
 
   a (tap-hold-release-keys $tap-time $hold-time (multi a @tap)  lctl $left-hand-keys)
@@ -133,7 +133,7 @@
   f (tap-hold-release-keys $tap-time $hold-time (multi f @tap)  lmet $left-hand-keys)
   j (tap-hold-release-keys $tap-time $hold-time (multi j @tap)  rmet $right-hand-keys)
   k (tap-hold-release-keys $tap-time $hold-time (multi k @tap)  rsft $right-hand-keys)
-  l (tap-hold-release-keys $tap-time $hold-time (multi l @tap) @ralt $right-hand-keys)
+  l (tap-hold-release-keys $tap-time $hold-time (multi l @tap) @npad $right-hand-keys)
   ; (tap-hold-release-keys $tap-time $hold-time (multi ; @tap)  rctl $right-hand-keys)
 
   lshift (tap-hold-press $tap-time $hold-time C-S-M-\ lsft)
