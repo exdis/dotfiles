@@ -132,6 +132,7 @@ in
     pkgs.hunk
     pkgs.exiftool
     pkgs.imagemagick
+    pkgs.pi-coding-agent
   ];
 
   # --- git --------------------------------------------------------------
