@@ -73,7 +73,6 @@
       "ripgrep"
       "koekeishiya/formulae/skhd"
       "koekeishiya/formulae/yabai"
-      "superfile"
       "thefuck"
       "tldr"
       "tmux"

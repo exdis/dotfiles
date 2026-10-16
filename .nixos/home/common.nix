@@ -135,6 +135,126 @@ in
     pkgs.pi-coding-agent
   ];
 
+  # --- superfile --------------------------------------------------------
+  # Home Manager owns the cross-platform package and config.
+  programs.superfile = {
+    enable = true;
+    firstUseCheck = false;
+
+    settings = {
+      theme = "alabaster";
+      auto_check_update = false;
+      ignore_missing_fields = true;
+      transparent_background = false;
+    };
+
+    # Based on Superfile's Vim preset and the nvim-tree mappings in
+    # home/nvim/lua/nvimtree-config.lua.
+    hotkeys = {
+      confirm = [ "enter" ];
+      quit = [ "ctrl+c" ];
+      cd_quit = [ "Q" ];
+
+      list_up = [ "k" ];
+      list_down = [ "j" ];
+      page_up = [ "pgup" ];
+      page_down = [ "pgdown" ];
+
+      create_new_file_panel = [ "n" ];
+      close_file_panel = [ "q" ];
+      next_file_panel = [ "tab" ];
+      previous_file_panel = [ "shift+tab" ];
+      split_file_panel = [ "N" ];
+      toggle_file_preview_panel = [ "f" ];
+      open_sort_options_menu = [ "o" ];
+      toggle_reverse_sort = [ "R" ];
+
+      focus_on_process_bar = [ "ctrl+p" ];
+      focus_on_sidebar = [ "ctrl+s" ];
+      focus_on_metadata = [ "ctrl+d" ];
+
+      file_panel_item_create = [ "a" ];
+      file_panel_item_rename = [ "r" ];
+      copy_items = [ "y" ];
+      cut_items = [ "x" ];
+      paste_items = [ "p" ];
+      delete_items = [ "d" ];
+      permanently_delete_items = [ "D" ];
+
+      extract_file = [ "ctrl+e" ];
+      compress_file = [ "ctrl+a" ];
+      open_file_with_editor = [ "e" ];
+      open_current_directory_with_editor = [ "E" ];
+
+      pinned_directory = [ "P" ];
+      toggle_dot_file = [ "." ];
+      change_panel_mode = [ "m" ];
+      open_help_menu = [ "?" ];
+      open_spf_prompt = [ ">" ];
+      open_command_line = [ ":" ];
+      open_zoxide = [ "z" ];
+      copy_path = [ "Y" ];
+      copy_present_working_directory = [ "c" ];
+      toggle_footer = [ "ctrl+f" ];
+
+      confirm_typing = [ "enter" ];
+      cancel_typing = [ "esc" ];
+      parent_directory = [ "-" ];
+      search_bar = [ "/" ];
+      file_panel_select_mode_items_select_down = [ "J" ];
+      file_panel_select_mode_items_select_up = [ "K" ];
+      file_panel_select_all_items = [ "A" ];
+    };
+
+    themes.alabaster = {
+      code_syntax_highlight = "native";
+
+      full_screen_fg = "#DADADA";
+      full_screen_bg = "#0E1112";
+      gradient_color = [ "#6699CC" "#C594C5" ];
+      directory_icon_color = "#FAC863";
+
+      file_panel_fg = "#DADADA";
+      file_panel_bg = "#0E1112";
+      file_panel_border = "#2E3235";
+      file_panel_border_active = "#6699CC";
+      file_panel_top_directory_icon = "#FAC863";
+      file_panel_top_path = "#6699CC";
+      file_panel_item_selected_fg = "#DADADA";
+      file_panel_item_selected_bg = "#0E1112";
+
+      footer_fg = "#DADADA";
+      footer_bg = "#0E1112";
+      footer_border = "#2E3235";
+      footer_border_active = "#99C794";
+
+      sidebar_fg = "#DADADA";
+      sidebar_bg = "#0E1112";
+      sidebar_title = "#6699CC";
+      sidebar_border = "#2E3235";
+      sidebar_border_active = "#C594C5";
+      sidebar_item_selected_fg = "#F3F3F3";
+      sidebar_item_selected_bg = "#1E2427";
+      sidebar_divider = "#2E3235";
+
+      modal_fg = "#DADADA";
+      modal_bg = "#0E1112";
+      modal_border_active = "#6699CC";
+      modal_cancel_fg = "#0E1112";
+      modal_cancel_bg = "#CF6A4C";
+      modal_confirm_fg = "#0E1112";
+      modal_confirm_bg = "#99C794";
+
+      help_menu_hotkey = "#5FB3B3";
+      help_menu_title = "#C594C5";
+      cursor = "#FAC863";
+      correct = "#99C794";
+      error = "#CF6A4C";
+      hint = "#5FB3B3";
+      cancel = "#FAC863";
+    };
+  };
+
   # --- git --------------------------------------------------------------
   # Faithful port of ~/.gitconfig. Home-manager writes this to
   # ~/.config/git/config, which git reads with LOWER precedence than the
