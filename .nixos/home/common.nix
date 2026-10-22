@@ -255,6 +255,8 @@ in
     };
   };
 
+  programs.btop.enable = true;
+
   # --- git --------------------------------------------------------------
   # Faithful port of ~/.gitconfig. Home-manager writes this to
   # ~/.config/git/config, which git reads with LOWER precedence than the
