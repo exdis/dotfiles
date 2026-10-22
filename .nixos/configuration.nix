@@ -236,6 +236,11 @@ in
 
   users.extraGroups.docker.members = [ "exdis" ];
 
+  # USB drives
+
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
+
   # Nix helper
 
   programs.nh = {

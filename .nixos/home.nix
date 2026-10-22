@@ -136,5 +136,10 @@
   #   wallpaper = ,~/.nixos/uwp1.jpeg
   # '';
 
+  services.udiskie = {
+    enable = true;
+    tray = "auto";
+  };
+
   home.stateVersion = "25.05";
 }
