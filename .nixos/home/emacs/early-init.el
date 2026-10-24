@@ -1,3 +1,5 @@
+;;; early-init.el --- Early startup settings -*- lexical-binding: t; -*-
+
 ;; Window bar
 (add-to-list 'default-frame-alist '(undecorated . t))
 

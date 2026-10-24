@@ -1,3 +1,5 @@
+;;; init.el --- Emacs configuration -*- lexical-binding: t; -*-
+
 ;; Load functions
 (load (expand-file-name "functions" user-emacs-directory))
 

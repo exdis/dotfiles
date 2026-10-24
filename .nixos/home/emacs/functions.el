@@ -1,9 +1,11 @@
+;;; functions.el --- Helper functions -*- lexical-binding: t; -*-
+
 ;; --- File path utilities ---
 
 (defun my/copy-relative-file-path ()
   "Copy the current buffer's file path relative to the project root to the clipboard."
   (interactive)
-  (let* ((root (or (when-let ((proj (project-current)))
+  (let* ((root (or (when-let* ((proj (project-current)))
                      (project-root proj))
                    default-directory))
          (path (file-relative-name (buffer-file-name) root)))
@@ -59,12 +61,10 @@
           (setq centaur-tabs-set-bar 'left)
           (setq centaur-tabs-active-bar
                 (centaur-tabs--make-xpm 'centaur-tabs-active-bar-face
-                                        2 centaur-tabs-bar-height))
-          ;; GUI: disable corfu-terminal
-          (corfu-terminal-mode -1))
-      ;; Terminal: no tab bar, enable corfu-terminal
-      (setq centaur-tabs-set-bar nil)
-      (corfu-terminal-mode 1))))
+                                        2 centaur-tabs-bar-height)))
+      (setq centaur-tabs-set-bar nil))
+    (when (< emacs-major-version 31)
+      (corfu-terminal-mode (if (display-graphic-p) -1 1)))))
 
 ;; --- Editorconfig ---
 

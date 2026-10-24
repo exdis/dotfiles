@@ -1,3 +1,5 @@
+;;; packages.el --- Package configuration -*- lexical-binding: t; -*-
+
 ;; Set up package repositories
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -141,6 +143,7 @@
   (global-corfu-mode))
 
 (use-package corfu-terminal
+  :if (< emacs-major-version 31)
   :ensure t
   :after corfu)
 

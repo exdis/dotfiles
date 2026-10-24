@@ -1,3 +1,5 @@
+;;; keybindings.el --- Key bindings -*- lexical-binding: t; -*-
+
 ;; Leader key bindings
 (my-leader-def
  "f" '(:ignore t :which-key "file")
